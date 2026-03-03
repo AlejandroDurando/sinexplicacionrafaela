@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expediente #112 - SER</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+
+    <style>
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            scroll-behavior: smooth;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 0.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background-color: var(--white);
+            border-bottom: 3px solid var(--black);
+        }
+
+        nav img {
+            height: 110px;
+            cursor: pointer;
+            filter: grayscale(100%);
+            transition: transform 0.3s;
+        }
+
+        nav img:hover {
+            transform: scale(1.1);
+        }
+
+        nav .links a {
+            color: var(--black);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        section {
+            padding: 12rem 2rem 4rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            align-self: flex-start;
+            margin-bottom: 2rem;
+            color: var(--black);
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--black);
+            padding-bottom: 2px;
+        }
+
+        .back-link:hover {
+            background-color: var(--black);
+            color: var(--white);
+        }
+
+        h1 {
+            font-family: 'Anton', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            align-self: flex-start;
+            width: 100%;
+        }
+
+        .meta-data {
+            align-self: flex-start;
+            margin-bottom: 3rem;
+            font-size: 0.9rem;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-left: 3px solid var(--black);
+            padding-left: 1rem;
+        }
+
+        .audio-container {
+            width: 100%;
+            padding: 2rem;
+            border: 3px solid var(--black);
+            margin-bottom: 3rem;
+            background-color: #f9f9f9;
+        }
+
+        audio {
+            width: 100%;
+            height: 50px;
+            filter: grayscale(100%) contrast(150%);
+        }
+
+        .transcription {
+            width: 100%;
+            text-align: left;
+        }
+
+        .transcription h3 {
+            font-family: 'Anton', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--black);
+            padding-bottom: 0.5rem;
+        }
+
+        .transcription p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            padding-left: 1rem;
+            border-left: 2px solid #ccc;
+        }
+
+        .transcription p strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #333;
+        }
+
+        /* Antigravity hidden classes */
+        .falling-element {
+            position: fixed !important;
+            margin: 0 !important;
+            z-index: 9999 !important;
+            box-sizing: border-box !important;
+            transform-origin: center center;
+            will-change: transform;
+            color: var(--white) !important;
+            background-color: transparent !important;
+            mix-blend-mode: difference !important;
+        }
+
+        .falling-border {
+            border: 3px solid var(--white) !important;
+            outline: none !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav id="navbar">
+        <a href="index.html" title="Volver al inicio"><img src="assets/logo.jpg" alt="SER Logo" id="logo"></a>
+        <div class="links">
+            <a href="testimonios.html">Testimonios</a>
+            <a href="index.html#sobre-nosotros">Sobre nosotros</a>
+            <a href="index.html#contacto">Contacto</a>
+        </div>
+    </nav>
+
+    <div id="wrapper">
+        <section>
+            <a href="testimonios.html" class="back-link reveal">
+                < Volver a los archivos</a>
+
+                    <h1 class="reveal">Expediente #112 - Relato de Operario Industrial</h1>
+
+                    <div class="meta-data reveal">
+                        Ubicación: PAER (Parque de Actividades Económicas de Rafaela) <br>
+                        Fecha: 11 de Agosto, 2010 <br>
+                        Fuente: Entrevista grabada en cassette TDK
+                    </div>
+
+                    <div class="audio-container reveal">
+                        <audio controls>
+                            <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
+                            Tu navegador no soporta el formato de audio.
+                        </audio>
+                    </div>
+
+                    <div class="transcription reveal">
+                        <h3>[ TRANSCRIPCIÓN OFICIAL ]</h3>
+
+                        <p><strong>Entrevistador:</strong> "Empecemos de nuevo, Marcos. Para la grabación. ¿A qué hora
+                            comenzó el apagón en el galpón 4?"</p>
+
+                        <p><strong>Marcos (Operario):</strong> "Eran casi las 3 de la madrugada. Turno noche. Las
+                            máquinas inyectoras se pararon de golpe. Todas juntas. No fue como cuando salta un
+                            disyuntor, fue como si les chuparan la energía."</p>
+
+                        <p><strong>Entrevistador:</strong> "¿Y qué hiciste después?"</p>
+
+                        <p><strong>Marcos:</strong> "Salí por el portón trasero para ver si los reflectores de la calle
+                            andaban... y ahí estaba eso. Justo arriba del transformador principal."</p>
+
+                        <p><strong>Entrevistador:</strong> "Describilo."</p>
+
+                        <p><strong>Marcos:</strong> "Era como... como si agarraras un bloque entero de la oscuridad de
+                            la noche y lo cortaras en forma geométrica. Como un rombo negro mate. No reflejaba nada de
+                            la luz de la luna."</p>
+
+                        <p><strong>Entrevistador:</strong> "¿Emitía algún tipo de luz o sonido?"</p>
+
+                        <p><strong>Marcos:</strong> "Nada. Silencio total. Pero yo sentía... sentía que el pelo de mis
+                            brazos se erizaba por la electricidad estática. Y un olor como a ozono o cobre quemado. Me
+                            miró, doctor. Sé que no tenía ojos, pero sentí su atención en mí. Y luego... no sé cómo
+                            explicarlo, simplemente no estaba más. Las luces volvieron dos horas después."</p>
+
+                        <p><strong>Nota del archivo:</strong> El transformador EPES no presentó fallas internas
+                            detectables, sin embargo, el medidor registró un pico de consumo equivalente a 20 días
+                            industriales consumidos en 3 nanosegundos antes del apagón.</p>
+                    </div>
+        </section>
+    </div>
+
+    <!-- Matter.js Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Scroll Reveal Animation
+            const revealElements = document.querySelectorAll('.reveal');
+
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, {
+                root: null,
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            });
+
+            revealElements.forEach(el => revealObserver.observe(el));
+
+            const logo = document.getElementById('logo');
+            let antigravityActive = false;
+            let clickTimeout;
+
+            logo.addEventListener('click', (e) => {
+                const logoLink = logo.closest('a');
+                e.preventDefault();
+                if (antigravityActive) return;
+
+                if (!clickTimeout) {
+                    clickTimeout = setTimeout(() => {
+                        window.location.href = logoLink.href;
+                    }, 300);
+                }
+            });
+
+            logo.addEventListener('dblclick', (e) => {
+                e.preventDefault();
+                if (clickTimeout) {
+                    clearTimeout(clickTimeout);
+                    clickTimeout = null;
+                }
+                if (antigravityActive) return;
+                antigravityActive = true;
+
+                window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+                setTimeout(initAntigravity, 50);
+            });
+
+            function initAntigravity() {
+                // (Mismo código de inicialización que omitiré por brevedad en la revisión,
+                // asume que está el Matter.js tal cual las otras páginas)
+                document.body.style.overflow = 'hidden';
+                const Engine = Matter.Engine, Render = Matter.Render, Runner = Matter.Runner, Bodies = Matter.Bodies, Composite = Matter.Composite, Mouse = Matter.Mouse, MouseConstraint = Matter.MouseConstraint;
+                const engine = Engine.create(); const world = engine.world;
+                const selectors = 'h1, h3, p, strong, .links a, img, audio, .back-link, .meta-data, .audio-container';
+                const elements = document.querySelectorAll(selectors);
+                const domBodies = [];
+                elements.forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.width < 5 || rect.height < 5 || document.defaultView.getComputedStyle(el).display === 'none') return;
+                    const css = window.getComputedStyle(el);
+                    const styles = { fontSize: css.fontSize, fontFamily: css.fontFamily, fontWeight: css.fontWeight, lineHeight: css.lineHeight, letterSpacing: css.letterSpacing, textTransform: css.textTransform, textAlign: css.textAlign, padding: css.padding, display: css.display, alignItems: css.alignItems, justifyContent: css.justifyContent };
+                    const x = rect.left + rect.width / 2; const y = rect.top + rect.height / 2;
+                    const body = Bodies.rectangle(x, y, rect.width, rect.height, { restitution: 0.6, friction: 0.1, density: 0.005 });
+                    Composite.add(world, body); domBodies.push({ body: body, element: el, width: rect.width, height: rect.height, savedStyles: styles });
+                });
+                const wrapper = document.getElementById('wrapper'); const nav = document.getElementById('navbar'); wrapper.style.display = 'none'; nav.style.display = 'none';
+                document.body.style.backgroundColor = '#000000'; document.body.style.backgroundImage = 'none';
+                domBodies.forEach(item => {
+                    const el = item.element; const style = item.savedStyles; document.body.appendChild(el); el.className = 'falling-element';
+                    if (el.classList.contains('audio-container')) { el.classList.add('falling-border'); }
+                    el.style.width = item.width + 'px'; el.style.height = item.height + 'px'; el.style.fontSize = style.fontSize; el.style.fontFamily = style.fontFamily; el.style.fontWeight = style.fontWeight; el.style.lineHeight = style.lineHeight; el.style.letterSpacing = style.letterSpacing; el.style.textTransform = style.textTransform; el.style.textAlign = style.textAlign; el.style.padding = style.padding;
+                    if (style.display === 'flex' || style.display === 'block') { el.style.display = style.display; el.style.alignItems = style.alignItems; el.style.justifyContent = style.justifyContent; }
+                    const x = item.body.position.x - item.width / 2; const y = item.body.position.y - item.height / 2; el.style.transform = `translate(${x}px, ${y}px) rotate(0rad)`;
+                });
+                const wallOpts = { isStatic: true }; const tb = 100; const w = window.innerWidth; const h = window.innerHeight;
+                Composite.add(world, [Bodies.rectangle(w / 2, h + tb / 2, w * 2, tb, wallOpts), Bodies.rectangle(w / 2, -tb / 2 - 2000, w * 2, tb, wallOpts), Bodies.rectangle(-tb / 2, h / 2, tb, h * 3, wallOpts), Bodies.rectangle(w + tb / 2, h / 2, tb, h * 3, wallOpts)]);
+                Matter.Events.on(engine, 'afterUpdate', () => { domBodies.forEach(item => { const x = item.body.position.x - item.width / 2; const y = item.body.position.y - item.height / 2; item.element.style.transform = `translate(${x}px, ${y}px) rotate(${item.body.angle}rad)`; }); });
+                const mouse = Mouse.create(document.body); const mouseConstraint = MouseConstraint.create(engine, { mouse: mouse, constraint: { stiffness: 0.2, render: { visible: false } } });
+                if (mouseConstraint.mouse.element) { mouseConstraint.mouse.element.removeEventListener('mousewheel', mouseConstraint.mouse.mousewheel); mouseConstraint.mouse.element.removeEventListener('DOMMouseScroll', mouseConstraint.mouse.mousewheel); }
+                Composite.add(world, mouseConstraint); Runner.run(Runner.create(), engine);
+            }
+        });
+    </script>
+</body>
+
+</html>

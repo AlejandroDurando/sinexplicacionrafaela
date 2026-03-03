@@ -1,0 +1,21 @@
+# Archivos de video y audio pesados (subir por separado)
+assets/*.mp4
+assets/*.mov
+assets/*.avi
+assets/*.mkv
+assets/*.MP4
+assets/*.MOV
+
+# Archivos de audio
+assets/*.mp3
+assets/*.wav
+
+# Imágenes pesadas opcionales
+assets/*.avif
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Dependencias
+node_modules/

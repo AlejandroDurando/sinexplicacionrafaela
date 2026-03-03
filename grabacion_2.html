@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expediente #089 - SER</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+
+    <style>
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            scroll-behavior: smooth;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 0.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background-color: var(--white);
+            border-bottom: 3px solid var(--black);
+        }
+
+        nav img {
+            height: 110px;
+            cursor: pointer;
+            filter: grayscale(100%);
+            transition: transform 0.3s;
+        }
+
+        nav img:hover {
+            transform: scale(1.1);
+        }
+
+        nav .links a {
+            color: var(--black);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        nav .links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--black);
+            transition: width 0.3s ease;
+        }
+
+        nav .links a:hover::after {
+            width: 100%;
+        }
+
+        section {
+            padding: 12rem 2rem 4rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            align-self: flex-start;
+            margin-bottom: 2rem;
+            color: var(--black);
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--black);
+            padding-bottom: 2px;
+        }
+
+        .back-link:hover {
+            background-color: var(--black);
+            color: var(--white);
+        }
+
+        h1 {
+            font-family: 'Anton', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            align-self: flex-start;
+            width: 100%;
+        }
+
+        .meta-data {
+            align-self: flex-start;
+            margin-bottom: 3rem;
+            font-size: 0.9rem;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-left: 3px solid var(--black);
+            padding-left: 1rem;
+        }
+
+        .audio-container {
+            width: 100%;
+            padding: 2rem;
+            border: 3px solid var(--black);
+            margin-bottom: 3rem;
+            background-color: #f9f9f9;
+        }
+
+        audio {
+            width: 100%;
+            height: 50px;
+            filter: grayscale(100%) contrast(150%);
+        }
+
+        .transcription {
+            width: 100%;
+            text-align: left;
+        }
+
+        .transcription h3 {
+            font-family: 'Anton', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--black);
+            padding-bottom: 0.5rem;
+        }
+
+        .transcription p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            padding-left: 1rem;
+            border-left: 2px solid #ccc;
+            color: var(--black);
+        }
+
+        .transcription p strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--black);
+        }
+
+        /* Gallery Styles */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+            margin-top: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: auto;
+            border: 3px solid var(--black);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border: 3px solid var(--white);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: var(--white);
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: #ccc;
+        }
+
+        .gallery-title {
+            font-family: 'Anton', sans-serif;
+            font-size: 2rem;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            align-self: flex-start;
+            border-bottom: 3px solid var(--black);
+            width: 100%;
+            padding-bottom: 0.5rem;
+            color: var(--black);
+        }
+
+        /* Antigravity hidden classes */
+        .falling-element {
+            position: fixed !important;
+            margin: 0 !important;
+            z-index: 9999 !important;
+            box-sizing: border-box !important;
+            transform-origin: center center;
+            will-change: transform;
+            color: var(--white) !important;
+            background-color: transparent !important;
+            mix-blend-mode: difference !important;
+        }
+
+        .falling-border {
+            border: 3px solid var(--white) !important;
+            outline: none !important;
+        }
+
+        /* Scroll Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Prevent Matter.js breaking due to opacity 0 elements */
+        .falling-element.reveal {
+            opacity: 1 !important;
+            transform: none !important;
+            transition: none !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav id="navbar">
+        <a href="index.html" title="Volver al inicio"><img src="assets/logo.jpg" alt="SER Logo" id="logo"></a>
+        <div class="links">
+            <a href="testimonios.html">Testimonios</a>
+            <a href="index.html#sobre-nosotros">Sobre nosotros</a>
+            <a href="index.html#contacto">Contacto</a>
+        </div>
+    </nav>
+
+    <div id="wrapper">
+        <section>
+            <a href="testimonios.html" class="back-link reveal">
+                < Volver a los archivos</a>
+
+                    <h1 class="reveal">Caso Chino Mojica</h1>
+
+                    <div class="meta-data reveal">
+                        Entrevistado: Chino Mojica &nbsp;|&nbsp; Entrevistador: S.E.R.<br>
+                        Fecha: 06 de Enero, 2023 <br>
+                        Fuente: Entrevista Directa - Caso Chino Mojica
+                    </div>
+
+                    <div class="audio-container reveal"
+                        style="padding: 0; background: var(--white); border: 3px solid var(--black); overflow: hidden; border-radius: 0;">
+                        <video controls style="width:100%; display:block; background: var(--white);">
+                            <source src="assets/Casos/Caso%20Chino%20Mojica/entrevista_chino.mp4" type="video/mp4">
+                            Tu navegador no soporta la reproducción de video.
+                        </video>
+                    </div>
+
+                    <div class="transcription">
+                        <h3>[ TRANSCRIPCIÓN OFICIAL ]</h3>
+
+                        <p><strong>S.E.R.:</strong> Bien, bueno, hoy es 6 de enero de 2023. Estamos con el grupo SER en
+                            una entrevista para con el señor...</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Me presento, Óscar Mojica y me dicen Chino.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Con el señor Chino. Bueno, nos vas a contar tus experiencias, de las
+                            de tus familiares si querés.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Bien, dale. Buenísimo. Bueno, voy a contar la primera experiencia que
+                            tenía aproximadamente de 7, 8 años. Me acuerdo bien porque fue una experiencia que marcó
+                            muchísimo. En ese momento no teníamos una reja, un portón de reja, sino que teníamos tejido
+                            y estamos sentados ahí con mi familia, mi papá, mi mamá, los sillones y estamos ahí frente a
+                            la vereda, y edad 8 años aproximadamente. Ellos se fueron adentro, ya nos íbamos a dormir y
+                            yo cuando quiero levantar el sillón, de pronto veo una esfera que habrá tenido no más de 2
+                            metros, algo hermoso, brillaba con una bola de fuego. Quedó suspendida a esta altura y
+                            después hizo una velocidad increíble. Salió hacia arriba. Quedó unos 20 cm más o menos del
+                            piso. No tocó el piso. Yo quedé impactado y enseguida salí corriendo. Le dije a mi mamá lo
+                            que había visto. Entonces mi mamá sale corriendo y ella dice, "¿Y qué viste?". Me contó y le
+                            describí que era una bola de fuego. Y fue algo, fue una experiencia fuerte.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> ¿Estaban en la vereda?</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Estamos en la casa, en la parte de adentro y que tenés a unos 3 m la
+                            calle, digamos, dentro del tejido de la casa, y 3 m ya tenés la calle a donde se produjo
+                            eso.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Sí, de la casa y 3 m ya tenés la calle a donde se produjo eso. Y esa
+                            esfera eh, ¿dónde estaba? ¿En la calle?</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Esa esfera bajó de la nada porque yo estaba levantando el sillón. Veo
+                            que baja, me quedo ahí, se mantiene durante 5 o 6 segundos y sale con... sale a una
+                            velocidad increíble y eso fue donde quedé ahí como...</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> ¿A qué distancia vos?</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Y 3, 4 m por ahí.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Ah, cerquita.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Cerquita. Sí, sí, sí, cerquita.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Y ahí estamos hablando eh, ¿de qué año?</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Y tenía 8 años aproximadamente, tengo 39, así que hay que sacar
+                            cuentas. Esto pasó en calle 27 de septiembre, a la altura 671. Y yo calculo que era la hora
+                            entre las 11 y las 12 de la noche.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> ¿Solo lo viste porque tus viejos justo habían entrado?</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Mi viejo justo había entrado, en los sillones donde yo quedé ahí,
+                            cuando quiero levantar el sillón lo veo y quedé ahí, porque hasta el día de hoy si veo algo
+                            parecido uno queda choqueado por lo desconocido. Pero fue una... igual no tenía miedo, me
+                            transmitió como paz, no tenía miedo, no describiría esa sensación con miedo.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> ¿Emitía luz, la esfera era la luz contenida?</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Era una luz contenida, pero era como fuego.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Color rojo, o medio grande. Fuego.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Fuego color amarillo.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Ah, fuego.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Era de este tamaño. Era muy grande. 1,5 metro. No sé si llegaba a los
+                            2 metros, pero era como un disco que quedó suspendido ahí 5 o 6 segundos y se fue con todo.
+                            Pero la velocidad increíble. Entonces, yo quedé ahí.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> 2 m es aquella ventana.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Sí. 1,5 más o menos de ancho.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> ¿Cómo es? Rón.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Sí, un poquito más.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> 1,20.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Sí.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Impresionante.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Sí.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> ¿Y vos qué? Qué pensaron los días siguientes. Digo, ¿qué pensabas?
+                            ¿Qué fue eso? Tu familia.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Quedé en shock y después como que lo tomé como algo natural y traté
+                            de olvidarme, pero a medida que pasa el tiempo, los años, como que esa experiencia estaba
+                            bien marcada, bien fuerte, porque después fueron sucediendo como hechos un poquito más
+                            fuertes. Pero ya eh, cuando era más chico, que va relacionado y va conectado, habré tenido
+                            entre 4 y 5 años. Mi mamá va a cerrar la persiana de mi pieza y ella dice, y me lo jura
+                            hasta el día de hoy, que ella vio un gris que estaba mirándome. Ella quedó en shock, cerró
+                            la ventana y ellos lo describen como que era un gris que me estaba mirando desde la ventana
+                            del lado de afuera.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Del lado de afuera hacia la casa.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> No, del lado de afuera hacia el patio de atrás, porque mi pieza,
+                            exactamente, mi pieza está conectada al patio y en ese momento no teníamos el galpón, era
+                            como muy un baldío, y ella dice que vio eso. Ella me lo comenta muchísimo tiempo después, y
+                            si yo se lo pregunto es como que también lo recuerda como "sí, vi un gris", lo describe
+                            forma de pera, todo, que me estaba mirando y ella quedó en shock. Sí, ella dice que vio eso.
+                            Yo no me acuerdo porque 4 o 5 años era muy chico. Y ahí es como que quedé un poquito... fue
+                            un poco de shock cuando me lo contó.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> ¿Te recordó tu experiencia ella cuando a los 8 años te pasó que
+                            viste la esfera, ahí fue el motivo para recordarlo de los 4 años?</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Yo creo que tal vez porque le dije eso, ella me lo contó.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Claro.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Y después se habló muchísimo del tema porque incluso me dijo...
+                            después yo le pregunté si ella había tenido una experiencia y me dijo lo que vio en mi
+                            pieza, y después me describió lo que había visto con mi viejo y una pareja más, que vio como
+                            una esfera y un aro naranja gigante en la esquina entre Ayacucho y 27 de Septiembre, también
+                            ahí arriba. Que estaba más o menos, ellos lo describen que estaba cerca, como unos 600, 700
+                            m, era cerca y no emitía sonido alguno, y quedaron todos choqueados, y de la nada
+                            desapareció, el mismo efecto, aparece y de la nada desaparece. Y hablaron con gente del
+                            barrio y demás... que yo creo que hasta el día de hoy es como que incluso algunas personas
+                            se lo callan. O sea, yo trato de juntar esta experiencia con personas que hablan del tema, o
+                            digamos una experiencia muy propia que también uno se bloquea o trata de compartir con
+                            personas que dentro de todo te escuchen o te sepan comprender, porque a veces es difícil. Me
+                            ha pasado también de ver cosas siempre o mirar al cielo y ver movimiento. Entonces, uno
+                            cuando ve ese tipo de cosas o movimientos, no es que dice uno, "Oh, es un ovni," sino que ve
+                            la trayectoria, cómo se mueve, la velocidad, si cambia de trayectoria. Entonces uno dice,
+                            "Ah, bueno, vi algo que no es un satélite, un poquito más grande, voy y estudio un poquito
+                            más". Y después esa conexión, desde chico, desde ver esa esfera de luz a ir a la librería
+                            con mi vieja, me acuerdo, y mi vieja me quería comprar bicho antiojito, yo quería la Conozca
+                            Más. Y después ese acercamiento al tema OVNI, me acuerdo que de chico escuchaba muchísimo a
+                            Fabio Zerpa o personas hasta el día de hoy.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Canal Infinito.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Canal Infinito, exactamente. Y después esa experiencia, fueron las
+                            experiencias que marcan, y después me pasó una muy fuerte que la he contado también, hace 3
+                            años atrás tengo un accidente. Me pusieron la bota Walker. Tuve un accidente, en la pierna,
+                            tuve una rotura en el tobillo. Estuve como 5 o 6 meses de muleta. Bueno, y estaba durmiendo
+                            en la casa de mi novia. Ella tiene un pasillo gigante, de la nada, yo estaba... ese pasillo
+                            apunta a la calle, o sea, un pasillo largo que tiene la puerta de la que va al frente y la
+                            luz de la calle que entra por la ventana. En un momento, creo que eran las 2 o entre las 3
+                            de la mañana, me despierto, yo se lo cuento a Mica, y veo un ser en la cocina con la típica
+                            forma, un gris. Yo no sabía si estaba soñando, lo que yo hice es salir como pude caminando a
+                            la cocina porque tenía ese miedo, pero es como la curiosidad también mató al gato. Uno
+                            quiere ver qué hay realmente. Pero ahí es donde viene la cuestión mía, porque cuando hago
+                            así, yo no recuerdo haber caminado eso, pero me desperté y estaba en la cocina. Entonces,
+                            algo me pasó ahí.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Eso fue...</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Eso fue hace comienzos de pandemia.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> ¿En qué lugar?</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> En casa de Mica, en el pasillo.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Romiteli 722.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Eso es...</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Barrio Mora. Exactamente. Ahí. Entonces, ¿vos qué decís que fue un
+                            sueño o...?</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> No sé cómo describirlo, porque estaba soñando y el tema es que
+                            nunca... no que yo sepa, no sufro de sonambulismo o algo parecido, porque ahí lo describiría
+                            exactamente la memoria.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Exacto. Entonces como que ves eso y decís, lo vi...</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Y en un segundo ya estaba en la cocina, pero no recuerdo haber
+                            caminado eso.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Esos sucesos... porque estabas con la bota también.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Claro, exactamente. No podía caminar a una velocidad... Claro.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Pero sí, ya estabas ahí.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Ya estaba ahí.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Y a todo esto, las muletas estaban ahí en la cocina... o sea, el
+                            trayecto, y tus muletas estaban en la pieza, ¿no? Sí, sí, entiendo la situación que las
+                            muletas tendrían que haber estado en la pieza, no en la cocina.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Porque yo usé las muletas para irme a la pieza. No entiendo cómo
+                            llegaron a la cocina. Eso es lo que yo...</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Falta un pedazo.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Falta el pedazo ese, ese lapso. Y eso fue lo que pasó. Después
+                            también, ese mismo año, también eso fue con Mica, entrando al barrio Mora. Tenemos el norte
+                            más allá. Bueno, sobre el norte vimos, estaba nublado de noche, eran las 10:30, lo vimos los
+                            dos, y vimos algo gigante que era como naranja y era como un plato que lo tapaban las nubes.
+                            Entonces veníamos con el auto con Mica y digo, "Mica, ¿viste eso?". Paramos el auto, lo
+                            vimos y después se corrió todas las nubes y lo tapó todo. No lo vimos más. Pero era algo, o
+                            sea, hermoso, digno de ver, hermoso. Y también uno tiene...</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> ¿Y era de noche, solos?</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> De noche. Exactamente de noche. Y después nos sentamos a ver ese
+                            mismo año a la noche, nos conectamos un poquito más con el cielo en plena etapa de
+                            cuarentena, que no había mucho movimiento, y se veían... de hecho, yo te había mandado un
+                            mensajito a vos, se veían en el sur como pequeñas esferas que se describen como pequeños
+                            Fighter, bien chiquititos, como drones, por así decirlo. Eran como cuatro o cinco que iban
+                            así, volvían brillante y de la nada desaparecían. Y quedamos mirando, y bueno, ella cree
+                            muchísimo en el tema, pero son experiencias... y experiencias fuertes, digamos, y siempre
+                            tengo la necesidad o esa conexión también en cuanto a que necesito como montañas, como que
+                            las montañas me llaman, necesito ir a las montañas, necesito montañas y ahí estoy en mi
+                            mundo.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Necesitás ese encuentro, necesitás montañas, es como que necesitás
+                            estar ahí. Sí, lo que vos dijiste antes, que después de los 8 años, desde que viste eso, te
+                            empezaron a pasar otras cosas. ¿Qué otras cosas son?</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Y por ejemplo, me pasó algo, ¿no?, en Reiter 722, que es una semana
+                            después de lo que pasó de ver o soñar ese tipo de imagen o ese ser. El caso reciente del
+                            tema de la teletransportación, que por ejemplo hay un pasillo largo, está primero el baño,
+                            después está la pieza de Noa, yo verlo a Noa a él ahí en el baño y cuando yo voy pasando
+                            para la pieza, para pasar el piso, está en la pieza. Eso es muy común en casa de Mica, o
+                            tiempos o lapsos perdidos. O por ejemplo, Noa me dice, "¿Vos cómo hiciste para venir a la
+                            pieza?". Eso lo describió Mika muchas veces, que es como que yo tampoco sé describir cómo
+                            aparezco desde la cocina en la pieza y ella estando en el baño, que me pierdo, a lo mejor
+                            llego y no me di cuenta o estaba pensando en algo y no me di cuenta que sí es trayectoria,
+                            pero es como tiempo perdido que uno describe en qué momento pasó eso...</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Y una preguntita volviendo atrás, cuando vos tuviste ese sueño, esa
+                            experiencia de ver ese ser, ¿cómo era? ¿Te acordabas? ¿Tenés algún detalle?</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Negro. Tenía como un traje negro, bien negro, y la forma ideal como
+                            de pera. El mismo ser que vio mi mamá hace unos años, porque yo me lo quería hacer a la
+                            mente así.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Ah, ¿qué altura?</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> ¿Qué altura? 1 metro y medio. Muy chiquitito.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Ah, muy chiquitito. Entraba justo en la nave esa que viste cuando
+                            eras chico.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> No sé, porque esa nave era una nave chica por lo que decís. Era...
+                        </p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Sí, pero en esa no viste ser ni nada.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> No podemos decir que... y que era el típico gris.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> El típico gris. Manos, ¿le alcanzaste a ver?</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Claro, sí, mano larga y dedos largos. Normal. Yo cuando lo voy a
+                            buscar porque digo, ¿por qué no tiene por qué estar dentro de la cocina?. Es como que no me
+                            acordaba del trayecto que fui a la cocina y no estaba más.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Ajá.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Y enseguida miré la hora, 2:30, a esa hora y siempre están ahí.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> O sea, que cuando lo viste, era como que lo viste desde la pieza.
+                            ¿Lo viste?</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Lo vi desde la pieza. Claro. Al costado porque tengo el pasillo.
+                            Entonces, yo me levanto, hago esto y cuando lo veo digo, no entendía, y no me salía tampoco
+                            la voz para llamarla a Mica. Ella estaba durmiendo y no sé en qué trayecto ya llegué a la
+                            cocina. Ese tiempo perdido que me pasó también antes.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Me había pasado con él... pero de ver siempre sí, ahí en tu barrio.
+                            Más o menos vamos a las dos primeras cosas que nos contaste, lo que vieron tus viejos y lo
+                            que te pasó a vos. Estamos hablando del 89, 90, 91, ahí en esa época.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Exacto.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> En esa época el barrio estaba exactamente como está ahora.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> No, no, era todo más descampado.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Enfrente de tu casa había descampado también, ¿no?</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Había casas que están muy poquitas. No era un descampado, pero había
+                            algo. El patio de mi casa sigue un poquito más descampado. Los vecinos no estaban tanto.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Sí, en esa época estaba la fábrica.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Estaba la fábrica Morfino. Sí, seguía estando esa fábrica. Sí, sí.
+                        </p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Bueno, entonces en ese tiempo eh, tu vieja y tu viejo vieron...</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Sí, ellos lo describen con un plato gigante naranja.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Después les pasó junto con otros vecinos más...</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Con una pareja había. Exactamente. Lo habían visto que era muy
+                            silencioso. Ellos tenían miedo y no emitía sonido alguno. Bueno, y lo tuyo fue después, lo
+                            de la esfera, y después de la esfera fue cuando tenía aproximadamente 8 años. 8, 9 años. Sí.
+                            Y antes, cuando yo le conté eso a mi mamá, el suceso que me pasó con esa esfera amarilla,
+                            después me empezó a contar que cuando tenía 4 o 5 años...</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Ah, eso fue antes.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Pasó que ella va a cerrar la ventana y ve este gris ahí, se asustó y
+                            cerró de la nada ahí. Nada. De hecho, yo siento y creo que obvio no es normal, pero le da un
+                            poquito de miedo hablar de tema. Bueno, le da un poquito porque lo vio. Yo no lo veía y no
+                            me acuerdo porque era muy chico, pero ella dice que me estaba mirando. Describe esa
+                            sensación.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Entonces enseguida la persiana y ahí el patio tenía conexión con
+                            otros baldíos.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> El patio tenía conexión con otra casa, pero todo baldío, digamos. Un
+                            patio también baldío de la otra casa también.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Tapial.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> No había.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Tapial. Había tejido.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Había tejido.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Sí, sí. Bueno, una experiencia así fuerte.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Sí.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Y evidentemente te marcó porque decís que como que vos estuviste
+                            siempre, todo el tiempo buscando cosas.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Sí, incluso busco información o creo... Bueno, no estamos para nada
+                            solos. Y creo que estamos atravesando un tiempo. Sinceramente creo también que ahí va a
+                            haber un contacto fuerte y como que en algún momento va a suceder con esos seres, y no a
+                            todos, sino que son personas que no sé si creen, pero hay una conexión. Si uno se pone a
+                            ver, eso es una conexión. No es que uno dice, "Yo quiero tener un contacto, yo voy a...", no
+                            sucede así. No se maneja de esa forma. No lo mandamos nosotros.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> ¿Te pasó de probar llamarlos y a ver si vinieran al cielo o algo o
+                            nunca?</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> No, solamente me siento a observar el cielo y siempre, si vos ves a
+                            la noche, siempre va a haber un movimiento.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Claro.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Siempre están. Es como que están siempre. Solamente que la época de
+                            cuarentena es como que nos hizo ver más al cielo.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Claro.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Y entender que somos muy chiquitos, muy pequeños, que somos
+                            insignificantes, que somos una partícula, y entender ya que no estamos solos, ya es un paso
+                            importante. Pero la conexión con el cielo y ver todas las noches y analizar y ver que somos
+                            muy insignificantes, eso describe muchísimas cosas. Es como innegable el tema también, ¿no?
+                        </p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Muchos que no conocemos, muchas cosas que no sabemos.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Exactamente. Sí. Eh, pero perdón, yo decía, hay que estar
+                            predispuesto para la búsqueda. Sí, hay que querer sentarse a mirar el cielo, mirar, y algo
+                            más allá de que no haya, o sea, para algunos por más que quieran no se puedan conectar, como
+                            decís vos, hay que estar predispuesto para buscar algo, para esperar algo. Yo creo, no digo
+                            que sea la verdad, pero lo que yo creo es que ahí arriba también hay cosas buenas y cosas
+                            malas, y que estamos pasando por una guerra espiritual, por así decirlo. Como hay personas
+                            que hacen muy bien las cosas, hay personas que hacen muy mal las cosas y es un balance. Y la
+                            gente se pregunta, ¿cómo no se presentan? Porque no estamos listos, no estamos preparados.
+                            Nos falta muchísimo evolucionar espiritualmente y un montón de cosas. Y va a llegar el
+                            momento, no es todavía el momento, pero va a llegar donde va a haber ese cambio, y también
+                            esa conexión con algunas personas, no todas. Pero es apasionante el tema.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Qué bueno. Yo quería volver a la esfera. Porque eh, lo que preguntó
+                            Patricia es lo que me interesaba: ¿desde la luz era como expansiva, si era una cosa que te
+                            dejó medio ciego o si era como una luz tenue tranquila o que no te producía... o sea, que no
+                            te encandilaba a lo mejor el alrededor?</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> La mejor descripción es como si estuvieras frente a una fogata.
+                            Exactamente. Como el fuego.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Como el fuego.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Era como si fuera un fuego, pero no ese fuego como si vos mirás al
+                            sol y no podés verlo, sino que un fuego que transmitía ganas de verlo, pero no que te
+                            enceguecía. La mejor descripción es como si fuera una fogata prendida en forma de un plato.
+                            Era fuego.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Ah, en forma de un plato.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> No, esfera. Plato porque una esfera redonda en el medio y un plato.
+                        </p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Ah, esfera. Exactamente. Imaginaba una esfera.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> No, no, no. Una esfera en el medio, forma de plato.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Una esfera es una esfera. Perdón. Vamos a dibujarlo. Entonces sería
+                            un plato, una esfera metida en un plato.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Ah, por eso. Eso es lo que deberíamos hacer desde un principio,
+                            dibujar, hacer dibujar a las personas.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Ahí está. Lo que... Ah, claro. Es, mira, una esfera en forma de...
+                        </p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Claro, una esfera en el medio y todo, todo era amarillo.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Todo amarillo.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Todo, todo, todo. Exacto. Qué te pregunte... "Menos mal que me
+                            hiciste dibujar. No soy bueno dibujando, pero bueno".</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> O sea, pero tampoco era tan circular, o sea, una esfera, si la tenés
+                            que dibujar plana es un círculo. Era más ovoidal.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Exacto.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> O sea, parece un plato volador chiquito.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Parece un plato volador chiquito. Bueno, ahora cambió la cosa.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Ahora cambió la cosa. Parece un plato volador chiquito. Entonces
+                            esto estaba a 20 cm.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> 20 cm del piso. Ahí hizo esto. Bajó, 5 o 6 segundos.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Subió en forma vertical.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> No, subieron en forma... Sí, pero a una velocidad que no la tenemos
+                            en este planeta. Al menos yo no la conozco. A esa velocidad, porque también tenés que venir
+                            a esa velocidad y frenarte a esa velocidad y a esa...</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Bajó a la misma velocidad que se fue.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> No, vino a la misma velocidad que se fue. Exactamente. Fue muy, o
+                            sea, no ni siquiera te da tiempo si hoy pasaría a sacar el teléfono a filmar, porque fue
+                            todo en cuestión de segundos, fue rapidísimo. Buscar como si estuviéramos viendo desde
+                            arriba la situación. La puedo dibujar como si la, o sea, como desde arriba.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Un plano, un plano que marque el frente de tu casa donde vos
+                            estabas, la vereda, la calle, más o menos para calcular, mirando desde arriba para ver la
+                            distancia.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Voy a dibujar a mi modo los sillones. Así que tenemos un pilar. Ya.
+                            Bien. Mira el pilar, porque me acuerdo patente el pilar de la luz. Acá está el garage y esto
+                            viene a ser lo que es el tejido. Si querés lo podemos hacer así.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Sí. Ajá.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Ahí estaría el sillón. Estoy yo y ahí lo que veo, ahí justo ahí.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> En la vereda.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Exactamente. Ahí está el garage. Acá está la cocina. Y mis viejos ya
+                            se habían ido a la cocina.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Estaba más o menos en el medio de la calle.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> En el medio de la calle. Exactamente. En el medio. Sí. Ahí. Bien. Y
+                            ahí estoy. Ahí lo veo. Ahí está en la formita. Exactamente. Y acá estaría 27 de Septiembre,
+                            sería este Ayacucho.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> ¿Había árboles en esa época?</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Ahora sé que hay, pero...</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Sí había. ¿No te acordás si eran grandes?</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> No, eran chiquitos porque son los que están ahora.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Ah, son los mismos.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Sí, son los mismos. Exacto. Listo. Perdón por el dibujo, no soy...
+                        </p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> No, no, no. Acá la clave estaba en reconocer la diferencia entre lo
+                            que nos imaginamos nosotros al escuchar como una bola, una pelota luminosa.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Claro. Sí, porque vi más el centro. Porque incluso cuando vos ves el
+                            fuego tampoco ves la forma.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Claro, porque te quedás... es como que el fuego no tiene un
+                            triángulo que es la fogata, el fuego porque vos ves y cambia de forma. Bueno, eso era así.
+                        </p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Pero se pareció que era, pero era tan, o sea, el color hermoso como
+                            si fuera el fuego, tal cual.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Amarillo ese, ¿viste? Que te... no es, no lo percibiste como algo
+                            sólido, sino como fuego.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Yo como fuego, como una esfera de fuego. La tengo con esfera porque
+                            le vi el centro.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Y las formas bien delimitadas.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Exacto.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Y el color eh lo viste, vos decís amarillo porque cada uno viste por
+                            ahí el color del fuego. ¿Qué colores podemos poner más o menos de lo que te acordás, fuerte
+                            amarillo fuerte? No, rojo.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> No rojo, amarillo.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Ah, este color ahí.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Amarillo.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Hubo vientos de ese aburriento árbol, ¿no?</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Y me pasó la misma situación. Es como que no corre una gota de viento
+                            en ese momento. Es como que estaría pausado todo. La misma descripción, por ejemplo, cuando
+                            pasó eso en lo de Mica, es como que se pausa todo, se detiene. Es como que se detiene, pero
+                            al mismo tiempo sigue pasando porque sigue sucediendo eso que viene y se va, pero es como
+                            que estás vos solo, es como que no lo ve nadie, no hay una persona que diga "lo vi, lo vi,
+                            lo vi". Por ejemplo, en el caso dicho, sí, sí, yo lo vi, no, como yo le dije, corrí a decir,
+                            "vi esto". Es como que el tiempo hace esto, como que no hay una gota de viento, no hay nada.
+                            No pasa ningún auto. No es nada.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Nadie, nada. Y vos, bueno, pasó hace mucho tiempo, pero vos no te
+                            acordás que después te hayas sentido mal, que te haya afectado. ¿Dormiste esa noche?</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Sí, lo más bien.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Ah.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Creo que no dormí más cuando mi vieja me dijo que había visto el
+                            gris.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Claro, porque claro...</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Ahí me afectó ahí. Sí. Ahí como que veía la ventana y miraba.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Claro, te habrás asustado.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Pero si no, no.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Eso lo terminaste de ver y fuiste y se lo contaste.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Sí, lo conté enseguida.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> ¿Qué te dijeron?</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> No, es como... mi vieja me dice, "¿Y cómo y qué viste? Y qué fue y
+                            cómo te sentís" porque mi vieja en esos temas, al igual que mi viejo, es como que son muy
+                            abiertos y creen.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Lo cual no es que te dijeran, "¿Estás seguro? Claro, no te habrás
+                            imaginado eso," sino que ya desde el primer momento que lo describí es como que dijeron,
+                            "Ah, mira qué bueno. A ver, contame cómo era".</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Se lo creí asombrado. Imaginate, 8 años. Bueno, creo que con esta
+                            edad también, si uno ve algo así, se asombra de la misma forma o más.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Quizás, quizás más. Sí, te conté que hay un chico que se llama
+                            Javier que vive ahí cerca de esa casa, de la 27 de Septiembre, que también, pero de día
+                            jugando con los compañeros, vio una, pero sí era una esfera pequeña y con las mismas
+                            características que vos decís de como si fuera de fuego. Ahí en el mismo barrio, bajó en
+                            plena tarde, bajó en línea recta.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Mirá. Llegó hasta la altura del tapial y después recorrió el tapial
+                            en forma horizontal. Ya lo vamos a invitar. No, no en la misma calle, el mismo barrio de la
+                            fábrica para el oeste, como dos cuadras el oeste. Pero la zona...</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> La zona, la zona, el mismo barrio. O el barrio, el otro, el
+                            barrio... pero bueno. Gracias. Bueno, andá convenciéndola a tu mamá, porque queremos
+                            escucharla en otro lado. Vamos a hacer todo lo posible para tratar de traerla, así ella
+                            describe la situación. Vamos para allá porque no...</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Si ella quiere, es para tener un registro del caso.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Y nosotros con él nos preguntábamos siempre, por eso nos contactamos
+                            con Luis, si acá en Rafaela eh, había casos como escuchamos de todos lados, sabemos, y
+                            dijimos, qué interesante sería hacer un registro de los casos de Rafaela. Ahí vemos con tu
+                            caso y otros que estamos empezando a grabar y a conocer, que hay casos en la ciudad. Que no
+                            es que... hablándole otra vez con el vecino de enfrente, me dijo que es muy bohemio,
+                            solitario, ¿no?. Y me dijo que a la noche él ve... están a punto de llamarlos y aparece ahí
+                            en el medio enfrente de casa. Sí, sí, en la ciudad. Ah, ciudad.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Digo, mirá, nunca había hablado con el chico. Más que dos palabras de
+                            tu casa... y después la conexión también, porque por ejemplo en Huerta Grande, mi prima, los
+                            abuelos de ella, Mingo, que falleció hace dos o tres años, él fue para el psicólogo, y cada
+                            vez que nos juntábamos es como que contaba cosas ahí en la mesa. Y bueno, Marta, su esposa,
+                            ella tiene una experiencia también muy fuerte, que ellos tienen un complejo de cabañas.
+                            Después de que falleció Mingo, una noche ella escuchaba ruido... que dice Torriano.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Exactamente, Torriano. Mingo. En Huerta Grande.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Exactamente. En Huerta Grande.</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> No, no, no. Pero no sé si lo conecto con el mecánico, ¿no? El
+                            hermano. Ah, está. Claro, el hermano que está todavía, el hermano en calle Ernesto Salva
+                            ahí. Claro.</p>
+                        <p></p>
+                        <p><strong>CHINO:</strong> Y ellos tienen un complejo de cabañas, y Mingo siempre estudió el
+                            tema y yo quedaba con las charlas, quedaba fascinado. Y bueno, y Marta en una ocasión me
+                            contó que ella, me parece que fue después de la muerte de Mingo en las cabañas, a la noche
+                            escuchaba ruido o algo, y en el centro de las cabañas porque tiene un montón a lo lejos. Y
+                            ahí ella ve tres seres que la llamaron, tres seres encapuchados. Eh, yo me quedé ahí
+                            escuchando la experiencia y fue muy fuerte, y que ella no se animó a ir, que la llamaban,
+                            que querían decirle algo y ella no se animó a ir y ella lo cuenta siempre. Marta tuvo esa
+                            experiencia fuertísima ahí en el complejo este, que justo da el complejo de la cabaña da con
+                            el cerro de la Banderita que está justo enfrente. El cerro de la Banderita está a 1000
+                            metros parece, está ahí nomás, está cerquita, re cerca, y tuvo esa experiencia muy fuerte.
+                            Por eso esa conexión también de personas que vieron o que sintieron, y hablando del tema es
+                            como que se abren también, "Ah, a mí me pasó esto, a mí me pasó aquello", y también hacer un
+                            registro y ver que hay muchas personas que...</p>
+                        <p></p>
+                        <p><strong>S.E.R.:</strong> Sí, que también, que le pasó eso, que suceden ese tipo de cosas.
+                            Paro de grabar. Gracias.</p>
+                    </div>
+
+                    <h3 class="gallery-title reveal">Evidencia Fotográfica (Dibujos)</h3>
+                    <div class="gallery reveal">
+                        <img src="assets/Casos/Caso%20Chino%20Mojica/Dibujos/IMG_20230106_170359987.jpg" alt="Dibujo 1"
+                            class="reveal">
+                        <img src="assets/Casos/Caso%20Chino%20Mojica/Dibujos/IMG_20230106_170447652.jpg" alt="Dibujo 2"
+                            class="reveal">
+                    </div>
+        </section>
+    </div>
+
+    <!-- Modal para fotos -->
+    <div id="imageModal" class="modal">
+        <span class="close-modal" id="closeModal">&times;</span>
+        <img class="modal-content" id="modalImg">
+    </div>
+
+    <!-- Matter.js Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Scroll Reveal Animation
+            const revealElements = document.querySelectorAll('.reveal');
+
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, {
+                root: null,
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            });
+
+            revealElements.forEach(el => revealObserver.observe(el));
+
+            const logo = document.getElementById('logo');
+            let antigravityActive = false;
+            let clickTimeout;
+
+            logo.addEventListener('click', (e) => {
+                const logoLink = logo.closest('a');
+                e.preventDefault();
+                if (antigravityActive) return;
+
+                if (!clickTimeout) {
+                    clickTimeout = setTimeout(() => {
+                        window.location.href = logoLink.href;
+                    }, 300);
+                }
+            });
+
+            logo.addEventListener('dblclick', (e) => {
+                e.preventDefault();
+                if (clickTimeout) {
+                    clearTimeout(clickTimeout);
+                    clickTimeout = null;
+                }
+                if (antigravityActive) return;
+                antigravityActive = true;
+
+                window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+                setTimeout(initAntigravity, 50);
+            });
+
+            function initAntigravity() {
+                document.body.style.overflow = 'hidden';
+
+                const Engine = Matter.Engine,
+                    Render = Matter.Render,
+                    Runner = Matter.Runner,
+                    Bodies = Matter.Bodies,
+                    Composite = Matter.Composite,
+                    Mouse = Matter.Mouse,
+                    MouseConstraint = Matter.MouseConstraint;
+
+                const engine = Engine.create();
+                const world = engine.world;
+
+                const selectors = 'h1, h3, p, strong, .links a, img, audio, .back-link, .meta-data, .audio-container';
+                const elements = document.querySelectorAll(selectors);
+                const domBodies = [];
+
+                elements.forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.width < 5 || rect.height < 5 || document.defaultView.getComputedStyle(el).display === 'none') return;
+
+                    const css = window.getComputedStyle(el);
+                    const styles = {
+                        fontSize: css.fontSize,
+                        fontFamily: css.fontFamily,
+                        fontWeight: css.fontWeight,
+                        lineHeight: css.lineHeight,
+                        letterSpacing: css.letterSpacing,
+                        textTransform: css.textTransform,
+                        textAlign: css.textAlign,
+                        padding: css.padding,
+                        display: css.display,
+                        alignItems: css.alignItems,
+                        justifyContent: css.justifyContent
+                    };
+
+                    const x = rect.left + rect.width / 2;
+                    const y = rect.top + rect.height / 2;
+                    const body = Bodies.rectangle(x, y, rect.width, rect.height, {
+                        restitution: 0.6,
+                        friction: 0.1,
+                        density: 0.005
+                    });
+
+                    Composite.add(world, body);
+
+                    domBodies.push({
+                        body: body,
+                        element: el,
+                        width: rect.width,
+                        height: rect.height,
+                        savedStyles: styles
+                    });
+                });
+
+                const wrapper = document.getElementById('wrapper');
+                const nav = document.getElementById('navbar');
+                wrapper.style.display = 'none';
+                nav.style.display = 'none';
+
+                document.body.style.backgroundColor = '#000000';
+                document.body.style.backgroundImage = 'none';
+
+                domBodies.forEach(item => {
+                    const el = item.element;
+                    const style = item.savedStyles;
+
+                    document.body.appendChild(el);
+
+                    el.className = 'falling-element';
+                    if (el.classList.contains('audio-container')) {
+                        el.classList.add('falling-border');
+                    }
+
+                    el.style.width = item.width + 'px';
+                    el.style.height = item.height + 'px';
+                    el.style.fontSize = style.fontSize;
+                    el.style.fontFamily = style.fontFamily;
+                    el.style.fontWeight = style.fontWeight;
+                    el.style.lineHeight = style.lineHeight;
+                    el.style.letterSpacing = style.letterSpacing;
+                    el.style.textTransform = style.textTransform;
+                    el.style.textAlign = style.textAlign;
+                    el.style.padding = style.padding;
+
+                    if (style.display === 'flex' || style.display === 'block') {
+                        el.style.display = style.display;
+                        el.style.alignItems = style.alignItems;
+                        el.style.justifyContent = style.justifyContent;
+                    }
+
+                    const x = item.body.position.x - item.width / 2;
+                    const y = item.body.position.y - item.height / 2;
+                    el.style.transform = `translate(${x}px, ${y}px) rotate(0rad)`;
+                });
+
+                const wallOpts = { isStatic: true };
+                const tb = 100;
+                const w = window.innerWidth;
+                const h = window.innerHeight;
+
+                Composite.add(world, [
+                    Bodies.rectangle(w / 2, h + tb / 2, w * 2, tb, wallOpts),
+                    Bodies.rectangle(w / 2, -tb / 2 - 2000, w * 2, tb, wallOpts),
+                    Bodies.rectangle(-tb / 2, h / 2, tb, h * 3, wallOpts),
+                    Bodies.rectangle(w + tb / 2, h / 2, tb, h * 3, wallOpts)
+                ]);
+
+                Matter.Events.on(engine, 'afterUpdate', () => {
+                    domBodies.forEach(item => {
+                        const x = item.body.position.x - item.width / 2;
+                        const y = item.body.position.y - item.height / 2;
+                        item.element.style.transform = `translate(${x}px, ${y}px) rotate(${item.body.angle}rad)`;
+                    });
+                });
+
+                const mouse = Mouse.create(document.body);
+                const mouseConstraint = MouseConstraint.create(engine, {
+                    mouse: mouse,
+                    constraint: { stiffness: 0.2, render: { visible: false } }
+                });
+
+                if (mouseConstraint.mouse.element) {
+                    mouseConstraint.mouse.element.removeEventListener('mousewheel', mouseConstraint.mouse.mousewheel);
+                    mouseConstraint.mouse.element.removeEventListener('DOMMouseScroll', mouseConstraint.mouse.mousewheel);
+                }
+
+                Composite.add(world, mouseConstraint);
+                Runner.run(Runner.create(), engine);
+            }
+
+            // Modal Logic for Gallery
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            const closeModal = document.getElementById('closeModal');
+            const galleryImages = document.querySelectorAll('.gallery img');
+
+            galleryImages.forEach(img => {
+                img.addEventListener('click', function () {
+                    // Prevent opening modal if antigravity is running
+                    if (antigravityActive) return;
+
+                    modal.style.display = 'flex';
+                    modalImg.src = this.src;
+                });
+            });
+
+            closeModal.addEventListener('click', function () {
+                modal.style.display = 'none';
+            });
+
+            modal.addEventListener('click', function (e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

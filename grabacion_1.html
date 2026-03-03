@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expediente #042 - SER</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+
+    <style>
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            scroll-behavior: smooth;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 0.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background-color: var(--white);
+            border-bottom: 3px solid var(--black);
+        }
+
+        nav img {
+            height: 110px;
+            cursor: pointer;
+            filter: grayscale(100%);
+            transition: transform 0.3s;
+        }
+
+        nav img:hover {
+            transform: scale(1.1);
+        }
+
+        nav .links a {
+            color: var(--black);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        nav .links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--black);
+            transition: width 0.3s ease;
+        }
+
+        nav .links a:hover::after {
+            width: 100%;
+        }
+
+        section {
+            padding: 12rem 2rem 4rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            align-self: flex-start;
+            margin-bottom: 2rem;
+            color: var(--black);
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--black);
+            padding-bottom: 2px;
+        }
+
+        .back-link:hover {
+            background-color: var(--black);
+            color: var(--white);
+        }
+
+        h1 {
+            font-family: 'Anton', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            align-self: flex-start;
+            width: 100%;
+        }
+
+        .meta-data {
+            align-self: flex-start;
+            margin-bottom: 3rem;
+            font-size: 0.9rem;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-left: 3px solid var(--black);
+            padding-left: 1rem;
+        }
+
+        .audio-container {
+            width: 100%;
+            padding: 2rem;
+            border: 3px solid var(--black);
+            margin-bottom: 3rem;
+            background-color: #f9f9f9;
+        }
+
+        audio {
+            width: 100%;
+            height: 50px;
+            filter: grayscale(100%) contrast(150%);
+        }
+
+        .transcription {
+            width: 100%;
+            text-align: left;
+        }
+
+        .transcription h3 {
+            font-family: 'Anton', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--black);
+            padding-bottom: 0.5rem;
+        }
+
+        .transcription p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            padding-left: 1rem;
+            border-left: 2px solid #ccc;
+            color: var(--black);
+        }
+
+        .transcription p strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--black);
+        }
+
+        /* Gallery Styles */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+            margin-top: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: auto;
+            border: 3px solid var(--black);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border: 3px solid var(--white);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: var(--white);
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: #ccc;
+        }
+
+        .gallery-title {
+            font-family: 'Anton', sans-serif;
+            font-size: 2rem;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            align-self: flex-start;
+            border-bottom: 3px solid var(--black);
+            width: 100%;
+            padding-bottom: 0.5rem;
+            color: var(--black);
+        }
+
+        /* Antigravity hidden classes */
+        .falling-element {
+            position: fixed !important;
+            margin: 0 !important;
+            z-index: 9999 !important;
+            box-sizing: border-box !important;
+            transform-origin: center center;
+            will-change: transform;
+            color: var(--white) !important;
+            background-color: transparent !important;
+            mix-blend-mode: difference !important;
+        }
+
+        .falling-border {
+            border: 3px solid var(--white) !important;
+            outline: none !important;
+        }
+
+        /* Scroll Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Prevent Matter.js breaking due to opacity 0 elements */
+        .falling-element.reveal {
+            opacity: 1 !important;
+            transform: none !important;
+            transition: none !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav id="navbar">
+        <a href="index.html" title="Volver al inicio"><img src="assets/logo.jpg" alt="SER Logo" id="logo"></a>
+        <div class="links">
+            <a href="testimonios.html">Testimonios</a>
+            <a href="index.html#sobre-nosotros">Sobre nosotros</a>
+            <a href="index.html#contacto">Contacto</a>
+        </div>
+    </nav>
+
+    <div id="wrapper">
+        <section>
+            <a href="testimonios.html" class="back-link reveal">
+                &lt; Volver a los archivos</a>
+
+            <h1 class="reveal">Caso Norberto Condrac</h1>
+
+            <div class="meta-data reveal">
+                Entrevistado: Dana &nbsp;|&nbsp; Entrevistador: S.E.R.<br>
+                Fecha de entrevista: 29 de Diciembre del 2022<br>
+                Clasificación: Testimonio directo — Avistamientos múltiples
+            </div>
+
+            <div class="audio-container reveal"
+                style="padding: 0; background: var(--white); border: 3px solid var(--black); overflow: hidden; border-radius: 0;">
+                <video controls style="width:100%; display:block; background: var(--white);">
+                    <source src="assets/Casos/Caso%20Condrac/entrevistaDana.mp4" type="video/mp4">
+                    Tu navegador no soporta la reproducción de video.
+                </video>
+            </div>
+
+            <div class="transcription">
+                <h3>[ TRANSCRIPCIÓN OFICIAL ]</h3>
+
+                <p><strong>DANA:</strong> El Titino Panigatti, chico, un día pensó que tenía un infarto, tenía gases,
+                    que le dolía hasta el pecho. El pensó que se moría y lo contó, contó lo mismo que mi papá nos
+                    contaba.</p>
+
+                <p><strong>S.E.R.:</strong> ¿Que volviendo de Roca tienes la teoría del Titino?</p>
+
+                <p><strong>DANA:</strong> No, no, no, empecemos de hacer. Porque dijo que la hija es la de Panigatti.
+                </p>
+
+                <p><strong>S.E.R.:</strong> Sí, que es la chica que da talleres de borrado.</p>
+
+                <p><strong>DANA:</strong> La mujer, son divinos. Yo no sé si ella te querrá contar.</p>
+
+                <p><strong>S.E.R.:</strong> Le vamos a preguntar.</p>
+
+                <p><strong>DANA:</strong> Hasta que ellas no te digan. El Titino contó lo mismo que mi papá. Exactamente
+                    lo mismo: cómo le aparecían los ruidos que le aparecían antes de verlo, lo que veía, todo.</p>
+
+                <p><strong>S.E.R.:</strong> Bueno, empecemos desde el principio.</p>
+
+                <p><strong>DANA:</strong> Mi papá lo vio dos veces. Y acá debe decir, yo no me acuerdo... 8 del 2 del
+                    5... 5 del 4 del 5... Acá dibujó todo, todo. 8 del 2, del 2005 o del 95, no sé qué decirte.</p>
+
+                <p><strong>S.E.R.:</strong> Hay que leer bien después los dibujos.</p>
+
+                <p><strong>DANA:</strong> Él contó: la primera vez se le aparece, volvía de Lehmann. Y venía por la
+                    avenida del autódromo.</p>
+
+                <p><strong>S.E.R.:</strong> ¿Viste donde está la tribuna? Que están todos los eucaliptos.</p>
+
+                <p><strong>DANA:</strong> Ah, bueno, mira. Dice que él venía, sintió... Es como que siempre fue muy...
+                </p>
+
+                <p><strong>S.E.R.:</strong> Perceptivo.</p>
+
+                <p><strong>DANA:</strong> Sí, perceptivo. Yo conocí a papá cuando se enfermó. Porque mi papá era un
+                    loco, famoso por lo loco. Cuando él se enfermó, es como que empezó. Era otra persona, empezó a
+                    contar. Me hablaba del timo.</p>
+
+                <p><strong>S.E.R.:</strong> Dice, pero este hombre ¿cómo puede saber de la energía del...?</p>
+
+                <p><strong>DANA:</strong> Un capo. Un capo, él se autocuraba todo el tiempo.</p>
+
+                <p><strong>S.E.R.:</strong> ¿Y recién de esto empezaste a conectar con él? ¿Con estos temas, recién
+                    cuando se enfermó?</p>
+
+                <p><strong>DANA:</strong> Eso toda la vida, no, todo el tiempo, eso fuimos siempre muy compañeros. Él me
+                    contaba de los extraterrestres, pero imagínate... Los últimos cuatro años de vida con él, él
+                    enfermo. Era, todos los días me hablaba de los extraterrestres.</p>
+
+                <p><strong>S.E.R.:</strong> ¿Y él hizo un cambio de personalidad cuando se enfermó?</p>
+
+                <p><strong>DANA:</strong> No, pero desde el avistamiento del tubo... Sí, él dice que a él... como que le
+                    hizo, los vio. Para que te cuente esta vez que los vio. Acá cuenta todo cómo los vio. Cómo fue la
+                    proyección, vio la nave. Vio las patas que bajaban. Y él siempre decía que los veía en el horizonte.
+                </p>
+
+                <p><strong>S.E.R.:</strong> O sea que no fue la primera vez.</p>
+
+                <p><strong>DANA:</strong> No, él los vio un montón de veces. Y encontraba marcas en los campos. Y
+                    nuestro campo, por ejemplo, yo te digo algo. Estamos en plena sequía. Yo te muestro una foto de mi
+                    campo. Mi campo está verde. Estamos viendo el mismo campo, este que está dibujado acá. Donde él
+                    sostenía que paraban. Porque él dice que buscan el agua. Que él sostiene que ellos... La
+                    comunicación de ellos... Yo te digo lo que él me decía. Yo nunca vi nada. Es por el agua. Entonces
+                    buscan lugares donde hay agua. Que esa es la mejor conexión de ellos. Porque él dice que tienen
+                    turbinas. Como mucho fuego, que todo es con energía. Como una energía de fuego. Que los transporta.
+                    Y dice que, por ejemplo, los movimientos son así. Como para arriba y así. No es que vienen así, como
+                    un avión. Que por eso él le decía que no eran aviones. ¿Entendés? Era todo muy...</p>
+
+                <p><strong>S.E.R.:</strong> Sí, eran otros movimientos.</p>
+
+                <p><strong>DANA:</strong> Sí, aparte, él siempre estudió mucho de física. Él quería ser físico y mi
+                    abuelo no lo dejó ir a estudiar física.</p>
+
+                <p><strong>S.E.R.:</strong> Dejaban marcas en los campos, quedaban marcas...</p>
+
+                <p><strong>DANA:</strong> Sí, marcas redondas. Quedaron esos marcos y después ya con el tiempo se
+                    fueron... No, él vio en Susana, en Lehmann. Acá en Ascochinga. Y en Corrientes, en Goya. Son todos
+                    campos espectaculares. Y donde más los veía él, él decía que era en Goya. Por eso compró el campo.
+                    Él decía como que después lo buscaban. Como que iban, cuando él dormía. Dice que le aparecían ruidos
+                    que le hacían así, así cerca, que él escuchaba eso. Y como que sentía que se conectaban con él. No
+                    que los tocaban ni nada. Pero él decía como una conexión.</p>
+
+                <p><strong>S.E.R.:</strong> A ver, de este dibujo, ¿tenés un relato?</p>
+
+                <p><strong>DANA:</strong> Sí, él dice que venía en auto. Yo te digo lo que me acuerdo. Dice que sintió
+                    como que el tiempo se detuvo. Como que la atmósfera se ponía. No densa, pero distinta, como
+                    luminosa. Por eso él siempre miraba, decía que era para el lado del sol. Donde hacían los
+                    movimientos o desaparecían. Y dice que los vio, pasó la nave esta que él dibujó.</p>
+
+                <p><strong>S.E.R.:</strong> Hay que leer el dibujo. Energía Blanca, ¿ves?</p>
+
+                <p><strong>DANA:</strong> Él decía que veía eso, chispeante. Está todo, después te voy a sacar una
+                    fotocopia. Él va diciendo todas las cosas que iba sintiendo.</p>
+
+                <p><strong>S.E.R.:</strong> ¿No ves color blanco? ¿No ves que dice una explosión? Tamaño visual Fokker.
+                </p>
+
+                <p><strong>DANA:</strong> Fokker era un avión. Así que el tamaño de... Claro, lo comparó con ese avión.
+                    Sí, porque él dice que nunca había visto una cosa así. Y después lo volvió a ver en Susana. En un
+                    campo que tenemos acá en Susana. Pero dice que siempre cerca de árboles.</p>
+
+                <p><strong>S.E.R.:</strong> Sí, y agua.</p>
+
+                <p><strong>DANA:</strong> Y agua. Es como que él sostiene que es por la naturaleza. Acá hay un
+                    estanquecito de agua en esta zona. Pero no, yo te hablo de agua importante en Goya. Que él caminando
+                    encontraba las marcas. Y vos sabés que las hacía marcar, las pintaba. Y eran las cuatro patas de las
+                    naves que él dibujaba.</p>
+
+                <p><strong>S.E.R.:</strong> ¿Ah, eran cuatro las marcas?</p>
+
+                <p><strong>DANA:</strong> Sí.</p>
+
+                <p><strong>S.E.R.:</strong> ¿Y formaban...?</p>
+
+                <p><strong>DANA:</strong> Círculos. Eran todos círculos.</p>
+
+                <p><strong>S.E.R.:</strong> ¿Y qué forma tenían? ¿Hacían algún dibujo?</p>
+
+                <p><strong>DANA:</strong> No, eran cuatro círculos. Él los marcaba.</p>
+
+                <p><strong>S.E.R.:</strong> Sí, sí, sí, tanto detalle.</p>
+
+                <p><strong>DANA:</strong> No, yo te digo lo que él me contaba.</p>
+
+                <p><strong>S.E.R.:</strong> ¿Qué más te contó?</p>
+
+                <p><strong>DANA:</strong> Bueno, que se le aparecían a la noche. Como que le daban mensajes. Pero él no
+                    sabía entenderlos. Vas a ver, mi papá era muy avanzado. Yo siempre digo, capaz que era tan... Viste
+                    cuando sos tan... Mi papá siempre fue avanzado. Sí, yo para ahí no quiero decirlo que me parezco
+                    agrandada. Pero él era un tipo que era muy avanzado. Muy visionario. Y muy solitario.</p>
+
+                <p><strong>S.E.R.:</strong> ¿Y tuvo alguna otra experiencia? ¿Las que vos te acordés?</p>
+
+                <p><strong>DANA:</strong> Cuando los vio. Y después decía que se le aparecían. En su casa.</p>
+
+                <p><strong>S.E.R.:</strong> ¿Vio alguna vez a un ser?</p>
+
+                <p><strong>DANA:</strong> No, siempre los escuchaba. Él escuchaba. Dice que le avisaban haciendo este
+                    sonido...</p>
+            </div>
+
+            <h3 class="gallery-title reveal">Evidencia Fotográfica</h3>
+            <div class="gallery reveal">
+                <img src="assets/Casos/Caso%20Condrac/Fotos/IMG_20221229_151222814.jpg" alt="Evidencia 1"
+                    class="reveal">
+                <img src="assets/Casos/Caso%20Condrac/Fotos/IMG_20221229_151227772.jpg" alt="Evidencia 2"
+                    class="reveal">
+                <img src="assets/Casos/Caso%20Condrac/Fotos/IMG_20221229_160504694.jpg" alt="Evidencia 3"
+                    class="reveal">
+                <img src="assets/Casos/Caso%20Condrac/Fotos/IMG_20221229_160537461.jpg" alt="Evidencia 4"
+                    class="reveal">
+                <img src="assets/Casos/Caso%20Condrac/Fotos/IMG_20221229_160551018.jpg" alt="Evidencia 5"
+                    class="reveal">
+                <img src="assets/Casos/Caso%20Condrac/Fotos/IMG_20221229_160635224.jpg" alt="Evidencia 6"
+                    class="reveal">
+                <img src="assets/Casos/Caso%20Condrac/Fotos/IMG_20221229_160907152.jpg" alt="Evidencia 7"
+                    class="reveal">
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal para fotos -->
+    <div id="imageModal" class="modal">
+        <span class="close-modal" id="closeModal">&times;</span>
+        <img class="modal-content" id="modalImg">
+    </div>
+
+    <!-- Matter.js Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Scroll Reveal Animation
+            const revealElements = document.querySelectorAll('.reveal');
+
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, {
+                root: null,
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            });
+
+            revealElements.forEach(el => revealObserver.observe(el));
+
+            const logo = document.getElementById('logo');
+            let antigravityActive = false;
+            let clickTimeout;
+
+            logo.addEventListener('click', (e) => {
+                const logoLink = logo.closest('a');
+                e.preventDefault();
+                if (antigravityActive) return;
+
+                if (!clickTimeout) {
+                    clickTimeout = setTimeout(() => {
+                        window.location.href = logoLink.href;
+                    }, 300);
+                }
+            });
+
+            logo.addEventListener('dblclick', (e) => {
+                e.preventDefault();
+                if (clickTimeout) {
+                    clearTimeout(clickTimeout);
+                    clickTimeout = null;
+                }
+                if (antigravityActive) return;
+                antigravityActive = true;
+
+                window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+                setTimeout(initAntigravity, 50);
+            });
+
+            function initAntigravity() {
+                document.body.style.overflow = 'hidden';
+
+                const Engine = Matter.Engine,
+                    Render = Matter.Render,
+                    Runner = Matter.Runner,
+                    Bodies = Matter.Bodies,
+                    Composite = Matter.Composite,
+                    Mouse = Matter.Mouse,
+                    MouseConstraint = Matter.MouseConstraint;
+
+                const engine = Engine.create();
+                const world = engine.world;
+
+                const selectors = 'h1, h3, p, strong, .links a, img, audio, .back-link, .meta-data, .audio-container';
+                const elements = document.querySelectorAll(selectors);
+                const domBodies = [];
+
+                elements.forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.width < 5 || rect.height < 5 || document.defaultView.getComputedStyle(el).display === 'none') return;
+
+                    const css = window.getComputedStyle(el);
+                    const styles = {
+                        fontSize: css.fontSize,
+                        fontFamily: css.fontFamily,
+                        fontWeight: css.fontWeight,
+                        lineHeight: css.lineHeight,
+                        letterSpacing: css.letterSpacing,
+                        textTransform: css.textTransform,
+                        textAlign: css.textAlign,
+                        padding: css.padding,
+                        display: css.display,
+                        alignItems: css.alignItems,
+                        justifyContent: css.justifyContent
+                    };
+
+                    const x = rect.left + rect.width / 2;
+                    const y = rect.top + rect.height / 2;
+                    const body = Bodies.rectangle(x, y, rect.width, rect.height, {
+                        restitution: 0.6,
+                        friction: 0.1,
+                        density: 0.005
+                    });
+
+                    Composite.add(world, body);
+
+                    domBodies.push({
+                        body: body,
+                        element: el,
+                        width: rect.width,
+                        height: rect.height,
+                        savedStyles: styles
+                    });
+                });
+
+                const wrapper = document.getElementById('wrapper');
+                const nav = document.getElementById('navbar');
+                wrapper.style.display = 'none';
+                nav.style.display = 'none';
+
+                document.body.style.backgroundColor = '#000000';
+                document.body.style.backgroundImage = 'none';
+
+                domBodies.forEach(item => {
+                    const el = item.element;
+                    const style = item.savedStyles;
+
+                    document.body.appendChild(el);
+
+                    el.className = 'falling-element';
+                    if (el.classList.contains('audio-container')) {
+                        el.classList.add('falling-border');
+                    }
+
+                    el.style.width = item.width + 'px';
+                    el.style.height = item.height + 'px';
+                    el.style.fontSize = style.fontSize;
+                    el.style.fontFamily = style.fontFamily;
+                    el.style.fontWeight = style.fontWeight;
+                    el.style.lineHeight = style.lineHeight;
+                    el.style.letterSpacing = style.letterSpacing;
+                    el.style.textTransform = style.textTransform;
+                    el.style.textAlign = style.textAlign;
+                    el.style.padding = style.padding;
+
+                    if (style.display === 'flex' || style.display === 'block') {
+                        el.style.display = style.display;
+                        el.style.alignItems = style.alignItems;
+                        el.style.justifyContent = style.justifyContent;
+                    }
+
+                    const x = item.body.position.x - item.width / 2;
+                    const y = item.body.position.y - item.height / 2;
+                    el.style.transform = `translate(${x}px, ${y}px) rotate(0rad)`;
+                });
+
+                const wallOpts = { isStatic: true };
+                const tb = 100;
+                const w = window.innerWidth;
+                const h = window.innerHeight;
+
+                Composite.add(world, [
+                    Bodies.rectangle(w / 2, h + tb / 2, w * 2, tb, wallOpts),
+                    Bodies.rectangle(w / 2, -tb / 2 - 2000, w * 2, tb, wallOpts),
+                    Bodies.rectangle(-tb / 2, h / 2, tb, h * 3, wallOpts),
+                    Bodies.rectangle(w + tb / 2, h / 2, tb, h * 3, wallOpts)
+                ]);
+
+                Matter.Events.on(engine, 'afterUpdate', () => {
+                    domBodies.forEach(item => {
+                        const x = item.body.position.x - item.width / 2;
+                        const y = item.body.position.y - item.height / 2;
+                        item.element.style.transform = `translate(${x}px, ${y}px) rotate(${item.body.angle}rad)`;
+                    });
+                });
+
+                const mouse = Mouse.create(document.body);
+                const mouseConstraint = MouseConstraint.create(engine, {
+                    mouse: mouse,
+                    constraint: { stiffness: 0.2, render: { visible: false } }
+                });
+
+                if (mouseConstraint.mouse.element) {
+                    mouseConstraint.mouse.element.removeEventListener('mousewheel', mouseConstraint.mouse.mousewheel);
+                    mouseConstraint.mouse.element.removeEventListener('DOMMouseScroll', mouseConstraint.mouse.mousewheel);
+                }
+
+                Composite.add(world, mouseConstraint);
+                Runner.run(Runner.create(), engine);
+            }
+
+            // Modal Logic for Gallery
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            const closeModal = document.getElementById('closeModal');
+            const galleryImages = document.querySelectorAll('.gallery img');
+
+            galleryImages.forEach(img => {
+                img.addEventListener('click', function () {
+                    // Prevent opening modal if antigravity is running
+                    if (antigravityActive) return;
+
+                    modal.style.display = 'flex';
+                    modalImg.src = this.src;
+                });
+            });
+
+            closeModal.addEventListener('click', function () {
+                modal.style.display = 'none';
+            });
+
+            modal.addEventListener('click', function (e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
