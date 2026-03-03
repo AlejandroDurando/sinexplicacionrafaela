@@ -415,33 +415,87 @@
             animation: ufoFly 4s ease-in-out forwards;
         }
 
+        /* Hamburger Menu Icon */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 200;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--black);
+            transition: all 0.3s ease;
+        }
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
             nav {
-                flex-direction: column;
-                padding: 1rem;
-                gap: 1rem;
+                flex-direction: row;
+                padding: 0.5rem 1rem;
+                justify-content: space-between;
+                align-items: center;
             }
 
             nav img {
-                height: 75px;
+                height: 60px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .menu-toggle.active span:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.active span:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
             }
 
             nav .links {
                 display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 1rem;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
                 width: 100%;
+                background-color: var(--white);
+                padding: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-in-out;
+                border-bottom: 0px solid var(--black);
+            }
+
+            nav .links.active {
+                max-height: 300px;
+                padding: 1.5rem 0;
+                border-bottom: 3px solid var(--black);
             }
 
             nav .links a {
-                margin-left: 0;
-                font-size: 0.95rem;
+                margin: 0;
+                padding: 1rem 0;
+                text-align: center;
+                font-size: 1.2rem;
+                width: 100%;
+            }
+
+            nav .links a::after {
+                display: none;
             }
 
             .hero {
-                margin-top: 155px;
+                margin-top: 76px;
             }
 
             section {
@@ -478,7 +532,14 @@
     <nav id="navbar">
         <span id="ufo">🛸</span>
         <img src="assets/logo_1png.png" alt="SER Logo" id="logo" title="No tocar.">
-        <div class="links">
+
+        <div class="menu-toggle" id="mobile-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <div class="links" id="nav-links">
             <a href="testimonios.html">Testimonios</a>
             <a href="#sobre-nosotros">Sobre nosotros</a>
             <a href="#contacto">Contacto</a>
@@ -487,7 +548,7 @@
 
     <div id="wrapper">
         <header class="hero" id="hero">
-            <video autoplay loop muted playsinline disablePictureInPicture>
+            <video autoplay muted playsinline disablePictureInPicture>
                 <source src="assets/Inicio.mp4" type="video/mp4">
             </video>
         </header>
@@ -572,6 +633,24 @@
             const logo = document.getElementById('logo');
             let antigravityActive = false;
             let clickTimeout;
+
+            // Hamburger menu functionality
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navLinks = document.getElementById('nav-links');
+            const links = navLinks.querySelectorAll('a');
+
+            mobileMenu.addEventListener('click', () => {
+                mobileMenu.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+
+            // Close when clicking a link
+            links.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    navLinks.classList.remove('active');
+                });
+            });
 
             logo.addEventListener('click', (e) => {
                 const logoLink = logo.closest('a');
