@@ -601,10 +601,23 @@
             const heroVideo = document.getElementById('hero-video');
             if (heroVideo) {
                 heroVideo.loop = false;
-                // Simple attempt to play in case autoplay attribute was blocked
-                setTimeout(() => {
-                    heroVideo.play().catch(e => console.log('Autoplay prevented by browser:', e));
-                }, 100);
+                heroVideo.muted = true;
+                heroVideo.defaultMuted = true;
+
+                const playPromise = heroVideo.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(e => {
+                        console.log('Autoplay prevented by browser. Waiting for interaction...');
+                        // Fallback: play on first interaction (required by iOS low power mode or strict policies)
+                        const startPlay = () => {
+                            heroVideo.play();
+                            document.removeEventListener('touchstart', startPlay);
+                            document.removeEventListener('click', startPlay);
+                        };
+                        document.addEventListener('touchstart', startPlay, { once: true });
+                        document.addEventListener('click', startPlay, { once: true });
+                    });
+                }
             }
 
             // Scroll Reveal Animation
