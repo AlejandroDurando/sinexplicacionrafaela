@@ -414,6 +414,62 @@
         #ufo.flying {
             animation: ufoFly 4s ease-in-out forwards;
         }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            nav img {
+                height: 75px;
+            }
+
+            nav .links {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+                width: 100%;
+            }
+
+            nav .links a {
+                margin-left: 0;
+                font-size: 0.95rem;
+            }
+
+            .hero {
+                margin-top: 155px;
+            }
+
+            section {
+                padding: 5rem 1.5rem;
+            }
+
+            h2 {
+                font-size: 3rem;
+            }
+
+            p {
+                font-size: 1.1rem;
+            }
+
+            #sobre-nosotros {
+                background-attachment: fixed;
+                background-position: center;
+            }
+
+            #ufo {
+                font-size: 2rem;
+            }
+
+            .footer-social a {
+                font-size: 0.9rem;
+                padding: 0.5rem 1rem;
+            }
+        }
     </style>
 </head>
 

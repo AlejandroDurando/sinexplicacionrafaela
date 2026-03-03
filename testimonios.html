@@ -187,6 +187,60 @@
             border: 3px solid var(--white) !important;
             outline: none !important;
         }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            nav img {
+                height: 75px;
+            }
+
+            nav .links {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+                width: 100%;
+            }
+
+            nav .links a {
+                margin-left: 0;
+                font-size: 0.95rem;
+            }
+
+            section {
+                padding: 12rem 1.5rem 4rem;
+            }
+
+            h1 {
+                font-size: 3.5rem;
+                margin-bottom: 2rem;
+            }
+
+            p.subtitle {
+                font-size: 1rem;
+                margin-bottom: 3rem;
+            }
+
+            .testimonio-link {
+                padding: 1.5rem;
+                padding-right: 3rem;
+            }
+
+            .testimonio-link::after {
+                right: 1.2rem;
+                font-size: 1.2rem;
+            }
+
+            .testimonio-link span {
+                font-size: 1.1rem;
+            }
+        }
     </style>
 </head>
 
