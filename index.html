@@ -549,7 +549,7 @@
 
     <div id="wrapper">
         <header class="hero" id="hero">
-            <video autoplay muted playsinline disablePictureInPicture>
+            <video id="hero-video" autoplay muted playsinline disablePictureInPicture>
                 <source src="assets/Inicio.mp4" type="video/mp4">
             </video>
         </header>
@@ -597,6 +597,16 @@
     <!-- Scripts -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Ensure video plays automatically and doesn't loop
+            const heroVideo = document.getElementById('hero-video');
+            if (heroVideo) {
+                heroVideo.loop = false;
+                // Simple attempt to play in case autoplay attribute was blocked
+                setTimeout(() => {
+                    heroVideo.play().catch(e => console.log('Autoplay prevented by browser:', e));
+                }, 100);
+            }
+
             // Scroll Reveal Animation
             const revealElements = document.querySelectorAll('.reveal');
 
