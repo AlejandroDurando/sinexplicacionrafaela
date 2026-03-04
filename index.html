@@ -241,7 +241,7 @@
             max-width: 800px;
             height: auto;
             opacity: 0;
-            animation: fadeInSmooth 1.5s ease-in-out 1s forwards;
+            animation: fadeInSmooth 1.5s ease-in-out 3s forwards;
             margin-bottom: 2rem;
             filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.8));
         }
@@ -257,24 +257,23 @@
         }
 
         .typewriter-part {
-            height: auto;
+            height: clamp(20px, 4vw, 50px);
+            width: auto;
+            object-fit: contain;
             filter: drop-shadow(0px 3px 5px rgba(0, 0, 0, 0.8));
         }
 
-        /* Responsive sizing for the subtitle parts */
+        /* Set animation timings 1 second after the main title starts appearing (3s + 1s = 4s) */
         .part-1 {
-            width: 18%;
-            animation: typeWriterReveal 0.6s steps(10) 2.5s both;
+            animation: typeWriterReveal 0.6s steps(15) 4.0s both;
         }
 
         .part-2 {
-            width: 50%;
-            animation: typeWriterReveal 1.2s steps(20) 3.1s both;
+            animation: typeWriterReveal 0.8s steps(15) 4.7s both;
         }
 
         .part-3 {
-            width: 29%;
-            animation: typeWriterReveal 0.8s steps(15) 4.3s both;
+            animation: typeWriterReveal 0.8s steps(15) 5.6s both;
         }
 
         @keyframes fadeInSmooth {
