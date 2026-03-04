@@ -249,31 +249,33 @@
         .hero-subtitle {
             display: flex;
             flex-direction: row;
-            flex-wrap: nowrap;
+            flex-wrap: wrap;
             align-items: center;
             justify-content: center;
-            gap: 1.5%;
+            gap: 1.2vw;
             width: 100%;
         }
 
         .typewriter-part {
-            height: clamp(20px, 4vw, 50px);
+            height: clamp(16px, 3.5vw, 45px);
+            /* Slightly smaller so it fits nicely on 1 line */
             width: auto;
             object-fit: contain;
+            flex-shrink: 0;
             filter: drop-shadow(0px 3px 5px rgba(0, 0, 0, 0.8));
         }
 
         /* Set animation timings 1 second after the main title starts appearing (3s + 1s = 4s) */
         .part-1 {
-            animation: typeWriterReveal 0.6s steps(15) 4.0s both;
+            animation: typeWriterReveal 0.6s linear 4.0s both;
         }
 
         .part-2 {
-            animation: typeWriterReveal 0.8s steps(15) 4.7s both;
+            animation: typeWriterReveal 0.8s linear 4.6s both;
         }
 
         .part-3 {
-            animation: typeWriterReveal 0.8s steps(15) 5.6s both;
+            animation: typeWriterReveal 0.8s linear 5.4s both;
         }
 
         @keyframes fadeInSmooth {
