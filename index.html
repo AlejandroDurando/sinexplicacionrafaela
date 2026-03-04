@@ -67,11 +67,17 @@
         }
 
         .preloader-person {
-            font-size: 2.5rem;
             position: absolute;
             bottom: 20px;
             z-index: 3;
             animation: abductPerson 4s infinite ease-in-out forwards;
+        }
+
+        .preloader-person img {
+            height: 60px;
+            /* Adjust size of uploaded image */
+            width: auto;
+            filter: drop-shadow(0 0 5px rgba(150, 255, 150, 0.5));
         }
 
         .preloader-text {
@@ -663,7 +669,9 @@
         <div class="abduction-scene">
             <div class="preloader-ufo">🛸</div>
             <div class="preloader-beam"></div>
-            <div class="preloader-person">🧍‍♂️</div>
+            <div class="preloader-person">
+                <img src="assets/barra_carga.png" alt="Abducción">
+            </div>
         </div>
         <div class="preloader-text">Cargando Evidencias...</div>
     </div>
