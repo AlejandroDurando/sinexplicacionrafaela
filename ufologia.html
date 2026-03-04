@@ -680,6 +680,10 @@
                 font-size: 3rem;
             }
 
+            .responsive-title {
+                font-size: 2rem !important;
+            }
+
             p {
                 font-size: 1.1rem;
             }
@@ -705,7 +709,7 @@
 
 <body>
 
-<nav id="navbar">
+    <nav id="navbar">
         <span id="ufo">🛸</span>
         <img src="assets/logo_1png.png" alt="SER Logo" id="logo" title="No tocar.">
 
@@ -723,30 +727,47 @@
     </nav>
 
     <div id="wrapper">
-        
 
 
 
-        <section style="margin-top: 76px; min-height: 100vh; background-color: var(--white); color: var(--black); align-items: flex-start; text-align: left; max-width: 900px; margin-left: auto; margin-right: auto;" id="ufologia" class="reveal">
-            <a href="index.html" class="back-link reveal" style="align-self: flex-start; margin-bottom: 2rem; color: var(--black); text-decoration: none; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid var(--black); padding-bottom: 2px;">
+
+        <section
+            style="margin-top: 76px; min-height: 100vh; background-color: var(--white); color: var(--black); align-items: flex-start; text-align: left; max-width: 900px; margin-left: auto; margin-right: auto;"
+            id="ufologia" class="reveal">
+            <a href="index.html" class="back-link reveal"
+                style="align-self: flex-start; margin-bottom: 2rem; color: var(--black); text-decoration: none; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid var(--black); padding-bottom: 2px;">
                 &lt; Volver al inicio</a>
 
-            <h2 style="align-self: flex-start; text-align: left; width: 100%;">¿Qué es la Ufología?</h2>
+            <h2 class="responsive-title" style="align-self: flex-start; text-align: left; width: 100%;">¿Qué es la
+                Ufología?</h2>
             <div class="transcription" style="width: 100%; text-align: left;">
-                <p style="max-width: none;">La ufología es el campo que estudia los OVNIs o fenómenos aéreos no identificados y los testimonios relacionados con posibles visitas o manifestaciones de origen extraterrestre. Se basa principalmente en la recopilación y análisis de reportes de testigos, fotografías, videos, registros de radar y evidencias físicas para intentar comprender estos fenómenos.</p>
-                
-                <h3 style="font-family: 'Anton', sans-serif; font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid var(--black); padding-bottom: 0.5rem;">Tipos de Encuentros</h3>
-                <p style="max-width: none;">Los encuentros con OVNIs suelen clasificarse por niveles según el grado de interacción:</p>
-                
-                <p style="max-width: none;"><strong>Encuentro del primer tipo:</strong> observación de un objeto o luz extraña en el cielo sin interacción ni efectos físicos.</p>
-                <p style="max-width: none;"><strong>Encuentro del segundo tipo:</strong> el objeto provoca efectos físicos en el entorno, como marcas en el suelo, interferencias eléctricas o efectos en animales.</p>
-                <p style="max-width: none;"><strong>Encuentro del tercer tipo:</strong> el testigo ve a los ocupantes o entidades asociadas al OVNI.</p>
-                <p style="max-width: none;"><strong>Encuentro del cuarto tipo:</strong> ocurre una abducción, donde una persona afirma haber sido llevada o examinada por seres extraterrestres.</p>
-                <p style="max-width: none;"><strong>Encuentro del quinto tipo:</strong> existe comunicación o interacción directa e intencional entre humanos y las supuestas entidades o inteligencias extraterrestres.</p>
+                <p style="max-width: none;">La ufología es el campo que estudia los OVNIs o fenómenos aéreos no
+                    identificados y los testimonios relacionados con posibles visitas o manifestaciones de origen
+                    extraterrestre. Se basa principalmente en la recopilación y análisis de reportes de testigos,
+                    fotografías, videos, registros de radar y evidencias físicas para intentar comprender estos
+                    fenómenos.</p>
+
+                <h3
+                    style="font-family: 'Anton', sans-serif; font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid var(--black); padding-bottom: 0.5rem;">
+                    Tipos de Encuentros</h3>
+                <p style="max-width: none;">Los encuentros con OVNIs suelen clasificarse por niveles según el grado de
+                    interacción:</p>
+
+                <p style="max-width: none;"><strong>Encuentro del primer tipo:</strong> observación de un objeto o luz
+                    extraña en el cielo sin interacción ni efectos físicos.</p>
+                <p style="max-width: none;"><strong>Encuentro del segundo tipo:</strong> el objeto provoca efectos
+                    físicos en el entorno, como marcas en el suelo, interferencias eléctricas o efectos en animales.</p>
+                <p style="max-width: none;"><strong>Encuentro del tercer tipo:</strong> el testigo ve a los ocupantes o
+                    entidades asociadas al OVNI.</p>
+                <p style="max-width: none;"><strong>Encuentro del cuarto tipo:</strong> ocurre una abducción, donde una
+                    persona afirma haber sido llevada o examinada por seres extraterrestres.</p>
+                <p style="max-width: none;"><strong>Encuentro del quinto tipo:</strong> existe comunicación o
+                    interacción directa e intencional entre humanos y las supuestas entidades o inteligencias
+                    extraterrestres.</p>
             </div>
         </section>
 
-        
+
     </div>
 
     <footer>
@@ -770,7 +791,7 @@
     <!-- Scripts -->
     <script>
 
-document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', () => {
 
             // Scroll Reveal Animation
             const revealElements = document.querySelectorAll('.reveal');
