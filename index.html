@@ -786,22 +786,14 @@
 
     <!-- Scripts -->
     <script>
-        // Preloader Logic using sessionStorage to run only once per session
+        // Preloader Logic
         window.addEventListener('load', () => {
             const preloader = document.getElementById('preloader');
-
-            if (sessionStorage.getItem('preloader_shown')) {
-                // Instantly hide it if already shown this session
-                preloader.style.display = 'none';
-            } else {
-                // Give it a tiny minimum duration on first load
-                setTimeout(() => {
-                    preloader.style.opacity = '0';
-                    preloader.style.visibility = 'hidden';
-                    sessionStorage.setItem('preloader_shown', 'true');
-                    setTimeout(() => preloader.style.display = 'none', 800); // Remove from DOM flow
-                }, 2500);
-            }
+            // Give it a tiny minimum duration so the animation can be appreciated
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                preloader.style.visibility = 'hidden';
+            }, 2500);
         });
 
         document.addEventListener('DOMContentLoaded', () => {
