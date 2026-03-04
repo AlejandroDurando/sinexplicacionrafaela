@@ -786,33 +786,25 @@
 
     <!-- Scripts -->
     <script>
-        // Preloader Logic
+        // Preloader Logic using sessionStorage to run only once per session
         window.addEventListener('load', () => {
             const preloader = document.getElementById('preloader');
-            // Give it a tiny minimum duration so the animation can be appreciated
-            setTimeout(() => {
-                preloader.style.opacity = '0';
-                preloader.style.visibility = 'hidden';
-            }, 2500);
+
+            if (sessionStorage.getItem('preloader_shown')) {
+                // Instantly hide it if already shown this session
+                preloader.style.display = 'none';
+            } else {
+                // Give it a tiny minimum duration on first load
+                setTimeout(() => {
+                    preloader.style.opacity = '0';
+                    preloader.style.visibility = 'hidden';
+                    sessionStorage.setItem('preloader_shown', 'true');
+                    setTimeout(() => preloader.style.display = 'none', 800); // Remove from DOM flow
+                }, 2500);
+            }
         });
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Ensure video plays automatically and doesn't loop
-            const heroVideo = document.getElementById('hero-video');
-            if (heroVideo) {
-                heroVideo.loop = false;
-                heroVideo.muted = true;
-                heroVideo.defaultMuted = true;
-                heroVideo.playsInline = true;
-
-                // Attempt to play immediately without waiting for interaction
-                const playPromise = heroVideo.play();
-                if (playPromise !== undefined) {
-                    playPromise.catch(e => {
-                        console.log('Autoplay temporarily prevented. The browser will resume it if allowed.');
-                    });
-                }
-            }
 
             // Scroll Reveal Animation
             const revealElements = document.querySelectorAll('.reveal');
