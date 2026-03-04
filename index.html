@@ -674,7 +674,10 @@
 
     <div id="wrapper">
         <header class="hero" id="hero">
-            <video id="hero-video" autoplay muted playsinline disablePictureInPicture>
+            <!-- Added loop="false" directly and ensured all mobile inline play attributes are present -->
+            <!-- Using an empty poster to prevent the default generic UI from flashing -->
+            <video id="hero-video" autoplay muted playsinline disablePictureInPicture
+                poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
                 <source src="assets/Inicio.mp4" type="video/mp4">
             </video>
         </header>
@@ -738,19 +741,13 @@
                 heroVideo.loop = false;
                 heroVideo.muted = true;
                 heroVideo.defaultMuted = true;
+                heroVideo.playsInline = true;
 
+                // Attempt to play immediately without waiting for interaction
                 const playPromise = heroVideo.play();
                 if (playPromise !== undefined) {
                     playPromise.catch(e => {
-                        console.log('Autoplay prevented by browser. Waiting for interaction...');
-                        // Fallback: play on first interaction (required by iOS low power mode or strict policies)
-                        const startPlay = () => {
-                            heroVideo.play();
-                            document.removeEventListener('touchstart', startPlay);
-                            document.removeEventListener('click', startPlay);
-                        };
-                        document.addEventListener('touchstart', startPlay, { once: true });
-                        document.addEventListener('click', startPlay, { once: true });
+                        console.log('Autoplay temporarily prevented. The browser will resume it if allowed.');
                     });
                 }
             }
