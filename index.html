@@ -211,41 +211,88 @@
             justify-content: center;
         }
 
-        .hero video {
-            position: relative;
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: auto;
-            display: block;
+            height: 100%;
+            object-fit: cover;
             z-index: 1;
+            opacity: 0.8;
+            /* Slightly darkened to let text pop */
         }
 
-        .hero-content {
+        .hero-text-container {
             position: relative;
             z-index: 2;
-            text-align: center;
-            padding: 0 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             width: 100%;
-            max-width: 1200px;
+            max-width: 1000px;
+            padding: 0 2rem;
+            margin-top: 5vh;
         }
 
-        .hero h1 {
-            font-family: 'Big Noodle Titling', 'Anton', sans-serif;
-            color: var(--white);
-            font-size: clamp(3rem, 7vw, 7rem);
-            line-height: 1.1;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        .hero-title {
+            width: 90%;
+            max-width: 800px;
+            height: auto;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeInDown 1.5s ease-out 0.5s forwards;
+            margin-bottom: 2rem;
+            filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.8));
+        }
+
+        .hero-subtitle {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 15px;
+            width: 100%;
         }
 
-        .hero h1 span {
-            display: block;
-            background: var(--black);
-            padding: 5px 20px;
-            white-space: nowrap;
+        .typewriter-part {
+            height: auto;
+            max-width: 90%;
+            opacity: 0;
+            filter: drop-shadow(0px 3px 5px rgba(0, 0, 0, 0.8));
+        }
+
+        /* Responsive sizing for the subtitle parts */
+        .part-1 {
+            width: 300px;
+            max-width: 50%;
+            animation: typeWriterReveal 0.1s forwards 2.5s;
+        }
+
+        .part-2 {
+            width: 600px;
+            max-width: 95%;
+            animation: typeWriterReveal 0.1s forwards 3.0s;
+        }
+
+        .part-3 {
+            width: 400px;
+            max-width: 70%;
+            animation: typeWriterReveal 0.1s forwards 3.7s;
+        }
+
+        @keyframes fadeInDown {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hard cut reveal to mimic a typewriter chunk appearing */
+        @keyframes typeWriterReveal {
+            to {
+                opacity: 1;
+            }
         }
 
         .hero h1 span:nth-child(2),
@@ -674,12 +721,15 @@
 
     <div id="wrapper">
         <header class="hero" id="hero">
-            <!-- Added loop="false" directly and ensured all mobile inline play attributes are present -->
-            <!-- Using an empty poster to prevent the default generic UI from flashing -->
-            <video id="hero-video" autoplay muted playsinline disablePictureInPicture
-                poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
-                <source src="assets/Inicio.mp4" type="video/mp4">
-            </video>
+            <img src="assets/fondo.jpg" alt="Fondo SER" class="hero-bg">
+            <div class="hero-text-container">
+                <img src="assets/texto1.png" alt="Sin Explicacion Rafaela" class="hero-title">
+                <div class="hero-subtitle">
+                    <img src="assets/texto2.1.png" alt="Centro" class="typewriter-part part-1">
+                    <img src="assets/texto2.2.png" alt="Testimonial de Fenomenos" class="typewriter-part part-2">
+                    <img src="assets/texto2.3.png" alt="Inexplicables" class="typewriter-part part-3">
+                </div>
+            </div>
         </header>
 
 
