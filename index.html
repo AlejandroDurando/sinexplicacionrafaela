@@ -234,6 +234,8 @@
             width: 100%;
             max-width: 1000px;
             padding: 0 2rem;
+            margin-bottom: 12vh;
+            /* Lift the entire text block higher up the screen */
         }
 
         .hero-title {
@@ -661,8 +663,13 @@
 
             .hero {
                 margin-top: 76px;
-                min-height: 60vh;
+                min-height: 55vh;
                 /* Reduced height on mobile to prevent excessive space */
+            }
+
+            .hero-bg {
+                /* Shifts the image downwards inside the container, hiding the top portion */
+                object-position: center 70%;
             }
 
             section {
