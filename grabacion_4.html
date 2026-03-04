@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expediente #156 - SER</title>
+    <title>Expediente #042 - SER</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -167,6 +167,7 @@
             margin-bottom: 1.5rem;
             padding-left: 1rem;
             border-left: 2px solid #ccc;
+            color: var(--black);
         }
 
         .transcription p strong {
@@ -175,7 +176,79 @@
             font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #333;
+            color: var(--black);
+        }
+
+        /* Gallery Styles */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+            margin-top: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: auto;
+            border: 3px solid var(--black);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border: 3px solid var(--white);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: var(--white);
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: #ccc;
+        }
+
+        .gallery-title {
+            font-family: 'Anton', sans-serif;
+            font-size: 2rem;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            align-self: flex-start;
+            border-bottom: 3px solid var(--black);
+            width: 100%;
+            padding-bottom: 0.5rem;
+            color: var(--black);
         }
 
         /* Antigravity hidden classes */
@@ -319,52 +392,122 @@
     <div id="wrapper">
         <section>
             <a href="testimonios.html" class="back-link reveal">
-                < Volver a los archivos</a>
+                &lt; Volver a los archivos</a>
 
-                    <h1 class="reveal">Expediente #156 - Grabación de Caja Negra</h1>
+            <h1 class="reveal">Caso Ale Durando</h1>
 
-                    <div class="meta-data reveal">
-                        Ubicación: Espacio áereo sobre zona metropolitana <br>
-                        Fecha: 22 de Noviembre, 2015 <br>
-                        Fuente: Grabadora de voces de cabina (CVR) - Cessna 172
-                    </div>
+            <div class="meta-data reveal">
+                Entrevistado: Ale Durando &nbsp;|&nbsp; Entrevistador: S.E.R.<br>
+                Fecha: 24 de Febrero de 2023 <br>
+                Fuente: Entrevista Directa - Caso Ale Durando
+            </div>
 
-                    <div class="audio-container reveal">
-                        <audio controls>
-                            <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
-                            Tu navegador no soporta el formato de audio.
-                        </audio>
-                    </div>
+            <div class="audio-container reveal"
+                style="padding: 0; background: var(--white); border: 3px solid var(--black); overflow: hidden; border-radius: 0;">
+                <audio controls playsinline preload="auto"
+                    style="width:100%; display:block; background: var(--white); height: 60px;">
+                    <source src="assets/Casos/Caso%20Ale%20Durando/entrevista%20Ale%20Durando%2024%20de%20febrero%202023.m4a" type="audio/mp4">
+                    Tu navegador no soporta la reproducción de audio.
+                </audio>
+            </div>
 
-                    <div class="transcription reveal">
-                        <h3>[ TRANSCRIPCIÓN OFICIAL ]</h3>
+            <div class="transcription">
+                <h3>[ TRANSCRIPCIÓN OFICIAL ]</h3>
 
-                        <p><strong>Piloto:</strong> "Torre Rafaela, Cessna 3-Echo-Lima, altitud de 4,500 pies, en
-                            curso."</p>
+                <p><strong>S.E.R:</strong> Bueno, hoy es 24 de febrero de 2023 y estamos reunidos con el grupo Ser y vamos a charlar con Alejandro Duranto.</p>
 
-                        <p><strong>Torre:</strong> "Entendido, 3-Echo-Lima. Continúe plan de vuelo. Cuidado con el
-                            tráfico visual, no tengo a nadie en radar por su zona."</p>
+                <p><strong>Ale:</strong> Bueno, esto pasó aproximadamente en el año 2016 o 17. Yo todavía vivía en la casa de mi vieja, tenía mi habitación y en esa época tenía recurrentes parálisis de sueño, unas dos o tres por semana incluso, hasta que bueno, la más heavy fue sentir que se abría la puerta de la habitación y entraba un ser de unos metro 80 de alto. Recorría la habitación, yo completamente paralizado, veía que había luz detrás de la puerta en donde entraba. Y en ese momento, yo estando de costado, sentía que se bajaban las sábanas. Inmediatamente sentía un pinchazo como si fuese una inyección en mi glúteo derecho. Pasó. Después de ese episodio, al rato, después de mucha desesperación, lograba despertarme y bueno, claramente no había nada ni nadie en la habitación. Pasó dos veces. Una de las veces intenté luchar. Me acuerdo que me enojé y siento que se está acercando la mano por mi cuerpo. Hice fuerza y se esfuerza, se esfuerza hasta que agarro una mano en una garra de unos, si no me equivoco, cuatro dedos. Una mano en forma de garra y me quemó mi mano, al punto que me desperté y me ardía muchísimo la mano; me acuerdo que lo había agarrado con la mano derecha. Después dije, bueno, elegí otros métodos para poder despertarme y que no pase un episodio tan feo. Esto de la inyección se repitió dos veces solamente, exactamente de la misma manera, en el mismo lugar. Y después a los años, esto fue aproximadamente hace 3 años, cuatro, en el 2018, si no me equivoco, voy al Uritorco, duermo en el refugio que está en la quinta estación. Después de ver luces y sonidos y demás, allí arriba a la noche, cuando me voy a acostar, sentí, no sé si una presencia, pero yo me sentía muy incómodo y con miedo y siento inmediatamente que empieza a vibrar esa zona del glúteo derecho en donde había tenido los dos pinchazos. Bueno, básicamente eso; después las parálisis siguieron, pero no tan profundas ni tan desesperantes como estas.</p>
 
-                        <p><strong>Piloto:</strong> "(Ininteligible)...¿seguro? Torre, tengo un contacto a mis 11 en
-                            punto. Está subiendo."</p>
+                <p><strong>S.E.R:</strong> ¿Y qué dijiste vos que después empezaste a buscar como una alternativa para contrarrestarlo? Para escuchar que...</p>
 
-                        <p><strong>Torre:</strong> "Negativo, 3-Echo-Lima. Mi pantalla está limpia. Confirme posición."
-                        </p>
+                <p><strong>Ale:</strong> Sí, las primeras veces, lo primero, para despertar y no desesperar porque cuanto más te desesperas peor es y más agitado te despertas. Entonces hablé con un amigo que le pasaban no tan terroríficas entre comillas como estas pero él me decía: "Te tenés que quedar lo más calmado posible y esperar porque en algún momento te puedes liberar y despertar". El tema es que cuando empecé a hacer esto, me pasaban estos acontecimientos y no estaba bueno quedarse tranquilo porque no podía, digamos. Entonces, hablando con otro amigo, me había dicho que luche, que saque todas mis fuerzas y me enoje, intente luchar. Cuando quise hacer eso, sentí lo de la garra, vi la mano, la quise agarrar y me quemó. Inmediatamente me desperté y me ardía la palma en la mano. Entonces, para la tercera vez lo que hice fue pedir ayuda a uno de mis guardianes y cuando sentí la presencia lo llamé...</p>
 
-                        <p><strong>Piloto (Respiración fuerte):</strong> "Está justo enfrente. Un cilindro metálico...
-                            no, no es metálico. Parece que el aire a su alrededor hirviera. No tiene alas, no tiene
-                            rotores... (Alarmas del avión comienzan a sonar de fondo: 'TERRAIN. PULL UP')"</p>
+                <p><strong>S.E.R:</strong> ¿Qué guardianes?</p>
 
-                        <p><strong>Torre:</strong> "3-Echo-Lima, sus instrumentos..."</p>
+                <p><strong>Ale:</strong> Todos tenemos nuestros guías y guardianes. Yo cuando había hecho registros akáshicos me habían dicho que uno de mis guías guardianes que estaba conmigo era el arcángel Gabriel. Eso englobado en cuanto a la religión católica, después uno no sabe realmente quién es. Pero bueno, lo llamé porque me habían dicho, "Si vos lo llamás, él va a aparecer". Entonces, en un acto de desesperación, lo llamo y le dije, "Mira, necesito ayuda, venite". Inmediatamente yo todavía paralizado, siento y veo arriba mío una lucha; era una nube de color azul contra una nube de color negro que luchaban, iban y venían los dos arriba mío hasta que en un momento se difumina toda la imagen y ahí me despierto agradeciendo porque, no sé, había funcionado.</p>
 
-                        <p><strong>Piloto:</strong> "¡Mis instrumentos se volvieron locos! Esa cosa voló a mi lado y
-                            ascendió al menos 10.000 pies en menos de un segundo. Sin turbulencia. ¡Nada!"</p>
+                <p><strong>S.E.R:</strong> Y todo ese pensamiento que vos hacés, ¿lo hacés en el sueño o lo prevés antes de acostarte, de decir, voy a...?</p>
 
-                        <p><strong>Nota del archivo:</strong> El registro de radar civil operando desde Paraná mostró
-                            una anomalía moviéndose a Mach 4 desde el suelo hacia el espacio superior en trayectoria
-                            rectilínea constante.</p>
-                    </div>
+                <p><strong>Ale:</strong> No, era ni bien me sentía paralizado.</p>
+
+                <p><strong>S.E.R:</strong> Ah. O sea, que en el mismo sueño vos tenés un grado de conciencia.</p>
+
+                <p><strong>Ale:</strong> Sí, sí, sí.</p>
+
+                <p><strong>S.E.R:</strong> Tal que te acordas de que hablaste con un amigo que te dijo eso.</p>
+
+                <p><strong>Ale:</strong> Sí, sí, sí.</p>
+
+                <p><strong>S.E.R:</strong> Sos consciente de todo.</p>
+
+                <p><strong>Ale:</strong> Sí, sí. Sabes que estás paralizado, sabes lo que está pasando, pero a veces las imágenes se distorsionan. Me ha pasado una vez que digo, voy a prender la luz. Yo visualizo y veo mi velador tal cual como era, pero cuando quiero prender la luz no andaba. Yo prendía y apagaba y me enojaba. Me acuerdo, me enojaba y lo tiraba. Resulta que hasta ahí, hasta que yo lo quería prender, eso sí era real, por así decirlo; después lo tiraba y se rompía y bueno, no estaba después en el piso. Pero yo veía que era como estar en un sueño, pero no en el sueño a veces inventas cosas y demás; ahí no, estaba todo ordenado tal cual como está en la vida real, digamos.</p>
+
+                <p><strong>S.E.R:</strong> ¿Y a qué se le llama parálisis de sueño?</p>
+
+                <p><strong>Ale:</strong> Es cuando el cerebro no está dormido, pero el cuerpo sí. Según la ciencia, tu cuerpo ya está dormido, pero tu cerebro no. Entonces, estás consciente, pero no puedes mover ni una parte del cuerpo.</p>
+
+                <p><strong>S.E.R:</strong> O querés gritar o hacer ruido y demás y no puedes. Inmediatamente te dormís o a las horas, no sabes...</p>
+
+                <p><strong>Ale:</strong> No. Esto generalmente pasaba a la madrugada.</p>
+
+                <p><strong>S.E.R:</strong> Varía la hora de...</p>
+
+                <p><strong>Ale:</strong> Sí, después de haber dormido varias horas.</p>
+
+                <p><strong>S.E.R:</strong> Ajá. Marcas físicas de los pinchazos, ¿eh? O de la mano que estaba caliente, ¿no?</p>
+
+                <p><strong>Ale:</strong> Esa vez sí. No marca, pero sí sentía una sensación de ardor porque ahí sí me desperté inmediatamente y dije, "¿Por qué hice eso?". Me ardía muchísimo, pero no me quedaron marcas. Sí en esa época mi vieja, que cuando yo dormía con ella, ella se ha despertado toda rajuñada en el brazo. Igual que en el tema del pinchazo, me busqué y todo, y nunca encontré marcas, nada.</p>
+
+                <p><strong>S.E.R:</strong> Cuando vos viste ese ser, esa presencia, vos sentiste que te querían transmitir algo, ¿cuál era el fin? ¿Qué es lo que ellos estaban buscando? ¿Qué sentías vos, o sea, qué percibías?</p>
+
+                <p><strong>Ale:</strong> Yo el miedo, y sentía que no estaba bueno lo que estaba pasando. Eran con intereses para ellos y no para mí, sobre todo por el modo en el que entraban y el hecho de uno estar paralizado y no poder moverse más. Yo lo atribuyo a un sentimiento muy parecido al de una persona violada.</p>
+
+                <p><strong>S.E.R:</strong> Esa sensación de no poder hacer nada y una impotencia.</p>
+
+                <p><strong>Ale:</strong> Sí, tal cual.</p>
+
+                <p><strong>S.E.R:</strong> Claro. Y la escena, ¿en qué consistía? ¿Entraba un ser?</p>
+
+                <p><strong>Ale:</strong> Yo sentía el ruido de la puerta que se abría porque justamente esa puerta rozaba con el piso, entonces hacía ruido.</p>
+
+                <p><strong>S.E.R:</strong> Ajá. Con ese detalle que estaba...</p>
+
+                <p><strong>Ale:</strong> Bueno, sentía que se abría e inmediatamente veía una luz detrás de la puerta. Entonces, cuando prestaba atención veía al ser. Yo no me acuerdo si fue la primera o la segunda vez, tengo como el recuerdo que eran dos.</p>
+
+                <p><strong>S.E.R:</strong> Ah.</p>
+
+                <p><strong>Ale:</strong> Pero sí, el que caminaba todo alrededor de la cama hasta llegar hasta mí era uno. Y claro, yo veía esa luz detrás de la puerta, a lo cual yo en ese momento, paralizado y todo, ¿no?, pensaba: "¿estoy con los ojos abiertos o no? ¿Esto está pasando o no está pasando?". Ya había experimentado muchas veces, entonces quería descartar hipótesis. Resulta que cuando sucede todo, hasta que logro despertarme, me doy cuenta que los ojos los tenía abiertos en realidad porque me despierto mirando la luz del modem de internet, que era exactamente el mismo amarillo que yo veía que salía detrás de la puerta. O sea, que ahí se confundió, digamos, entre el sueño y la realidad. Pero pude comprobar que los ojos los tenía abiertos durante esa parálisis porque yo veía una luz que era la del modem wifi.</p>
+
+                <p><strong>S.E.R:</strong> Y en la visión que vos tenés, que recordás, que podés recordar el tipo de ser, así como bueno, vos lo graficaste acá...</p>
+
+                <p><strong>Ale:</strong> Sí, era flaco, alto, sin ropa, y muy sigiloso. Me acuerdo porque entraba muy despacio en la habitación. Caminaba despacio y no se escuchaban ruidos de pasos ni nada.</p>
+
+                <p><strong>S.E.R:</strong> Y el color...</p>
+
+                <p><strong>Ale:</strong> Era gris, gris oscuro. Aparte, bueno, estaba todo oscuro en la habitación, pero se lo veía de un gris, me acuerdo, con los ojos grandes. Pero bueno, más detalles no recuerdo, pero sí, eso sí que era alto.</p>
+
+                <p><strong>S.E.R:</strong> Dijiste que dormías con tu vieja en la misma habitación o en la misma casa.</p>
+
+                <p><strong>Ale:</strong> No, en la misma casa. Mi vieja dormía exactamente en el mismo lugar, pero en el piso de arriba.</p>
+
+                <p><strong>S.E.R:</strong> Y ella no recuerda ninguna situación parecida.</p>
+
+                <p><strong>Ale:</strong> Nunca hablamos, pero sí le ha pasado de despertarse un día y estaba toda rajuñada, y ella no tenía las uñas largas. Es más, ella intentó rajuñarse así y no le quedaban esas marcas. Esa época me acuerdo que yo tenía muchos sueños recurrentes a ese tema, a ataques y también con súcubos, en donde son como una, no sé si violación digamos, pero son escenas sexuales, pero en realidad no son personas, sino que son entidades. Y me ha pasado una vez de, en el sueño, darme cuenta de que con quien yo estaba hablando no era una persona. Era un sueño que me llevaba a la infancia cuando yo estaba en la escuela y de repente una chica, entre comillas, se me acerca y quiere pelear y yo le digo, sabiendo que yo estaba soñando eso y que no era una chica en realidad: "¿Y qué te pensás, que porque sos una chica no te voy a pegar? Porque yo sé quién sos". Y me acuerdo que le empiezo a pegar, inmediatamente se transforma, se le transforman los ojos, los dientes se le empezaron a poner agudos y se le pusieron las manos en forma</p>
+
+            </div>
+
+            <h3 class="gallery-title reveal">Evidencia Fotográfica</h3>
+            <div class="gallery reveal">
+                <img src="assets/Casos/Caso Ale Durando/Dibujos/dibujo_durando_1.jpg" alt="Evidencia 1" class="reveal">
+                <img src="assets/Casos/Caso Ale Durando/Dibujos/dibujo_durando_2.jpg" alt="Evidencia 2" class="reveal">
+            </div>
         </section>
+    </div>
+
+    <!-- Modal para fotos -->
+    <div id="imageModal" class="modal">
+        <span class="close-modal" id="closeModal">&times;</span>
+        <img class="modal-content" id="modalImg">
     </div>
 
     <!-- Matter.js Script -->
@@ -436,36 +579,161 @@
 
             function initAntigravity() {
                 document.body.style.overflow = 'hidden';
-                const Engine = Matter.Engine, Render = Matter.Render, Runner = Matter.Runner, Bodies = Matter.Bodies, Composite = Matter.Composite, Mouse = Matter.Mouse, MouseConstraint = Matter.MouseConstraint;
-                const engine = Engine.create(); const world = engine.world;
+
+                const Engine = Matter.Engine,
+                    Render = Matter.Render,
+                    Runner = Matter.Runner,
+                    Bodies = Matter.Bodies,
+                    Composite = Matter.Composite,
+                    Mouse = Matter.Mouse,
+                    MouseConstraint = Matter.MouseConstraint;
+
+                const engine = Engine.create();
+                const world = engine.world;
+
                 const selectors = 'h1, h3, p, strong, .links a, img, audio, .back-link, .meta-data, .audio-container';
                 const elements = document.querySelectorAll(selectors);
                 const domBodies = [];
+
                 elements.forEach(el => {
                     const rect = el.getBoundingClientRect();
                     if (rect.width < 5 || rect.height < 5 || document.defaultView.getComputedStyle(el).display === 'none') return;
+
                     const css = window.getComputedStyle(el);
-                    const styles = { fontSize: css.fontSize, fontFamily: css.fontFamily, fontWeight: css.fontWeight, lineHeight: css.lineHeight, letterSpacing: css.letterSpacing, textTransform: css.textTransform, textAlign: css.textAlign, padding: css.padding, display: css.display, alignItems: css.alignItems, justifyContent: css.justifyContent };
-                    const x = rect.left + rect.width / 2; const y = rect.top + rect.height / 2;
-                    const body = Bodies.rectangle(x, y, rect.width, rect.height, { restitution: 0.6, friction: 0.1, density: 0.005 });
-                    Composite.add(world, body); domBodies.push({ body: body, element: el, width: rect.width, height: rect.height, savedStyles: styles });
+                    const styles = {
+                        fontSize: css.fontSize,
+                        fontFamily: css.fontFamily,
+                        fontWeight: css.fontWeight,
+                        lineHeight: css.lineHeight,
+                        letterSpacing: css.letterSpacing,
+                        textTransform: css.textTransform,
+                        textAlign: css.textAlign,
+                        padding: css.padding,
+                        display: css.display,
+                        alignItems: css.alignItems,
+                        justifyContent: css.justifyContent
+                    };
+
+                    const x = rect.left + rect.width / 2;
+                    const y = rect.top + rect.height / 2;
+                    const body = Bodies.rectangle(x, y, rect.width, rect.height, {
+                        restitution: 0.6,
+                        friction: 0.1,
+                        density: 0.005
+                    });
+
+                    Composite.add(world, body);
+
+                    domBodies.push({
+                        body: body,
+                        element: el,
+                        width: rect.width,
+                        height: rect.height,
+                        savedStyles: styles
+                    });
                 });
-                const wrapper = document.getElementById('wrapper'); const nav = document.getElementById('navbar'); wrapper.style.display = 'none'; nav.style.display = 'none';
-                document.body.style.backgroundColor = '#000000'; document.body.style.backgroundImage = 'none';
+
+                const wrapper = document.getElementById('wrapper');
+                const nav = document.getElementById('navbar');
+                wrapper.style.display = 'none';
+                nav.style.display = 'none';
+
+                document.body.style.backgroundColor = '#000000';
+                document.body.style.backgroundImage = 'none';
+
                 domBodies.forEach(item => {
-                    const el = item.element; const style = item.savedStyles; document.body.appendChild(el); el.className = 'falling-element';
-                    if (el.classList.contains('audio-container')) { el.classList.add('falling-border'); }
-                    el.style.width = item.width + 'px'; el.style.height = item.height + 'px'; el.style.fontSize = style.fontSize; el.style.fontFamily = style.fontFamily; el.style.fontWeight = style.fontWeight; el.style.lineHeight = style.lineHeight; el.style.letterSpacing = style.letterSpacing; el.style.textTransform = style.textTransform; el.style.textAlign = style.textAlign; el.style.padding = style.padding;
-                    if (style.display === 'flex' || style.display === 'block') { el.style.display = style.display; el.style.alignItems = style.alignItems; el.style.justifyContent = style.justifyContent; }
-                    const x = item.body.position.x - item.width / 2; const y = item.body.position.y - item.height / 2; el.style.transform = `translate(${x}px, ${y}px) rotate(0rad)`;
+                    const el = item.element;
+                    const style = item.savedStyles;
+
+                    document.body.appendChild(el);
+
+                    el.className = 'falling-element';
+                    if (el.classList.contains('audio-container')) {
+                        el.classList.add('falling-border');
+                    }
+
+                    el.style.width = item.width + 'px';
+                    el.style.height = item.height + 'px';
+                    el.style.fontSize = style.fontSize;
+                    el.style.fontFamily = style.fontFamily;
+                    el.style.fontWeight = style.fontWeight;
+                    el.style.lineHeight = style.lineHeight;
+                    el.style.letterSpacing = style.letterSpacing;
+                    el.style.textTransform = style.textTransform;
+                    el.style.textAlign = style.textAlign;
+                    el.style.padding = style.padding;
+
+                    if (style.display === 'flex' || style.display === 'block') {
+                        el.style.display = style.display;
+                        el.style.alignItems = style.alignItems;
+                        el.style.justifyContent = style.justifyContent;
+                    }
+
+                    const x = item.body.position.x - item.width / 2;
+                    const y = item.body.position.y - item.height / 2;
+                    el.style.transform = `translate(${x}px, ${y}px) rotate(0rad)`;
                 });
-                const wallOpts = { isStatic: true }; const tb = 100; const w = window.innerWidth; const h = window.innerHeight;
-                Composite.add(world, [Bodies.rectangle(w / 2, h + tb / 2, w * 2, tb, wallOpts), Bodies.rectangle(w / 2, -tb / 2 - 2000, w * 2, tb, wallOpts), Bodies.rectangle(-tb / 2, h / 2, tb, h * 3, wallOpts), Bodies.rectangle(w + tb / 2, h / 2, tb, h * 3, wallOpts)]);
-                Matter.Events.on(engine, 'afterUpdate', () => { domBodies.forEach(item => { const x = item.body.position.x - item.width / 2; const y = item.body.position.y - item.height / 2; item.element.style.transform = `translate(${x}px, ${y}px) rotate(${item.body.angle}rad)`; }); });
-                const mouse = Mouse.create(document.body); const mouseConstraint = MouseConstraint.create(engine, { mouse: mouse, constraint: { stiffness: 0.2, render: { visible: false } } });
-                if (mouseConstraint.mouse.element) { mouseConstraint.mouse.element.removeEventListener('mousewheel', mouseConstraint.mouse.mousewheel); mouseConstraint.mouse.element.removeEventListener('DOMMouseScroll', mouseConstraint.mouse.mousewheel); }
-                Composite.add(world, mouseConstraint); Runner.run(Runner.create(), engine);
+
+                const wallOpts = { isStatic: true };
+                const tb = 100;
+                const w = window.innerWidth;
+                const h = window.innerHeight;
+
+                Composite.add(world, [
+                    Bodies.rectangle(w / 2, h + tb / 2, w * 2, tb, wallOpts),
+                    Bodies.rectangle(w / 2, -tb / 2 - 2000, w * 2, tb, wallOpts),
+                    Bodies.rectangle(-tb / 2, h / 2, tb, h * 3, wallOpts),
+                    Bodies.rectangle(w + tb / 2, h / 2, tb, h * 3, wallOpts)
+                ]);
+
+                Matter.Events.on(engine, 'afterUpdate', () => {
+                    domBodies.forEach(item => {
+                        const x = item.body.position.x - item.width / 2;
+                        const y = item.body.position.y - item.height / 2;
+                        item.element.style.transform = `translate(${x}px, ${y}px) rotate(${item.body.angle}rad)`;
+                    });
+                });
+
+                const mouse = Mouse.create(document.body);
+                const mouseConstraint = MouseConstraint.create(engine, {
+                    mouse: mouse,
+                    constraint: { stiffness: 0.2, render: { visible: false } }
+                });
+
+                if (mouseConstraint.mouse.element) {
+                    mouseConstraint.mouse.element.removeEventListener('mousewheel', mouseConstraint.mouse.mousewheel);
+                    mouseConstraint.mouse.element.removeEventListener('DOMMouseScroll', mouseConstraint.mouse.mousewheel);
+                }
+
+                Composite.add(world, mouseConstraint);
+                Runner.run(Runner.create(), engine);
             }
+
+            // Modal Logic for Gallery
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            const closeModal = document.getElementById('closeModal');
+            const galleryImages = document.querySelectorAll('.gallery img');
+
+            galleryImages.forEach(img => {
+                img.addEventListener('click', function () {
+                    // Prevent opening modal if antigravity is running
+                    if (antigravityActive) return;
+
+                    modal.style.display = 'flex';
+                    modalImg.src = this.src;
+                });
+            });
+
+            closeModal.addEventListener('click', function () {
+                modal.style.display = 'none';
+            });
+
+            modal.addEventListener('click', function (e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
         });
     </script>
 </body>
