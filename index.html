@@ -841,11 +841,11 @@
                     ufo.classList.remove('flying');
                 }, { once: true });
             }
-            // First flight after 3 seconds, then every 30 seconds
+            // First flight after 5 seconds, then every 30 seconds
             setTimeout(() => {
                 launchUFO();
                 setInterval(launchUFO, 30000);
-            }, 3000);
+            }, 5000);
 
             // Matter.js Antigravity Script
             const logo = document.getElementById('logo');
