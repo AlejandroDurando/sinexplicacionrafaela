@@ -49,16 +49,15 @@
         }
 
         .preloader-ufo {
-            width: 100%;
-            height: auto;
-            max-height: 50vh;
+            width: 100vw;
+            height: 100vh;
             object-fit: cover;
-            position: relative;
+            position: absolute;
+            top: 0;
+            left: 0;
             z-index: 2;
             animation: preloaderHover 4s ease-in-out infinite alternate;
-            filter: drop-shadow(0 0 20px rgba(150, 220, 255, 0.4));
-            margin-top: -5vh;
-            /* Slight offset to ensure top coverage */
+            /* Filter removed to keep the original image clarity if it acts as a background */
         }
 
         .preloader-person {
