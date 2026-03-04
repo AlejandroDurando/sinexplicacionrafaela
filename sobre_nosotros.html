@@ -705,16 +705,7 @@
 
 <body>
 
-    <!-- Preloader -->
-    <div id="preloader">
-        <div class="abduction-scene">
-            <img src="assets/ovni.png" alt="UFO" class="preloader-ufo">
-            <img src="assets/hombre.png" alt="Persona abducida" class="preloader-person">
-        </div>
-        <div class="preloader-text">Cargando Evidencias...</div>
-    </div>
-
-    <nav id="navbar">
+<nav id="navbar">
         <span id="ufo">🛸</span>
         <img src="assets/logo_1png.png" alt="SER Logo" id="logo" title="No tocar.">
 
@@ -768,17 +759,8 @@
 
     <!-- Scripts -->
     <script>
-        // Preloader Logic
-        window.addEventListener('load', () => {
-            const preloader = document.getElementById('preloader');
-            // Give it a tiny minimum duration so the animation can be appreciated
-            setTimeout(() => {
-                preloader.style.opacity = '0';
-                preloader.style.visibility = 'hidden';
-            }, 2500);
-        });
 
-        document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
 
             // Scroll Reveal Animation
             const revealElements = document.querySelectorAll('.reveal');
@@ -837,13 +819,12 @@
             });
 
             logo.addEventListener('click', (e) => {
-                const logoLink = logo.closest('a');
                 e.preventDefault();
                 if (antigravityActive) return;
 
                 if (!clickTimeout) {
                     clickTimeout = setTimeout(() => {
-                        window.location.href = logoLink.href;
+                        window.location.href = 'index.html';
                     }, 300);
                 }
             });

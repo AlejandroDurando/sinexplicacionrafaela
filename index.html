@@ -873,13 +873,12 @@
             });
 
             logo.addEventListener('click', (e) => {
-                const logoLink = logo.closest('a');
                 e.preventDefault();
                 if (antigravityActive) return;
 
                 if (!clickTimeout) {
                     clickTimeout = setTimeout(() => {
-                        window.location.href = logoLink.href;
+                        window.location.href = 'index.html';
                     }, 300);
                 }
             });
