@@ -39,41 +39,49 @@
 
         .abduction-scene {
             position: relative;
-            width: 400px;
-            height: 500px;
+            width: 100vw;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
+            overflow: hidden;
+            justify-content: flex-start;
         }
 
         .preloader-ufo {
             width: 100%;
-            max-width: 350px;
             height: auto;
+            max-height: 50vh;
+            object-fit: cover;
             position: relative;
             z-index: 2;
-            animation: preloaderHover 3s ease-in-out infinite alternate;
-            filter: drop-shadow(0 0 15px rgba(150, 220, 255, 0.4));
+            animation: preloaderHover 4s ease-in-out infinite alternate;
+            filter: drop-shadow(0 0 20px rgba(150, 220, 255, 0.4));
+            margin-top: -5vh;
+            /* Slight offset to ensure top coverage */
         }
 
         .preloader-person {
             position: absolute;
-            bottom: 20px;
+            bottom: 10vh;
             z-index: 3;
-            height: 120px;
+            height: 15vh;
+            max-height: 150px;
             width: auto;
             animation: abductPerson 4s infinite ease-in-out forwards;
-            filter: drop-shadow(0 0 8px rgba(150, 255, 150, 0.6));
+            filter: drop-shadow(0 0 10px rgba(150, 255, 150, 0.6));
         }
 
         .preloader-text {
+            position: absolute;
+            bottom: 3vh;
             color: var(--white);
             font-family: 'Anton', sans-serif;
-            font-size: 1.5rem;
+            font-size: clamp(1.2rem, 4vw, 2rem);
             letter-spacing: 2px;
-            margin-top: 20px;
             text-transform: uppercase;
             animation: preloaderPulse 1.5s infinite alternate;
+            z-index: 4;
         }
 
         @keyframes preloaderHover {
@@ -90,31 +98,31 @@
 
         @keyframes abductPerson {
             0% {
-                bottom: 20px;
+                bottom: 10vh;
                 transform: scale(1) translateY(0);
                 opacity: 0;
             }
 
             10% {
-                bottom: 20px;
+                bottom: 10vh;
                 transform: scale(1) translateY(0);
                 opacity: 1;
             }
 
             20% {
-                bottom: 20px;
-                transform: scale(1) translateY(-5px);
+                bottom: 10vh;
+                transform: scale(1) translateY(-10px);
                 opacity: 1;
             }
 
             90% {
-                bottom: 350px;
-                transform: scale(0.3) translateY(0);
+                bottom: 60vh;
+                transform: scale(0.2) translateY(0);
                 opacity: 0;
             }
 
             100% {
-                bottom: 350px;
+                bottom: 60vh;
                 transform: scale(0) translateY(0);
                 opacity: 0;
             }
