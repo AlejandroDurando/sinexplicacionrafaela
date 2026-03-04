@@ -241,57 +241,57 @@
             max-width: 800px;
             height: auto;
             opacity: 0;
-            transform: translateY(-20px);
-            animation: fadeInDown 1.5s ease-out 0.5s forwards;
+            animation: fadeInSmooth 1.5s ease-in-out 1s forwards;
             margin-bottom: 2rem;
             filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.8));
         }
 
         .hero-subtitle {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
+            flex-wrap: nowrap;
             align-items: center;
-            gap: 15px;
+            justify-content: center;
+            gap: 1.5%;
             width: 100%;
         }
 
         .typewriter-part {
             height: auto;
-            max-width: 90%;
-            opacity: 0;
             filter: drop-shadow(0px 3px 5px rgba(0, 0, 0, 0.8));
         }
 
         /* Responsive sizing for the subtitle parts */
         .part-1 {
-            width: 300px;
-            max-width: 50%;
-            animation: typeWriterReveal 0.1s forwards 2.5s;
+            width: 18%;
+            animation: typeWriterReveal 0.6s steps(10) 2.5s both;
         }
 
         .part-2 {
-            width: 600px;
-            max-width: 95%;
-            animation: typeWriterReveal 0.1s forwards 3.0s;
+            width: 50%;
+            animation: typeWriterReveal 1.2s steps(20) 3.1s both;
         }
 
         .part-3 {
-            width: 400px;
-            max-width: 70%;
-            animation: typeWriterReveal 0.1s forwards 3.7s;
+            width: 29%;
+            animation: typeWriterReveal 0.8s steps(15) 4.3s both;
         }
 
-        @keyframes fadeInDown {
+        @keyframes fadeInSmooth {
             to {
                 opacity: 1;
-                transform: translateY(0);
             }
         }
 
-        /* Hard cut reveal to mimic a typewriter chunk appearing */
         @keyframes typeWriterReveal {
-            to {
+            0% {
                 opacity: 1;
+                clip-path: inset(0 100% 0 0);
+            }
+
+            100% {
+                opacity: 1;
+                clip-path: inset(0 0 0 0);
             }
         }
 
@@ -574,7 +574,7 @@
         }
 
         #ufo.flying {
-            animation: ufoFly 4s ease-in-out forwards;
+            animation: ufoFly 6s ease-in-out forwards;
         }
 
         /* Hamburger Menu Icon */
