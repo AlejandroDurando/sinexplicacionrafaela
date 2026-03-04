@@ -701,7 +701,51 @@
             }
         }
 
+
+        /* Intro Texto */
+        #intro-texto {
+            background-color: var(--white);
+            color: var(--black);
+            padding: 5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .intro-container {
+            max-width: 800px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .intro-divider {
+            width: 50px;
+            height: 2px;
+            background-color: var(--black);
+            border: none;
+        }
+
+        .intro-container p {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            font-weight: 400;
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 768px) {
+            .intro-container p {
+                font-size: 1.1rem;
+            }
+        }
+
         /* Ufologia Link */
+
         #ufologia-banner {
             background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('assets/fondoalien.png');
             background-size: cover;
@@ -770,7 +814,19 @@
                 </div>
             </div>
         </header>
+
+        <section id="intro-texto" class="reveal">
+            <div class="intro-container">
+                <hr class="intro-divider">
+                <p>
+                    <strong>S.E.R.</strong> es un espacio dedicado a recopilar y preservar testimonios de fenómenos inexplicables en Rafaela y la región: avistamientos, encuentros y experiencias que aún no tienen una explicación clara.
+                </p>
+                <hr class="intro-divider">
+            </div>
+        </section>
+
         <a href="ufologia.html" id="ufologia-link" style="text-decoration: none; display: block;">
+
             <section id="ufologia-banner" class="reveal">
                 <h2>¿Qué es la Ufología?</h2>
             </section>
