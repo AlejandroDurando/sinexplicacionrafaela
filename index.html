@@ -770,6 +770,91 @@
                 background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('assets/fondoalien_2.png');
             }
         }
+
+        /* Quotes Carousel */
+        #quotes-carousel {
+            background-color: var(--white);
+            color: var(--black);
+            padding: 4rem 2rem;
+            min-height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .carousel-container {
+            position: relative;
+            max-width: 800px;
+            width: 100%;
+            height: clamp(200px, 30vw, 300px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+            pointer-events: auto;
+            z-index: 2;
+        }
+
+        .quote {
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            font-style: italic;
+            font-weight: 400;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: var(--black);
+            max-width: 90%;
+        }
+
+        .author {
+            font-family: 'Anton', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #555;
+            display: inline-block;
+        }
+
+        .carousel-indicators {
+            display: flex;
+            gap: 12px;
+            z-index: 3;
+        }
+
+        .dot {
+            height: 14px;
+            width: 14px;
+            background-color: #ccc;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .dot.active,
+        .dot:hover {
+            background-color: var(--black);
+            transform: scale(1.2);
+        }
     </style>
 
 </head>
@@ -819,7 +904,9 @@
             <div class="intro-container">
                 <hr class="intro-divider">
                 <p>
-                    <strong>S.E.R.</strong> es un espacio dedicado a recopilar y preservar testimonios de fenómenos inexplicables en Rafaela y la región: avistamientos, encuentros y experiencias que aún no tienen una explicación clara.
+                    <strong>S.E.R.</strong> es un espacio dedicado a recopilar y preservar testimonios de fenómenos
+                    inexplicables en Rafaela y la región: avistamientos, encuentros y experiencias que aún no tienen una
+                    explicación clara.
                 </p>
                 <hr class="intro-divider">
             </div>
@@ -832,12 +919,37 @@
             </section>
         </a>
 
+        <section id="quotes-carousel" class="reveal">
+            <div class="carousel-container">
+                <div class="carousel-slide active">
+                    <p class="quote">"Él hizo un cambio de personalidad. Hubo un antes y un después... desde el
+                        avistamiento que él tuvo."</p>
+                    <strong class="author">- Dana Condrac</strong>
+                </div>
+                <div class="carousel-slide">
+                    <p class="quote">"Él dice que venía en auto. Dice que sintió como que el tiempo se detuvo, como que
+                        el tiempo se detuvo y veía todos colores."</p>
+                    <strong class="author">- Dana Condrac</strong>
+                </div>
+                <div class="carousel-slide">
+                    <p class="quote">"Cuando él se enfermó es como que empezó a era otra persona, empezó a hablarme del
+                        tiempo. Yo decía, 'Pero este hombre, ¿cómo puede saber de la energía?' Era un capo."</p>
+                    <strong class="author">- Dana Condrac</strong>
+                </div>
+            </div>
+            <div class="carousel-indicators">
+                <span class="dot active" onclick="currentSlide(0)"></span>
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+            </div>
+        </section>
 
 
 
-        
 
-        
+
+
+
     </div>
 
     <footer>
@@ -1124,6 +1236,39 @@
 
             window.location.href = 'mailto:sinexplicacionrafaela@gmail.com?subject=' + subject + '&body=' + body;
         }
+
+        // Quotes Carousel Logic
+        let slideIndex = 0;
+        let slideInterval;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.dot');
+
+        function showSlides(n) {
+            if (slides.length === 0) return;
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+
+            slideIndex = n;
+            if (slideIndex >= slides.length) { slideIndex = 0; }
+            if (slideIndex < 0) { slideIndex = slides.length - 1; }
+
+            slides[slideIndex].classList.add('active');
+            dots[slideIndex].classList.add('active');
+        }
+
+        function nextSlide() {
+            showSlides(slideIndex + 1);
+        }
+
+        if (slides.length > 0) {
+            slideInterval = setInterval(nextSlide, 7000); // Change quote every 7 seconds
+        }
+
+        window.currentSlide = function (n) {
+            clearInterval(slideInterval);
+            showSlides(n);
+            slideInterval = setInterval(nextSlide, 7000);
+        };
     </script>
 </body>
 

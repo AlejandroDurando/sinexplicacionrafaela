@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expediente #045 - SER</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+
+    <style>
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            scroll-behavior: smooth;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 0.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background-color: var(--white);
+            border-bottom: 3px solid var(--black);
+        }
+
+        nav img {
+            height: 110px;
+            cursor: pointer;
+            filter: grayscale(100%);
+            transition: transform 0.3s;
+        }
+
+        nav img:hover {
+            transform: scale(1.1);
+        }
+
+        nav .links a {
+            color: var(--black);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        nav .links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--black);
+            transition: width 0.3s ease;
+        }
+
+        nav .links a:hover::after {
+            width: 100%;
+        }
+
+        section {
+            padding: 12rem 2rem 4rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            align-self: flex-start;
+            margin-bottom: 2rem;
+            color: var(--black);
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--black);
+            padding-bottom: 2px;
+        }
+
+        .back-link:hover {
+            background-color: var(--black);
+            color: var(--white);
+        }
+
+        h1 {
+            font-family: 'Anton', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            align-self: flex-start;
+            width: 100%;
+        }
+
+        .meta-data {
+            align-self: flex-start;
+            margin-bottom: 3rem;
+            font-size: 0.9rem;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-left: 3px solid var(--black);
+            padding-left: 1rem;
+        }
+
+        .audio-container {
+            width: 100%;
+            padding: 2rem;
+            border: 3px solid var(--black);
+            margin-bottom: 3rem;
+            background-color: #f9f9f9;
+        }
+
+        audio {
+            width: 100%;
+            height: 50px;
+            filter: grayscale(100%) contrast(150%);
+        }
+
+        .transcription {
+            width: 100%;
+            text-align: left;
+        }
+
+        .transcription h3 {
+            font-family: 'Anton', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--black);
+            padding-bottom: 0.5rem;
+        }
+
+        .transcription p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            padding-left: 1rem;
+            border-left: 2px solid #ccc;
+            color: var(--black);
+        }
+
+        .transcription p strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--black);
+        }
+
+        /* Gallery Styles */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+            margin-top: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: auto;
+            border: 3px solid var(--black);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border: 3px solid var(--white);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: var(--white);
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: #ccc;
+        }
+
+        .gallery-title {
+            font-family: 'Anton', sans-serif;
+            font-size: 2rem;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            align-self: flex-start;
+            border-bottom: 3px solid var(--black);
+            width: 100%;
+            padding-bottom: 0.5rem;
+            color: var(--black);
+        }
+
+        /* Antigravity hidden classes */
+        .falling-element {
+            position: fixed !important;
+            margin: 0 !important;
+            z-index: 9999 !important;
+            box-sizing: border-box !important;
+            transform-origin: center center;
+            will-change: transform;
+            color: var(--white) !important;
+            background-color: transparent !important;
+            mix-blend-mode: difference !important;
+        }
+
+        .falling-border {
+            border: 3px solid var(--white) !important;
+            outline: none !important;
+        }
+
+        /* Hamburger Menu Icon */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 200;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--black);
+            transition: all 0.3s ease;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: row;
+                padding: 0.5rem 1rem;
+                justify-content: space-between;
+                align-items: center;
+                height: auto;
+            }
+
+            nav img {
+                height: 60px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .menu-toggle.active span:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.active span:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            nav .links {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                padding: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-in-out;
+                border-bottom: 0px solid var(--black);
+            }
+
+            nav .links.active {
+                max-height: 300px;
+                padding: 1.5rem 0;
+                border-bottom: 3px solid var(--black);
+            }
+
+            nav .links a {
+                margin: 0;
+                padding: 1rem 0;
+                text-align: center;
+                font-size: 1.2rem;
+                width: 100%;
+            }
+
+            nav .links a::after {
+                display: none;
+            }
+        }
+
+        /* Scroll Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Prevent Matter.js breaking due to opacity 0 elements */
+        .falling-element.reveal {
+            opacity: 1 !important;
+            transform: none !important;
+            transition: none !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav id="navbar">
+        <a href="index.html" title="Volver al inicio"><img src="assets/logo_1png.png" alt="SER Logo" id="logo"></a>
+
+        <div class="menu-toggle" id="mobile-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <div class="links" id="nav-links">
+            <a href="testimonios.html">Testimonios</a>
+            <a href="sobre_nosotros.html">Sobre nosotros</a>
+            <a href="contacto.html">Contacto</a>
+        </div>
+    </nav>
+
+    <div id="wrapper">
+        <section>
+            <a href="testimonios.html" class="back-link reveal">
+                &lt; Volver a los archivos</a>
+
+            <h1 class="reveal">Caso María y Omar</h1>
+
+            <div class="meta-data reveal">
+                Entrevistado: Javi Possetto &nbsp;|&nbsp; Entrevistador: S.E.R.<br>
+                Fecha: No especificado <br>
+                Fuente: Entrevista Directa - Caso María y Omar
+            </div>
+
+            <div class="audio-container reveal"
+                style="padding: 0; background: var(--white); border: 3px solid var(--black); overflow: hidden; border-radius: 0;">
+                <audio controls playsinline preload="auto"
+                    style="width:100%; display:block; background: var(--white); height: 60px;">
+                    <source src="assets/Casos/Caso%20Maria%20y%20Omar/entrevista%20Mar%C3%ADa%20y%20Omar.m4a" type="audio/mp4">
+                    Tu navegador no soporta la reproducción de audio.
+                </audio>
+            </div>
+
+            <div class="transcription">
+                <h3>[ TRANSCRIPCIÓN OFICIAL ]</h3>
+
+                                <p><strong>﻿María:</strong> Soy María y bueno, y mi testimonio es que me pasan muchas cosas de tener varias experiencia, eh, pero la llama que sería como una salamandra, es una eh como una llama, ¿viste? Del fuego, el mismo color que traspasa la puerta al vidrio y entra. Se me viene arriba. Yo estaba acostada, era de como las 12 de la noche, estaba la veo, ¿viste? Yo no me había dormido. y veo cuando entra, ¿viste? Y entonces yo miraba y se me venía se me venía encima. Cuando yo pienso eso, que dije, "Ay, se me viene encima me dio miedo." Y eso parece una cosa inteligente que sale sale por traspasa el vidrio a la ventana porque yo tengo un así como esta puerta tenemos eh vidrio, ¿viste? Y entra por la puerta, traspasa la puerta y sale por la ventana. Bueno, Esa fue una de mi experiencia que tuve. Que</p>
+                                <p><strong>S.E.R.:</strong> ¿Cuándo le pasó eso?</p>
+                                <p><strong>María:</strong> Más o menos en los 90.</p>
+                                <p><strong>S.E.R.:</strong> En los 90.</p>
+                                <p><strong>María:</strong> Eh, yo no me animaba a contar porque dije, "Bueno, me van a decir que estoy loca porque fue una más o menos de las primeras experiencias que tuve.</p>
+                                <p><strong>S.E.R.:</strong> Color,</p>
+                                <p><strong>María:</strong> el color igual que que el fuego. Era una llama, ¿viste? Que va así con la punta y todo y venía, te hago esto porque venía, era una cosa que iba así, tenía como una lengüeta de juego. Esa es la palabra.</p>
+                                <p><strong>S.E.R.:</strong> Sí, sí.</p>
+                                <p><strong>María:</strong> ¿Entendés? Entonces, traspasa la ventana, entra por el vidrio, traspasa el vidrio de puerta. También fue algo inteligente para mí porque viste que sale sale por la ventana. Después cuando a mí me da miedo esa cosa reacciona y sale y se va, desaparece.</p>
+                                <p><strong>S.E.R.:</strong> ¿Y usted dónde estaba?</p>
+                                <p><strong>María:</strong> Durmiendo. Estaba acostado. Él estaba durmiendo. Él es mi esposo. Sí.</p>
+                                <p><strong>S.E.R.:</strong> Y él no lo vio. por ejemplo.</p>
+                                <p><strong>María:</strong> Y la última experiencia que tuve, nosotros somos muy amigos de un hombre que falleció a los 80 y pico de años. Él hace toda una vida eh yendo también este a capilla del monte y él siempre hablaba de las naves y todo eso y él tuvo muchas experiencias también. Entonces yo acá en mi casa, en el patio de mi casa, Yo un día salgo afuera, la noche era más o menos 8:309, ya era oscuro, viene de oeste a este veo una esfera o como una pelota de tenis que venía una luz muy alto y él siempre contaba desde que él iba en las naves y yo lo nombro a él, ¿viste? Y le digo, "Estás ahí, estás en esa nave." Y y eso se hace Así se agrandó como la luna llena, ¿viste? Bueno, yo te digo, me quedé ahí helada porque lo que menos me esperaba que iba a tener una respuesta de ese tipo, porque después se achica y se va se va hacia el lado, eh, ¿cómo te puedo decir? Así, al este</p>
+                                <p><strong>S.E.R.:</strong> y se mantenía. Decí que tenía el tamaño de una pelota de tenis y era redonda como una pelota de tenis.</p>
+                                <p><strong>María:</strong> Sí, sí, bien redonda, blanca. La luz de tipo viste, eh comparar con una eh soldadura, una luz blanca</p>
+                                <p><strong>S.E.R.:</strong> y con destellos o se veía solo la forma</p>
+                                <p><strong>María:</strong> la forma circular.</p>
+                                <p><strong>S.E.R.:</strong> Pero usted lo que dice que usted le habló y como que reaccionó. Eso es lo que le llamó la atención</p>
+                                <p><strong>María:</strong> cuando yo lo nombro</p>
+                                <p><strong>S.E.R.:</strong> y y llamó a ese persona que ya había fallecido.</p>
+                                <p><strong>María:</strong> Sí, hacía un mes o dos que había fallecido y le le pregunto, "¿Estás en esa nave?" Y y así, ¿viste? De esa forma, así como te lo estoy diciendo a vos,</p>
+                                <p><strong>S.E.R.:</strong> se agrandó. Exacto. Se agrandó como la luna llena.</p>
+                                <p><strong>María:</strong> Ajá. Que yo te juro que no me esperaba eso. Me quedé ahí viéndolo, ¿viste? Y</p>
+                                <p><strong>S.E.R.:</strong> era como que estaba interactuando con usted. Evidentement.</p>
+                                <p><strong>María:</strong> Exacto. Se achica de nuevo y se va, desaparece. Y bueno,</p>
+                                <p><strong>S.E.R.:</strong> y así tener. Dijiste, dijiste la hora que pasó eso</p>
+                                <p><strong>María:</strong> más o menos entre las 9 de la noche.</p>
+                                <p><strong>S.E.R.:</strong> Eso está interesante porque evidentemente hubo una interacción con usted porque usted cuando le dijo algo es como que reaccionó.</p>
+                                <p><strong>María:</strong> Claro. Y después de un vez también con hace otro tiempo antes donde me acuerdo que yo no sé si es el 7 de septiembre que es el día de la paz que se festeja el día de paz. Yo me acordé.</p>
+                                <p><strong>S.E.R.:</strong> Bueno,</p>
+                                <p><strong>María:</strong> eh mirar al cielo, por ejemplo, y y darle gracias a ellos y que te de allá que te empiecen a hacer esto,</p>
+                                <p><strong>S.E.R.:</strong> una lucecita ver</p>
+                                <p><strong>María:</strong> y que de repente te hagan esto. V porque tengo la costumbre de hablar, chicos. Les hablo.</p>
+                                <p><strong>S.E.R.:</strong> Ajá. Mire usted, está bien. hablar como le estoy hablando a usted.</p>
+                                <p><strong>María:</strong> Sí, sí, sí, sí, sí, sí.</p>
+                                <p><strong>Omar:</strong> Y mi señora le habla las plantas.</p>
+                                <p><strong>S.E.R.:</strong> Bueno, sí, yo también.</p>
+                                <p><strong>María:</strong> Ah, bueno, estoy rodeada de plantas también, ¿viste?</p>
+                                <p><strong>S.E.R.:</strong> Y y exterioriza, pero sí, igual hay personas que lo sienten también, no lo dicen, pero lo sienten, digamos. 21 de septiembre,</p>
+                                <p><strong>María:</strong> pero evidentemente hubo el día de la primavera.</p>
+                                <p><strong>S.E.R.:</strong> Sí, pero hay una hubo una interacción con esa</p>
+                                <p><strong>María:</strong> Sí, sí, sí. Sí, no, sí, tener así distintos tipos de experiencia.</p>
+                                <p><strong>S.E.R.:</strong> ¿Usted tuvo alguna vez eh pérdida de</p>
+                                <p><strong>María:</strong> No, lo</p>
+                                <p><strong>S.E.R.:</strong> temporaria de</p>
+                                <p><strong>María:</strong> de memoria?</p>
+                                <p><strong>S.E.R.:</strong> De memoria, sí. No,</p>
+                                <p><strong>María:</strong> no.</p>
+                                <p><strong>S.E.R.:</strong> Y la persona esa a la que ustedes eh aluden. Sí. No,</p>
+                                <p><strong>María:</strong> no, que yo sepa, no.</p>
+                                <p><strong>S.E.R.:</strong> Ah, vivía acá en Rafael, ¿no? En Buenos Aires.</p>
+                                <p><strong>María:</strong> Ah, era como un padre, lo amábamos.</p>
+                                <p><strong>S.E.R.:</strong> Ah, tenía mucha</p>
+                                <p><strong>María:</strong> Lo queremos</p>
+                                <p><strong>S.E.R.:</strong> relación con él.</p>
+                                <p><strong>María:</strong> Sí, sí. Él iba mucho a capilla del monte y allá él tenía especialmente los días 24 de diciembre, él se iba allá y se quedaba solo en el medio del cerro y bueno, él tuvo muchas experiencias de esas,</p>
+                                <p><strong>S.E.R.:</strong> ¿qué considera respecto de todas esas experiencias que ha tenido? Lo ve como algo positivo, negativo.</p>
+                                <p><strong>María:</strong> Pienso que es positivo.</p>
+                                <p><strong>S.E.R.:</strong> Piensa que es positivo.</p>
+                                <p><strong>María:</strong> Sí, positivo, por supuesto.</p>
+                                <p><strong>S.E.R.:</strong> Ajá.</p>
+                                <p><strong>María:</strong> No, no. Y creo en la Creo.</p>
+                                <p><strong>S.E.R.:</strong> Ah, pero tiene ten nos empezaste a contarnos algunas algunas visitas, algo de unas visitas. ¿Podés relatarnos algo?</p>
+                                <p><strong>María:</strong> Si querés, sí, eh, de verlos de, o sea, siempre a la noche cuando yo estoy acostada, suponte, eh, que se me aparece, o sea, yo estoy durmiendo, chicos, estoy dormida y es como que te despiertan. Al despertar me veo enfrente en los pies de mi cama un ser todo blanco como esta luz que viste la fluorescente pero toda la silueta, no es que haya destello alrededor blanco y se veía la parte de los ojitos que se veían como oscuros, eh, pero no tengo miedo y no tengo reacción. Yo solo o ellos hacen de que yo solamente los veo, no tengo miedo, no siento nada.</p>
+                                <p><strong>S.E.R.:</strong> No le produce miedo ni nada malo,</p>
+                                <p><strong>María:</strong> ninguna sensación. No, nada.</p>
+                                <p><strong>S.E.R.:</strong> ¿De qué? De tranquilidad.</p>
+                                <p><strong>María:</strong> Tranquilidad.</p>
+                                <p><strong>S.E.R.:</strong> Tranquilidad.</p>
+                                <p><strong>María:</strong> Sí.</p>
+                                <p><strong>S.E.R.:</strong> ¿Y por qué decí siempre?</p>
+                                <p><strong>María:</strong> Paz.</p>
+                                <p><strong>S.E.R.:</strong> Tranquilidad.</p>
+                                <p><strong>María:</strong> Ajá.</p>
+                                <p><strong>S.E.R.:</strong> ¿Y por qué dijiste siempre sucede regularmente varias veces?</p>
+                                <p><strong>María:</strong> No, eso me pasó ahí cuando vivía en calle Brasil. Esas cosas y no. Otra otro otra cosa que haya ahí en esa misma casa fue donde entró la llama que te conté e y ahí donde vi los dos seres eh como una pared parados en la puerta que te dije los perritos durmiendo. Ni se molestaron los perritos para nada. Y también me despierto, veo dos siluetas eh vestidos igual con parecía un enterizo todo de un color así marrón, ¿viste? Un marrón claro. Pero eh lo mío es que es como que después te duermen, o no sé, porque yo no me acuerdo ni cómo me despiertan y cuando se van. Qu no es como que me vuelvo a dormir y no es un sueño porque yo lo veo, yo lo estoy viendo.</p>
+                                <p><strong>S.E.R.:</strong> Sí, sí. Y no, no te podes mover o probaste mover.</p>
+                                <p><strong>María:</strong> No, no, eso te digo, eh, no, no intenté moverme, no nada, no reacciono, ¿entendés? Para nada. No, no, no pienso, no nada, solamente veo</p>
+                                <p><strong>S.E.R.:</strong> rasgos que puedas reconocer de edad, eh,</p>
+                                <p><strong>María:</strong> jóvenes,</p>
+                                <p><strong>S.E.R.:</strong> eh sexo,</p>
+                                <p><strong>María:</strong> Una mujer y un hombre. Parecía una pareja. Te digo una mujer y un hombre, pero entre 30, 40.</p>
+                                <p><strong>S.E.R.:</strong> Podías ver rostro, cab Si tenían cabello, si</p>
+                                <p><strong>María:</strong> me parecían normales. Sí.</p>
+                                <p><strong>S.E.R.:</strong> Ajá. Y se veían con cierta luminosidad o pacos como nosotros.</p>
+                                <p><strong>María:</strong> Así como nosotros.</p>
+                                <p><strong>S.E.R.:</strong> Ajá. Pero con algún algunos rasgos que te hacen dudar, digamos, de que ha cuenta dos experiencias distintas. O</p>
+                                <p><strong>María:</strong> que una vez que un ser que era luminoso todos experiencias distintas de lo que te estoy diciendo. Una vez me paso una cosa, otra vez me pasó otra y así</p>
+                                <p><strong>S.E.R.:</strong> en esa misma casa.</p>
+                                <p><strong>María:</strong> Sí, incluso mis vecinas, nosotros hacíamos reuniones en esa casa también con ese grupo que habíamos armado. Así pu nos contaron que tenían grupos de como nosotros de 30 años. Hace más de 30 años fue eso y que habíamos formado el grupo y una vecina me dice un día Anoche había una palangana grande arriba de tu casa. Un plato volador. ¿Qué puede ser? Nosotros ni he enterado, pero ella dice porque ella vivía detrás de mi casa, sobre calle Brasil también, donde yo eh donde me pasaron todas esas cosas. Y nosotros dijimos, bueno, y después otra persona más un día pasó enfrente también de nuestra casa y nos dijo también, ¿no?, que había visto algo arriba. O sea, que ellos estaban ahí como protegiendo, ¿no? No, no sé, viste, pero otras personas lo vieron,</p>
+                                <p><strong>S.E.R.:</strong> no les dieron detalles de que la como una palangana, pero si era metálica, si era luminosa. Eh, por ejemplo, esa persona que dijo que te dijo era luminoso, ¿no? Que vio algo.</p>
+                                <p><strong>María:</strong> Sí, sí. Y después tu voz.</p>
+                                <p><strong>S.E.R.:</strong> Qué locura.</p>
+                                <p><strong>María:</strong> Eso los muchachos con un con la hija. Y en la casa de te conocíamos. Ahora no, eh. No, en la casa de ahora lo que fue que la última experiencia que tuvo que tuve era 3 años. que te conté eso que aparece la nave, que yo le pregunto ah al hombre este si él estaba viajando esa nave. Sí, sí.</p>
+                                <p><strong>S.E.R.:</strong> Después de haber visto la nave que leé foto, que te mostré a vos, bueno, él experiencia es donde vivimos ahora</p>
+                                <p><strong>María:</strong> ahora eno este año.</p>
+                                <p><strong>S.E.R.:</strong> Sí, sí, sí. Y todos, casi todos los días. Y esas son las experiencias que él tuvo ahí que se sacan.</p>
+                                <p><strong>María:</strong> Incluso cuando yo pregunto si él estaba viajando es en la casa donde vivimos ahora, eh, donde aparece y desaparece la nave, ¿viste?</p>
+                                <p><strong>S.E.R.:</strong> Pero bueno, y desde cuándo empezaron con la temática de</p>
+                                <p><strong>Omar:</strong> Mira, eh si tengo que decirte desde cuándo me interesa, te puedo decir que desde los 14, 15 años, 16 más o menos empecé que me interesaba el tema.</p>
+                                <p><strong>S.E.R.:</strong> ¿Cuántos años tienes ahora?</p>
+                                <p><strong>Omar:</strong> 63.</p>
+                                <p><strong>S.E.R.:</strong> 63 Y los 80,</p>
+                                <p><strong>Omar:</strong> claro. Eh, nosotros no vivíamos acá, vivíamos en Mariuana y empecé, me interesaba el tema. Eh, en esa época había visto por televisión, a ver, no, no, eso fue acá, lo vi a Rom por televisión, pero no en esa época me acuerdo que eh había conseguido algunas publicaciones de Benítez, de JJ Benítez.</p>
+                                <p><strong>S.E.R.:</strong> Ajá.</p>
+                                <p><strong>Omar:</strong> Eh, y bueno, por ahí eso. me movilizó, ¿viste? Pero siempre quedó ahí porque nunca viste que no es fácil conseguir información y más en esa época en esa época no. Cuando vinimos a Rafaela, bueno, después se se dio la posibilidad de contactar con otra gente y y por ahí tener un poco más de información.</p>
+                                <p><strong>S.E.R.:</strong> ¿Y con quién se contactó?</p>
+                                <p><strong>Omar:</strong> Bueno, eh en su momento acá en Rafaela eh fue con José María Rey, que no sé si lo conocés, él fue el que trajo a</p>
+                                <p><strong>S.E.R.:</strong> estaba en el artículo José María fue en esa época, año 88, 87, trajo a Pedro Rom acá. Sí, sí, sí.</p>
+                                <p><strong>Omar:</strong> Ahí en el Cinecol Colón, en el creo que se colón</p>
+                                <p><strong>S.E.R.:</strong> San Martín, qué san Martín. Exactamente. San Martín</p>
+                                <p><strong>Omar:</strong> San Martín. Sí, exactamente.</p>
+                                <p><strong>S.E.R.:</strong> Ajá.</p>
+                                <p><strong>Omar:</strong> Y aún eh era cordobés ese hombre, ¿no? De Buenos Aires.</p>
+                                <p><strong>S.E.R.:</strong> Ah, de Buenos Aires. Un piloto de avión que</p>
+                                <p><strong>Omar:</strong> Ah. se miró. Bueno, Pedro, no sé si queré grabar esto una cosa contártela. Después, en todo caso charlamos el caso de él de cómo empezó el tema de de Romagú, pero eh bueno, el caso fue así. Eh, conocemos a Roma y empezamos a interesarnos ahí en contacto con Rey, empezamos a juntarnos, fuimos un un par de veces a Capilla del Monte. Eh, después formamos un Empezamos a tener contacto con Dante Franch. Eh, ahí lo trajimos un par de veces a Rafael, unas tres, cuatro veces a Rafaela y hizo unas conferencias acá. Él me decía que no no nunca se enteraron de nada. Pino varias veces y cómo es y bueno y así y a raíz de eso se armaban los grupos eh o el grupo ese que que ella comenta que nos reunimos en calle Brasil en donde era ven otra gente externa del grupo que pasaba por ahí o la mujer esta que vivía ahí, ven cosas en distintas oportunidades, no fue en la misma la misma situación, sino que esa mujer comentó que vio eso que parecía como una palangana sobre la casa y el otro muchacho que lo conocía eh un día pasaba caminando en con la hija y cuenta que vio vio eso, vio como un disco, no en realidad no no lo tengo bien presente que era pues Sé que dijo que vio algo arriba de la casa que era como una luz en Brasil.</p>
+                                <p><strong>S.E.R.:</strong> ¿Qué altura? Brasil al 9</p>
+                                <p><strong>Omar:</strong> era una balanza antes. Ahora ya frente vivíamos balanza de camiones. Vivíamos antes. Ahora no vivimos.</p>
+                                <p><strong>S.E.R.:</strong> El año de eso es</p>
+                                <p><strong>Omar:</strong> esto te estoy contando entre el 90 y 94. Eh, Ra Peña y Brasil. En esa</p>
+                                <p><strong>S.E.R.:</strong> ahí se juntaban en su casa.</p>
+                                <p><strong>Omar:</strong> Sí.</p>
+                                <p><strong>S.E.R.:</strong> Ah, otras personas que participaban que interesaron quiénes son.</p>
+                                <p><strong>Omar:</strong> Interesaban y no eh nombre, no sé si</p>
+                                <p><strong>S.E.R.:</strong> y habían armado como un grupo, le pusieron nombre. Juntábamos, se juntaba. Estamos grabando, si no queres decir nada, no hay drama. O person, pero está bueno porque para poderarlo en los diarios si hicieron alguna cuestión pública, está bueno.</p>
+                                <p><strong>Omar:</strong> Está bueno. Esa gente no está mal. Yo le dije que una vez lo fui a ver a usted porque alguien me dijo porque en un momento dice este señor eh este está en el tema y digamos, o sea, sí, sí, no sé por qué razón</p>
+                                <p><strong>S.E.R.:</strong> y experiencias suyas, porque</p>
+                                <p><strong>Omar:</strong> experiencia yo te puedo contar lo que le comentaba a ellos antes que vos llegues, una noche que también eh la mayoría de las veces fue acá en Brasil, ¿no? Eh, cuando veía dos luces que yo creí que era un avión y que veía las dos puntas de las alas porque veía dos veces una paralela una al lado de la otra que eh viajaban de de sur a norte y cuando eh digo un avión y eso se cruzó y se puso una atrás de la otra y siguió manchando. Rarísimo. Después otra noche con un amigo charlando enfrente de mi casa, eh quedaba hacia el sur, eh tenía una una porita de reja, estábamos ahí. charlando y veo así e hacia el oeste una luz que pensé, digo, la luna. La luna. Digo, qué raro, la luna. Ahí cuando paso a mi casa después que él se va y voy al patio y veo que la luna estaba saliendo por el este y era una media así, una luna menguante o creciente, una cosa una cosa chiquita. Y ya era tarde para volver aquello.</p>
+                                <p><strong>S.E.R.:</strong> Pero ya y usted qué considera que eso le pasa a usted nada más o</p>
+                                <p><strong>Omar:</strong> eh no. Acá hay mucha gente que le ha pasado cosas, gente que por ahí eh no sé</p>
+                                <p><strong>S.E.R.:</strong> y entonces que considera que es más observador que otra gente, digamos. Caso nuestro.</p>
+                                <p><strong>Omar:</strong> Sí. En el caso suyo.</p>
+                                <p><strong>S.E.R.:</strong> Sí, supongo.</p>
+                                <p><strong>Omar:</strong> La costumbre nuestra es salir, pero en el momento justo que están pasando y el cielo, ¿entendés? Yo creo que eso sucede porque justo no sé por qué están llamando salía ahora que estamos pasando.</p>
+                                <p><strong>S.E.R.:</strong> Hay gente que todo el día a lo mejor ado mirando para abajo y por ahí uno observa más.</p>
+                                <p><strong>Omar:</strong> Ajá. Eh, y eso hace que más cosas. Después hay gente que por determinada razón tiene más experiencia que otra. Por alguna razón determinada, no sé, tiene más experiencia que otra. Sí, por alguna por alcho, por por lo que sea, tiene tiene hay gente o porque le interesa más o porque o por lo que sea</p>
+                                <p><strong>S.E.R.:</strong> y con el grupo de personas que se juntaban llegaban especie de conclusión al respecto.</p>
+                                <p><strong>Omar:</strong> Todos creíamos, me pas, o sea, no es que eh sí, todos creíamos y bueno, intentamos salir, hacer unas salidas a al campo para para ver si veíamos.</p>
+                                <p><strong>S.E.R.:</strong> Sí, sí, hicimos un par de salidas. Nunca nunca nos pasó como le pasó a ustedes que le pasó.</p>
+                                <p><strong>Omar:</strong> Nosotros fuimos dos veces antes, ¿verdad? Ah, no,</p>
+                                <p><strong>S.E.R.:</strong> pero usted me contó que una vez fue a ver unas huellas allá. Ah, sí, sí. A Felicia. Felicia. Sí, sí. Eso. ¿Se acuerdas de la mañana de haber ido a Felicia a ver las huellas esas? ¿Se acuerdas?</p>
+                                <p><strong>Omar:</strong> Eh, cuando fuimos a Felicia fuimos a otros campos también a ver, ¿te acuerdas cuando fuimos con Antonio ese lugar? Que fuimos a ver una huella en el campo ese donde había eh como es un campo con alfa alfa. Era</p>
+                                <p><strong>S.E.R.:</strong> Y se veían los círculos y buscaron algún testimonio de alguien. ¿Por qué estaban esas huellas?</p>
+                                <p><strong>Omar:</strong> En realidad había una persona ahí cuando fuimos. Eh, eso fue hace tanto tiempo. Éramos nosotros éramos unos unos 10 personas más o menos y ahí había una persona, sí, que fuimos que nos interesaba el tema de viste como como pasa como les ha pasado a ustedes con el tema este de de ahí que fueron al polvorín, que se enteraron y fueron. Sí, sí. Te enteras y Entonces nosotros fuimos, nos miraron en un campo en tal lugar en Felicia, fuimos y y había una persona ahí y había unas, yo te puedo decir 10 huellas fácil, eh aros eran aros y unos eh sí, 15, 20 cm de de digamos el aro, el la de espesor. Sí, y el aro grandote. Era un aro de unos dos aproximadamente de diámetro. Así eh no había no había eh huellas de apoyar ni nada, ¿no? Solo eso</p>
+                                <p><strong>S.E.R.:</strong> impto estaba</p>
+                                <p><strong>Omar:</strong> exactamente. Pasto era un pasto Sí, un pasto no no tan alto tampoco. Y este hombre, bueno, este hombre nos hablaba de le interesaba la radiestesia, andaba con las varillitas y cuando se arrimaba la huella así con las varillitas se cruzaban las varillas. lo explicaba, dice, "Mira, esto esto tiene algún alguna energía, algún campo de fuerza o algo porque dice el hombre del campo,</p>
+                                <p><strong>S.E.R.:</strong> el hombre era de allá, sí, no sé. Y él pudo asoció, pudo asociar eso con algunas luces o algo por el estilo. Solo veían las huellas,</p>
+                                <p><strong>Omar:</strong> solo las huellas y nada más. Él él contó, creo que con, mira, te digo esto, te estoy hablando esto antes del 90.</p>
+                                <p><strong>S.E.R.:</strong> Sí, hace muchísimo</p>
+                                <p><strong>Omar:</strong> antes del 90. Él él contó Me parece que eh que contó que conocía al dueño del campo, que se enteró que fue todo como un rumor ahí en la zona, porque esto, imagínate, aparece esto, el si alguien vio vio luces, eh, habrá dicho algo, o no sé cómo habrá sido el romor, porque acá llegó llegó como una información que habían aparecido esas esas huellas en Felicia y fuimos, pero charlaban un poco así, te digo, Mira, imagínate</p>
+                                <p><strong>S.E.R.:</strong> eso tuvo repercusión nacional en esa época.</p>
+                                <p><strong>Omar:</strong> No, nacional no creo.</p>
+                                <p><strong>S.E.R.:</strong> Ah,</p>
+                                <p><strong>Omar:</strong> no creo. No sé si acá en el diario local diario algo. No sé si en el diario local me parece que había alguna foto. Me parece que vi esa época una foto. A lo mejor por ahí en la opinión puedas conseguir algún dato. Antes del 90.</p>
+                                <p><strong>S.E.R.:</strong> Sí, sí. Entre el 88 y el 90 aproximadamente. Así es. ¿Te animass un quejo de de esto, por ejemplo, de la llama dibuja, le gusta dibujar a la mientras habla dibuja. Este que esta era la puerta era la ventana si queres escribir puerta de ventana y eso no más nos queda como un esquema, ¿no? Te si te gusta dibujar dale.</p>
+                                <p><strong>María:</strong> Dibujé toda mi vida.</p>
+                                <p><strong>S.E.R.:</strong> Listo, ya está. Te entrego el lápiz cuando la escuela y después de grande también. Parece mentira. Ya está. ¿Hay algo más para contar? Vos tenés más para contar, pero tenemos la grabación.</p>
+
+            </div>
+
+            <h3 class="gallery-title reveal">Evidencia Fotográfica</h3>
+            <div class="gallery reveal">
+                <img src="assets/Casos/Caso%20Maria%20y%20Omar/dibujos/Forma%20de%20la%20llama%20y%20recorrido%20.jpg" alt="Forma de la llama y recorrido .jpg" class="reveal">
+                <img src="assets/Casos/Caso%20Maria%20y%20Omar/dibujos/IMG_20230603_191438779.jpg" alt="IMG_20230603_191438779.jpg" class="reveal">
+                <img src="assets/Casos/Caso%20Maria%20y%20Omar/dibujos/IMG_20230603_191454909.jpg" alt="IMG_20230603_191454909.jpg" class="reveal">
+                <img src="assets/Casos/Caso%20Maria%20y%20Omar/dibujos/IMG_20230603_191501656.jpg" alt="IMG_20230603_191501656.jpg" class="reveal">
+                <img src="assets/Casos/Caso%20Maria%20y%20Omar/dibujos/IMG_20230603_191540062.jpg" alt="IMG_20230603_191540062.jpg" class="reveal">
+                <img src="assets/Casos/Caso%20Maria%20y%20Omar/dibujos/Llama%20de%20fuego%20.jpg" alt="Llama de fuego .jpg" class="reveal">
+                <img src="assets/Casos/Caso%20Maria%20y%20Omar/dibujos/Voz%20que%20escuch%C3%B3%20Mar%C3%ADa%20.jpg" alt="Voz que escuchó María .jpg" class="reveal">
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal para fotos -->
+    <div id="imageModal" class="modal">
+        <span class="close-modal" id="closeModal">&times;</span>
+        <img class="modal-content" id="modalImg">
+    </div>
+
+    <!-- Matter.js Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Scroll Reveal Animation
+            const revealElements = document.querySelectorAll('.reveal');
+
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, {
+                root: null,
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            });
+
+            revealElements.forEach(el => revealObserver.observe(el));
+
+            // Hamburger menu functionality
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navLinks = document.getElementById('nav-links');
+            const links = navLinks.querySelectorAll('a');
+
+            mobileMenu.addEventListener('click', () => {
+                mobileMenu.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+
+            // Close when clicking a link
+            links.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    navLinks.classList.remove('active');
+                });
+            });
+
+            const logo = document.getElementById('logo');
+            let antigravityActive = false;
+            let clickTimeout;
+
+            logo.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (antigravityActive) return;
+
+                if (!clickTimeout) {
+                    clickTimeout = setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 300);
+                }
+            });
+
+            logo.addEventListener('dblclick', (e) => {
+                e.preventDefault();
+                if (clickTimeout) {
+                    clearTimeout(clickTimeout);
+                    clickTimeout = null;
+                }
+                if (antigravityActive) return;
+                antigravityActive = true;
+
+                window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+                setTimeout(initAntigravity, 50);
+            });
+
+            function initAntigravity() {
+                document.body.style.overflow = 'hidden';
+
+                const Engine = Matter.Engine,
+                    Render = Matter.Render,
+                    Runner = Matter.Runner,
+                    Bodies = Matter.Bodies,
+                    Composite = Matter.Composite,
+                    Mouse = Matter.Mouse,
+                    MouseConstraint = Matter.MouseConstraint;
+
+                const engine = Engine.create();
+                const world = engine.world;
+
+                const selectors = 'h1, h3, p, strong, .links a, img, audio, .back-link, .meta-data, .audio-container';
+                const elements = document.querySelectorAll(selectors);
+                const domBodies = [];
+
+                elements.forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.width < 5 || rect.height < 5 || document.defaultView.getComputedStyle(el).display === 'none') return;
+
+                    const css = window.getComputedStyle(el);
+                    const styles = {
+                        fontSize: css.fontSize,
+                        fontFamily: css.fontFamily,
+                        fontWeight: css.fontWeight,
+                        lineHeight: css.lineHeight,
+                        letterSpacing: css.letterSpacing,
+                        textTransform: css.textTransform,
+                        textAlign: css.textAlign,
+                        padding: css.padding,
+                        display: css.display,
+                        alignItems: css.alignItems,
+                        justifyContent: css.justifyContent
+                    };
+
+                    const x = rect.left + rect.width / 2;
+                    const y = rect.top + rect.height / 2;
+                    const body = Bodies.rectangle(x, y, rect.width, rect.height, {
+                        restitution: 0.6,
+                        friction: 0.1,
+                        density: 0.005
+                    });
+
+                    Composite.add(world, body);
+
+                    domBodies.push({
+                        body: body,
+                        element: el,
+                        width: rect.width,
+                        height: rect.height,
+                        savedStyles: styles
+                    });
+                });
+
+                const wrapper = document.getElementById('wrapper');
+                const nav = document.getElementById('navbar');
+                wrapper.style.display = 'none';
+                nav.style.display = 'none';
+
+                document.body.style.backgroundColor = '#000000';
+                document.body.style.backgroundImage = 'none';
+
+                domBodies.forEach(item => {
+                    const el = item.element;
+                    const style = item.savedStyles;
+
+                    document.body.appendChild(el);
+
+                    el.className = 'falling-element';
+                    if (el.classList.contains('audio-container')) {
+                        el.classList.add('falling-border');
+                    }
+
+                    el.style.width = item.width + 'px';
+                    el.style.height = item.height + 'px';
+                    el.style.fontSize = style.fontSize;
+                    el.style.fontFamily = style.fontFamily;
+                    el.style.fontWeight = style.fontWeight;
+                    el.style.lineHeight = style.lineHeight;
+                    el.style.letterSpacing = style.letterSpacing;
+                    el.style.textTransform = style.textTransform;
+                    el.style.textAlign = style.textAlign;
+                    el.style.padding = style.padding;
+
+                    if (style.display === 'flex' || style.display === 'block') {
+                        el.style.display = style.display;
+                        el.style.alignItems = style.alignItems;
+                        el.style.justifyContent = style.justifyContent;
+                    }
+
+                    const x = item.body.position.x - item.width / 2;
+                    const y = item.body.position.y - item.height / 2;
+                    el.style.transform = `translate(${x}px, ${y}px) rotate(0rad)`;
+                });
+
+                const wallOpts = { isStatic: true };
+                const tb = 100;
+                const w = window.innerWidth;
+                const h = window.innerHeight;
+
+                Composite.add(world, [
+                    Bodies.rectangle(w / 2, h + tb / 2, w * 2, tb, wallOpts),
+                    Bodies.rectangle(w / 2, -tb / 2 - 2000, w * 2, tb, wallOpts),
+                    Bodies.rectangle(-tb / 2, h / 2, tb, h * 3, wallOpts),
+                    Bodies.rectangle(w + tb / 2, h / 2, tb, h * 3, wallOpts)
+                ]);
+
+                Matter.Events.on(engine, 'afterUpdate', () => {
+                    domBodies.forEach(item => {
+                        const x = item.body.position.x - item.width / 2;
+                        const y = item.body.position.y - item.height / 2;
+                        item.element.style.transform = `translate(${x}px, ${y}px) rotate(${item.body.angle}rad)`;
+                    });
+                });
+
+                const mouse = Mouse.create(document.body);
+                const mouseConstraint = MouseConstraint.create(engine, {
+                    mouse: mouse,
+                    constraint: { stiffness: 0.2, render: { visible: false } }
+                });
+
+                if (mouseConstraint.mouse.element) {
+                    mouseConstraint.mouse.element.removeEventListener('mousewheel', mouseConstraint.mouse.mousewheel);
+                    mouseConstraint.mouse.element.removeEventListener('DOMMouseScroll', mouseConstraint.mouse.mousewheel);
+                }
+
+                Composite.add(world, mouseConstraint);
+                Runner.run(Runner.create(), engine);
+            }
+
+            // Modal Logic for Gallery
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            const closeModal = document.getElementById('closeModal');
+            const galleryImages = document.querySelectorAll('.gallery img');
+
+            galleryImages.forEach(img => {
+                img.addEventListener('click', function () {
+                    // Prevent opening modal if antigravity is running
+                    if (antigravityActive) return;
+
+                    modal.style.display = 'flex';
+                    modalImg.src = this.src;
+                });
+            });
+
+            closeModal.addEventListener('click', function () {
+                modal.style.display = 'none';
+            });
+
+            modal.addEventListener('click', function (e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
