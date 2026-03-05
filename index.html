@@ -786,7 +786,7 @@
             position: relative;
             max-width: 800px;
             width: 100%;
-            height: clamp(200px, 30vw, 300px);
+            height: 300px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -882,6 +882,39 @@
         .dot:hover {
             background-color: var(--black);
             transform: scale(1.2);
+        }
+
+        /* Carousel Responsiveness */
+        @media (max-width: 768px) {
+            #quotes-carousel {
+                padding: 3rem 1rem;
+            }
+
+            .carousel-container {
+                height: 480px;
+                /* Allow more height for wrapping text */
+            }
+
+            .carousel-arrow {
+                font-size: 2rem;
+            }
+
+            .carousel-arrow.prev {
+                left: -5px;
+            }
+
+            .carousel-arrow.next {
+                right: -5px;
+            }
+
+            .quote {
+                font-size: 1.1rem;
+                max-width: 90%;
+            }
+
+            .author {
+                font-size: 1rem;
+            }
         }
     </style>
 
