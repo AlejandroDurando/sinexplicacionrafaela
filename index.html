@@ -815,6 +815,34 @@
             z-index: 2;
         }
 
+        /* Carousel Arrows */
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            color: #bbb;
+            border: none;
+            font-size: 2.5rem;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 5;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .carousel-arrow:hover {
+            color: var(--black);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-arrow.prev {
+            left: 5px;
+        }
+
+        .carousel-arrow.next {
+            right: 5px;
+        }
+
         .quote {
             font-size: clamp(1.2rem, 4vw, 1.8rem);
             font-style: italic;
@@ -822,7 +850,7 @@
             line-height: 1.6;
             margin-bottom: 1.5rem;
             color: var(--black);
-            max-width: 90%;
+            max-width: 80%;
         }
 
         .author {
@@ -921,6 +949,8 @@
 
         <section id="quotes-carousel" class="reveal">
             <div class="carousel-container">
+                <button class="carousel-arrow prev" onclick="prevSlide()">&#10094;</button>
+
                 <div class="carousel-slide active">
                     <p class="quote">"Él hizo un cambio de personalidad. Hubo un antes y un después... desde el
                         avistamiento que él tuvo."</p>
@@ -936,11 +966,31 @@
                         tiempo. Yo decía, 'Pero este hombre, ¿cómo puede saber de la energía?' Era un capo."</p>
                     <strong class="author">- Dana Condrac</strong>
                 </div>
+                <div class="carousel-slide">
+                    <p class="quote">"Siempre están. Es como que están siempre. Solamente que la época de cuarentena es
+                        como que nos hizo ver más al cielo."</p>
+                    <strong class="author">- Chino Mojica</strong>
+                </div>
+                <div class="carousel-slide">
+                    <p class="quote">"La gente se pregunta, ¿cómo no se presentan? Porque no estamos listos, no estamos
+                        preparados. Nos falta muchísimo evolucionar espiritualmente."</p>
+                    <strong class="author">- Chino Mojica</strong>
+                </div>
+                <div class="carousel-slide">
+                    <p class="quote">"Entender que somos muy chiquitos, muy pequeños, que somos insignificantes, que
+                        somos una partícula, y entender que no estamos solos, ya es un paso importante."</p>
+                    <strong class="author">- Chino Mojica</strong>
+                </div>
+
+                <button class="carousel-arrow next" onclick="triggerNextSlide()">&#10095;</button>
             </div>
             <div class="carousel-indicators">
                 <span class="dot active" onclick="currentSlide(0)"></span>
                 <span class="dot" onclick="currentSlide(1)"></span>
                 <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+                <span class="dot" onclick="currentSlide(4)"></span>
+                <span class="dot" onclick="currentSlide(5)"></span>
             </div>
         </section>
 
@@ -1267,6 +1317,18 @@
         window.currentSlide = function (n) {
             clearInterval(slideInterval);
             showSlides(n);
+            slideInterval = setInterval(nextSlide, 7000);
+        };
+
+        window.prevSlide = function () {
+            clearInterval(slideInterval);
+            showSlides(slideIndex - 1);
+            slideInterval = setInterval(nextSlide, 7000);
+        };
+
+        window.triggerNextSlide = function () {
+            clearInterval(slideInterval);
+            showSlides(slideIndex + 1);
             slideInterval = setInterval(nextSlide, 7000);
         };
     </script>
