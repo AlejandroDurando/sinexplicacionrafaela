@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expediente #044 - SER</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+
+    <style>
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            scroll-behavior: smooth;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 0.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background-color: var(--white);
+            border-bottom: 3px solid var(--black);
+        }
+
+        nav img {
+            height: 110px;
+            cursor: pointer;
+            filter: grayscale(100%);
+            transition: transform 0.3s;
+        }
+
+        nav img:hover {
+            transform: scale(1.1);
+        }
+
+        nav .links a {
+            color: var(--black);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        nav .links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--black);
+            transition: width 0.3s ease;
+        }
+
+        nav .links a:hover::after {
+            width: 100%;
+        }
+
+        section {
+            padding: 12rem 2rem 4rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            align-self: flex-start;
+            margin-bottom: 2rem;
+            color: var(--black);
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--black);
+            padding-bottom: 2px;
+        }
+
+        .back-link:hover {
+            background-color: var(--black);
+            color: var(--white);
+        }
+
+        h1 {
+            font-family: 'Anton', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            align-self: flex-start;
+            width: 100%;
+        }
+
+        .meta-data {
+            align-self: flex-start;
+            margin-bottom: 3rem;
+            font-size: 0.9rem;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-left: 3px solid var(--black);
+            padding-left: 1rem;
+        }
+
+        .audio-container {
+            width: 100%;
+            padding: 2rem;
+            border: 3px solid var(--black);
+            margin-bottom: 3rem;
+            background-color: #f9f9f9;
+        }
+
+        audio {
+            width: 100%;
+            height: 50px;
+            filter: grayscale(100%) contrast(150%);
+        }
+
+        .transcription {
+            width: 100%;
+            text-align: left;
+        }
+
+        .transcription h3 {
+            font-family: 'Anton', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--black);
+            padding-bottom: 0.5rem;
+        }
+
+        .transcription p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            padding-left: 1rem;
+            border-left: 2px solid #ccc;
+            color: var(--black);
+        }
+
+        .transcription p strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--black);
+        }
+
+        /* Gallery Styles */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+            margin-top: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: auto;
+            border: 3px solid var(--black);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border: 3px solid var(--white);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: var(--white);
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: #ccc;
+        }
+
+        .gallery-title {
+            font-family: 'Anton', sans-serif;
+            font-size: 2rem;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            align-self: flex-start;
+            border-bottom: 3px solid var(--black);
+            width: 100%;
+            padding-bottom: 0.5rem;
+            color: var(--black);
+        }
+
+        /* Antigravity hidden classes */
+        .falling-element {
+            position: fixed !important;
+            margin: 0 !important;
+            z-index: 9999 !important;
+            box-sizing: border-box !important;
+            transform-origin: center center;
+            will-change: transform;
+            color: var(--white) !important;
+            background-color: transparent !important;
+            mix-blend-mode: difference !important;
+        }
+
+        .falling-border {
+            border: 3px solid var(--white) !important;
+            outline: none !important;
+        }
+
+        /* Hamburger Menu Icon */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 200;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--black);
+            transition: all 0.3s ease;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: row;
+                padding: 0.5rem 1rem;
+                justify-content: space-between;
+                align-items: center;
+                height: auto;
+            }
+
+            nav img {
+                height: 60px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .menu-toggle.active span:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.active span:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            nav .links {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                padding: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-in-out;
+                border-bottom: 0px solid var(--black);
+            }
+
+            nav .links.active {
+                max-height: 300px;
+                padding: 1.5rem 0;
+                border-bottom: 3px solid var(--black);
+            }
+
+            nav .links a {
+                margin: 0;
+                padding: 1rem 0;
+                text-align: center;
+                font-size: 1.2rem;
+                width: 100%;
+            }
+
+            nav .links a::after {
+                display: none;
+            }
+        }
+
+        /* Scroll Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Prevent Matter.js breaking due to opacity 0 elements */
+        .falling-element.reveal {
+            opacity: 1 !important;
+            transform: none !important;
+            transition: none !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav id="navbar">
+        <a href="index.html" title="Volver al inicio"><img src="assets/logo_1png.png" alt="SER Logo" id="logo"></a>
+
+        <div class="menu-toggle" id="mobile-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <div class="links" id="nav-links">
+            <a href="testimonios.html">Testimonios</a>
+            <a href="sobre_nosotros.html">Sobre nosotros</a>
+            <a href="contacto.html">Contacto</a>
+        </div>
+    </nav>
+
+    <div id="wrapper">
+        <section>
+            <a href="testimonios.html" class="back-link reveal">
+                &lt; Volver a los archivos</a>
+
+            <h1 class="reveal">Caso Javi Possetto</h1>
+
+            <div class="meta-data reveal">
+                Entrevistado: Javi Possetto &nbsp;|&nbsp; Entrevistador: S.E.R.<br>
+                Fecha: No especificado <br>
+                Fuente: Entrevista Directa - Caso Javi Possetto
+            </div>
+
+            <div class="audio-container reveal"
+                style="padding: 0; background: var(--white); border: 3px solid var(--black); overflow: hidden; border-radius: 0;">
+                <audio controls playsinline preload="auto"
+                    style="width:100%; display:block; background: var(--white); height: 60px;">
+                    <source
+                        src="assets/Casos/Caso%20Javi%20Possetto/testimonio%20ovni%20Javi%20possetto.m4a"
+                        type="audio/mp4">
+                    Tu navegador no soporta la reproducción de audio.
+                </audio>
+            </div>
+
+            <div class="transcription">
+                <h3>[ TRANSCRIPCIÓN OFICIAL ]</h3>
+
+                                <p><strong>﻿S.E.R.:</strong> Hoy es 8 de mayo de 2024. Estamos con un testigo que nos va a relatar una experiencia que tuvo. ¿En qué año más o menos?
+Javi: Y fue en los 90, pero el año, no me acuerdo.
+S.E.R.: ¿Te acuerdas? ¿Cuántos años tenías?
+Javi: Y habré tenido ocho, nueve, entre si nueve, capaz.
+S.E.R.: Bueno, y saquemos la cuenta. Entonces, estamos en 2024 sería... ¿Cuántos años tenés?
+Javi: 30 menos... 95, 96, 95.
+S.E.R.: Bueno, te preguntaba porque más o menos en los 90 ahí en ese mismo barrio pasaron cosas. Barrio Fasoli.
+Javi: Barrio Fasoli más o menos.
+S.E.R.: ¿Y más o menos la ubicación frente a quién?
+Javi: Eh, en realidad fue en el patio de mi casa. Calle Cervantes, antes de llegar a 27 de septiembre.
+S.E.R.: Bien. ¿Y lo viste más o menos para qué lado, para qué punto cardinal? Así lo voy ubicando.
+Javi: Sí, suroeste.
+S.E.R.: Contanos cómo fue.
+Javi: Fue una tarde primaveral de verano. Ahí había nubes. Eso no me acuerdo bien, pero había sol y estaba jugando con mis amigos en el patio de mi casa con mis vecinos y otro vecino de ahí a la vuelta. Creo que en total éramos de la derecha con los laterales, estábamos jugando bien en el patio y de la nada vemos que baja como una bola así de energía. Baja, estoy así...
+S.E.R.: Pero o sea, ahí nomás lo tuviste. ¿Que baja a dónde?
+Javi: Ponele a la altura del tapial, digamos.
+S.E.R.: ¿A cuántos metros?
+Javi: El tapial que divide la medianera de mi casa con la del vecino.
+S.E.R.: ¿Y qué distancia tenías más o menos de dónde estaba?
+Javi: Un metro ponele. Yo estaba en el pasto, digamos, mi hermano, mi amigo también y había uno de los pibes que estaba sentado arriba del tapial, así que le pasó cerca, digamos.
+S.E.R.: Bueno, ¿cómo era entonces lo que viste?
+Javi: Era como una bola de energía, fuego, porque luces era algo brillante. Sí, pero era como que...
+S.E.R.: ¿Y qué tamaño, así como decís?
+Javi: Era como que se movía esa energía, digamos.
+S.E.R.: Ajá.
+Javi: Por eso no digo un fuego, pero no sé, como radioactividad.
+S.E.R.: Sí, pero era así, algo así. Eh, ahí estás hablando de 20 cm de diámetro, más o menos.
+Javi: Sí, no sé. Sí, 20 cm, 25 cm. Y bueno, y baja así... Sí, capaz que era más del oeste que del sur, porque baja así.
+S.E.R.: ¿Baja en línea recta de arriba hacia abajo o oblicua?
+Javi: Oblicua.
+S.E.R.: Ajá.
+Javi: Pero lo vemos así de la nada que baja y todos lo vieron. Todos.
+S.E.R.: ¿Y qué hicieron en ese momento? Porque eran chiquitos. Así, o sea, baja a la altura del tapial.
+Javi: Sí, baja a toda velocidad y a la altura del tapial como que va más lento. Hace unos metros y vuela otra vez.
+S.E.R.: Hace unos metros. ¿En qué dirección? ¿Horizontal o...?
+Javi: Arriba del tapial. Siguiendo la línea del tapial.
+S.E.R.: ¿Y el tapial a qué altura? ¿Mucho más alto que ustedes?
+Javi: Y sí, ponele que en esa época era re chiquito.
+S.E.R.: Claro, eras chiquito, entonces estaba mucho más arriba.
+Javi: Sí. Ponele que debe tener 1,70 el tapial. Y bueno, y quedamos todos así, todo bien, pero como que lo normalizamos.
+S.E.R.: ¿Le contaron a alguien, a sus padres?
+Javi: Sí, después de grande.
+S.E.R.: No, en serio, ¿en ese momento no se animaron? ¿Qué?
+Javi: No me acuerdo.
+S.E.R.: O no le llevaron el apunte, lo dejaron pasar.
+Javi: Como que por eso te digo, como que lo normalizamos, como éramos chicos y veíamos esas cosas, no sé, en videojuegos.
+S.E.R.: Normalizar, por ese sentido como que es algo que ya lo habían visto. ¿Qué color tenía eso?
+Javi: Y era una mezcla de luces de colores, ¿no? Era algo brillante que alrededor era más tirando a azul y adentro era como rojo y anaranjado, así con la mezcla. Eso es lo que vi yo, porque seguramente mis amigos te van a decir que tenían otro color, que sí hablaron después de eso. Bueno, ahora te voy a mostrar lo que me mandó mi amigo, uno de los que lo vio, pero no es lo que vimos exactamente, es una onda y justamente me lo mandó ayer.
+S.E.R.: No, en serio, mirá, justo hablando del tema. ¿O él vio un video que encontró y es tal cual como lo vieron ustedes? ¿Es lo que se va a ver ahí, no? Porque este como que tira rayos, es más loco, pero este no sé, que están las vías...
+Javi: Sí, ese es un fotomontaje.
+S.E.R.: Ah, no, no es real, pero bueno.
+Javi: Exacto. Igual este, sí, una cosa así que vimos nosotros, bajó así rápido y después fue lento. Sí. Este le tira rayos.
+S.E.R.: ¿Y vos por qué sabes que eso no es real?
+Javi: Centella.
+S.E.R.: Ah, investigaste.
+Javi: Una centella globular. Esto es algo viejo que ya está circulando en la red hace rato.
+S.E.R.: Entonces, hace rato está circulando.
+Javi: Sí, se llaman centellas.
+S.E.R.: Pero sí es una esfera. Entonces eso que viste... mirá, mirá lo que le puse yo. A ver. Pero este tira rayos y él me pone videos de más, pero es difícil de agarrar raro así. A ver, raro que sepan cuándo aparece una de esas, ¿no? Claro. Bueno, vamos al tiempo inmediato.
+Javi: Ah, lo había visto.
+S.E.R.: ¿Sucedió algo antes o después? ¿Hubo algún otro avistamiento o alguna sensación extraña, alguna visita, algún sueño, algo que te acuerdes?
+Javi: Ah, yo digamos. Sí. Y mis amigos.
+S.E.R.: ¿Se vio otro fenómeno en el mismo lugar, en algún otro momento de tu vida? ¿Mismo lugar y parecido?
+Javi: Sí, después yo vi en San Marcos Sierra, pero lo vi de lejos.
+S.E.R.: ¿Qué viste?
+Javi: Una luz que bajaba así y desaparecía atrás de las... hace mucho, en 2021.
+S.E.R.: ¿Y cómo era esa luz, de qué tamaño?
+Javi: Y yo la vi lejos. Yo estaba en un cerro, un cerro que se llama el Cerro de la Cruz.
+S.E.R.: Sí.
+Javi: En San Marcos, no sé si lo conocen.
+S.E.R.: Sí.
+Javi: Que subí caminando ahí, y mirando para el lado que sería Capilla del Monte, todo lo Uritorco. Ahí se veía una bola así anaranjada.
+S.E.R.: ¿Cómo? Por ahí derecho.
+Javi: Sí, bajaba como si estuviera cerca del cerro, o se veía más lejos. O sea, más lejos de donde estábamos nosotros. Se veía como cerca del cerro. No sé si era justo el Uritorco, pero se veía como una bola anaranjada. Y yo le dije a mis amigos, pero ellos alcanzaron de entrada... eso fue hace poco, unos tres años, y pero ahí en el barrio no vimos más nada.
+S.E.R.: ¿Y alguien más después? Hablando de... después que vos le contaste a tus viejos, ¿ellos habían visto algo, escuchado algo, algún vecino, algún amigo que le haya pasado algo parecido? Bueno, pero yo sí tengo el caso de un chico que vive en calle 27 de septiembre.
+Javi: Ahí cerquita.
+S.E.R.: Ah, o sea, en el barrio. Que también bajó una luz, en el 91 fue más o menos, él era chiquito y estaban tomando mate en la vereda cuando se hace de noche, que entran a comer así en verano que está caluroso y todo. Y entra la familia, y él se queda jugando ahí en la vereda y baja una luz que él la veía como una especie de plato, pero era una esfera en realidad. Era una esfera con extensiones hacia los costados, como unos brazos hacia los costados, que también podía tener como un metro de diámetro y baja, viene del cielo, baja en línea recta hasta 30 cm de la calle, se queda ahí y después sube a toda velocidad. A toda velocidad también, en el mismo barrio.
+Javi: Bueno, algo con...
+S.E.R.: Claro, que se van, llegan y se van rápido. Después o por ahí, creo que fue en el 94, unos vecinos vieron una bola anaranjada flotando en ese barrio. Algo más grande. Sí. O sea, que no sería la primera vez, ¿no? Por eso digo que es una zona caliente, Guillermo. Está liberada esa zona. Eh, ahí están los...
+Javi: Que llevan cuidado. Los frigoríficos.
+S.E.R.: Ah, vos decís que el tema siempre recurrente son las vacas.</p>
+
+            </div>
+
+            <h3 class="gallery-title reveal">Evidencia Fotográfica</h3>
+            <div class="gallery reveal">
+                <img src="assets/Casos/Caso%20Ale%20Durando/Dibujos/dibujo_durando_1.jpg" alt="Dibujo Durando 1"
+                    class="reveal">
+                <img src="assets/Casos/Caso%20Ale%20Durando/Dibujos/dibujo_durando_2.jpg" alt="Dibujo Durando 2"
+                    class="reveal">
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal para fotos -->
+    <div id="imageModal" class="modal">
+        <span class="close-modal" id="closeModal">&times;</span>
+        <img class="modal-content" id="modalImg">
+    </div>
+
+    <!-- Matter.js Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Scroll Reveal Animation
+            const revealElements = document.querySelectorAll('.reveal');
+
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, {
+                root: null,
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            });
+
+            revealElements.forEach(el => revealObserver.observe(el));
+
+            // Hamburger menu functionality
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navLinks = document.getElementById('nav-links');
+            const links = navLinks.querySelectorAll('a');
+
+            mobileMenu.addEventListener('click', () => {
+                mobileMenu.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+
+            // Close when clicking a link
+            links.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    navLinks.classList.remove('active');
+                });
+            });
+
+            const logo = document.getElementById('logo');
+            let antigravityActive = false;
+            let clickTimeout;
+
+            logo.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (antigravityActive) return;
+
+                if (!clickTimeout) {
+                    clickTimeout = setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 300);
+                }
+            });
+
+            logo.addEventListener('dblclick', (e) => {
+                e.preventDefault();
+                if (clickTimeout) {
+                    clearTimeout(clickTimeout);
+                    clickTimeout = null;
+                }
+                if (antigravityActive) return;
+                antigravityActive = true;
+
+                window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+                setTimeout(initAntigravity, 50);
+            });
+
+            function initAntigravity() {
+                document.body.style.overflow = 'hidden';
+
+                const Engine = Matter.Engine,
+                    Render = Matter.Render,
+                    Runner = Matter.Runner,
+                    Bodies = Matter.Bodies,
+                    Composite = Matter.Composite,
+                    Mouse = Matter.Mouse,
+                    MouseConstraint = Matter.MouseConstraint;
+
+                const engine = Engine.create();
+                const world = engine.world;
+
+                const selectors = 'h1, h3, p, strong, .links a, img, audio, .back-link, .meta-data, .audio-container';
+                const elements = document.querySelectorAll(selectors);
+                const domBodies = [];
+
+                elements.forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.width < 5 || rect.height < 5 || document.defaultView.getComputedStyle(el).display === 'none') return;
+
+                    const css = window.getComputedStyle(el);
+                    const styles = {
+                        fontSize: css.fontSize,
+                        fontFamily: css.fontFamily,
+                        fontWeight: css.fontWeight,
+                        lineHeight: css.lineHeight,
+                        letterSpacing: css.letterSpacing,
+                        textTransform: css.textTransform,
+                        textAlign: css.textAlign,
+                        padding: css.padding,
+                        display: css.display,
+                        alignItems: css.alignItems,
+                        justifyContent: css.justifyContent
+                    };
+
+                    const x = rect.left + rect.width / 2;
+                    const y = rect.top + rect.height / 2;
+                    const body = Bodies.rectangle(x, y, rect.width, rect.height, {
+                        restitution: 0.6,
+                        friction: 0.1,
+                        density: 0.005
+                    });
+
+                    Composite.add(world, body);
+
+                    domBodies.push({
+                        body: body,
+                        element: el,
+                        width: rect.width,
+                        height: rect.height,
+                        savedStyles: styles
+                    });
+                });
+
+                const wrapper = document.getElementById('wrapper');
+                const nav = document.getElementById('navbar');
+                wrapper.style.display = 'none';
+                nav.style.display = 'none';
+
+                document.body.style.backgroundColor = '#000000';
+                document.body.style.backgroundImage = 'none';
+
+                domBodies.forEach(item => {
+                    const el = item.element;
+                    const style = item.savedStyles;
+
+                    document.body.appendChild(el);
+
+                    el.className = 'falling-element';
+                    if (el.classList.contains('audio-container')) {
+                        el.classList.add('falling-border');
+                    }
+
+                    el.style.width = item.width + 'px';
+                    el.style.height = item.height + 'px';
+                    el.style.fontSize = style.fontSize;
+                    el.style.fontFamily = style.fontFamily;
+                    el.style.fontWeight = style.fontWeight;
+                    el.style.lineHeight = style.lineHeight;
+                    el.style.letterSpacing = style.letterSpacing;
+                    el.style.textTransform = style.textTransform;
+                    el.style.textAlign = style.textAlign;
+                    el.style.padding = style.padding;
+
+                    if (style.display === 'flex' || style.display === 'block') {
+                        el.style.display = style.display;
+                        el.style.alignItems = style.alignItems;
+                        el.style.justifyContent = style.justifyContent;
+                    }
+
+                    const x = item.body.position.x - item.width / 2;
+                    const y = item.body.position.y - item.height / 2;
+                    el.style.transform = `translate(${x}px, ${y}px) rotate(0rad)`;
+                });
+
+                const wallOpts = { isStatic: true };
+                const tb = 100;
+                const w = window.innerWidth;
+                const h = window.innerHeight;
+
+                Composite.add(world, [
+                    Bodies.rectangle(w / 2, h + tb / 2, w * 2, tb, wallOpts),
+                    Bodies.rectangle(w / 2, -tb / 2 - 2000, w * 2, tb, wallOpts),
+                    Bodies.rectangle(-tb / 2, h / 2, tb, h * 3, wallOpts),
+                    Bodies.rectangle(w + tb / 2, h / 2, tb, h * 3, wallOpts)
+                ]);
+
+                Matter.Events.on(engine, 'afterUpdate', () => {
+                    domBodies.forEach(item => {
+                        const x = item.body.position.x - item.width / 2;
+                        const y = item.body.position.y - item.height / 2;
+                        item.element.style.transform = `translate(${x}px, ${y}px) rotate(${item.body.angle}rad)`;
+                    });
+                });
+
+                const mouse = Mouse.create(document.body);
+                const mouseConstraint = MouseConstraint.create(engine, {
+                    mouse: mouse,
+                    constraint: { stiffness: 0.2, render: { visible: false } }
+                });
+
+                if (mouseConstraint.mouse.element) {
+                    mouseConstraint.mouse.element.removeEventListener('mousewheel', mouseConstraint.mouse.mousewheel);
+                    mouseConstraint.mouse.element.removeEventListener('DOMMouseScroll', mouseConstraint.mouse.mousewheel);
+                }
+
+                Composite.add(world, mouseConstraint);
+                Runner.run(Runner.create(), engine);
+            }
+
+            // Modal Logic for Gallery
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            const closeModal = document.getElementById('closeModal');
+            const galleryImages = document.querySelectorAll('.gallery img');
+
+            galleryImages.forEach(img => {
+                img.addEventListener('click', function () {
+                    // Prevent opening modal if antigravity is running
+                    if (antigravityActive) return;
+
+                    modal.style.display = 'flex';
+                    modalImg.src = this.src;
+                });
+            });
+
+            closeModal.addEventListener('click', function () {
+                modal.style.display = 'none';
+            });
+
+            modal.addEventListener('click', function (e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
