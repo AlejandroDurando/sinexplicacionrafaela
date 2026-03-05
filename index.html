@@ -864,6 +864,10 @@
 
         .carousel-indicators {
             display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 90%;
+            margin: 0 auto;
             gap: 12px;
             z-index: 3;
         }
@@ -917,6 +921,15 @@
 
             .author {
                 font-size: 0.9rem;
+            }
+
+            .carousel-indicators {
+                gap: 8px;
+            }
+
+            .dot {
+                height: 10px;
+                width: 10px;
             }
         }
     </style>
